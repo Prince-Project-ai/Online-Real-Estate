@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { isValidateField } from "../Middlewares/Auth.Middleware.js";
+import { isValidateField, verifyJWT } from "../Middlewares/Auth.Middleware.js";
 
 const router = Router();
 
-app.post("/sign-in", isValidateField);
+app.post("/sign-up", isValidateField);
 
 export default router;
