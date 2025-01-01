@@ -1,20 +1,11 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
+import { DB_NAME } from "../Constant.js";
 
-const userSchema = new Schema(
-  {
-    fullName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
-    },
-    
-  },
-  {
-    timestamps: true,
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(`${process.env.MONGODB_URL}/${DB_NAME}`);
+    console.log("😍😋😑😶 Connection Successfully.");
+  } catch (error) {
+    console.error("ERROR IN CONNECTING MONGODB : ", error);
   }
-);
+};
