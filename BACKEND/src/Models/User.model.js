@@ -27,13 +27,13 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
-    Address: {
+    address: {
       type: String,
-      required: true,
+      // required: true,
     },
-    refreshToken:{
-      type:String,
-      required:true,
+    refreshToken: {
+      type: String,
+      // required:true,
     },
   },
   {

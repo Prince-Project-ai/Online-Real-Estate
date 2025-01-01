@@ -3,6 +3,7 @@ import { ApiError } from "../Utils/ApiError.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
+
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
     const Token = req?.cookies?.accessToken || req?.headers?.Authorization()?.replace("Bearer ");
@@ -11,13 +12,13 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     }
     const decode = jwt.verify(Token, process.env.ACCESS_TOKEN_SECREAT);
     const user = await User.findById(decode._id).select("-password -refreshToken");
-    if(!user) {
-      throw new ApiError(401,"unAuthorized Request."); 
+    if (!user) {
+      throw new ApiError(401, "unAuthorized Request.");
     }
     req.user = user;
     next();
   } catch (error) {
-    throw new ApiError(401,error?.message||"Invalid Request");
+    throw new ApiError(401, error?.message || "Invalid Request");
   }
 })
 
@@ -26,12 +27,12 @@ export const isValidateField = asyncHandler(async (req, res, next) => {
   const { fullName, email, password, crmPassword, phoneNumber, addres } =
     req.body;
 
-  if (!(fullName && email && password && crmPassword && phoneNumber && addres)) {
-    return ApiError(401, "All Fields are Requireds..");
+  if (!(fullName || email || password || crmPassword || phoneNumber || addres)) {
+    throw new ApiError(401, "All Fields are Requireds..");
   }
   const user = await User.findOne({ email });
   if (user) {
-    return ApiError(401, "User Already Exist..");
+    throw new ApiError(401, "User Already Exist..");
   }
   next();
 });

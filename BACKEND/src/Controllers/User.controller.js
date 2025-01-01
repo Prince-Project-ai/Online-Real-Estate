@@ -1,39 +1,49 @@
 import { User } from "../Models/User.model.js";
+import { ApiError } from "../Utils/ApiError.js";
+import { ApiResponse } from "../Utils/ApiResponse.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 
-//signup controller
-
-export const generateAccessTokenAndRefreshToken = async (id) =>  {
+// accessToken and refreshToken generator function
+export const generateAccessTokenAndRefreshToken = async (id) => {
   try {
     const user = await User.findById(id);
     const refreshToken = user.generateRefreshToken()
     const accessToken = user.generateAccessToken()
     user.refreshToken = refreshToken;
-    await user.save({validateBeforeSave:false});
-    return {accessToken,refreshToken};
+    await user.save({ validateBeforeSave: false });
+    return { accessToken, refreshToken };
   } catch (error) {
-    throw new ApiError(500,"Something went wrong while generating token");
+    throw new ApiError(500, "Something went wrong while generating token");
   }
 }
-
+// Signup Controller
 export const signUp = asyncHandler(async (req, res) => {
-  req.body;
+  try {
+    const { fullName,
+      email,
+      password,
+      crmPassword,
+      phoneNumber,
+      addres } = req.body;
 
-  const user = await User.create({
-    fullName,
-    email,
-    password,
-    crmPassword,
-    phoneNumber,
-    addres,
-  });
+    const user = await User.create({
+      fullName,
+      email,
+      password,
+      crmPassword,
+      phoneNumber,
+      addres,
+    });
 
-  const createdUser = await User.findById(user._id).select("-password -refreshToken");
+    const createdUser = await User.findById(user._id).select("-password -refreshToken");
 
-  if(!createdUser) {
-    throw new ApiError(400,"User Not Registered...")
+    if (!createdUser) {
+      throw new ApiError(400, "User Not Registered...")
+    }
+    res
+      .status(201)
+      .json(new ApiResponse(201, createdUser, "User Registration successfull.."));
+  } catch (error) {
+    throw new ApiError(400, error.message || "Something went wrong..");
   }
-  res
-    .status(201)
-    .json(new ApiResponse(201, createdUser, "User Registration successfull.."));
 });
