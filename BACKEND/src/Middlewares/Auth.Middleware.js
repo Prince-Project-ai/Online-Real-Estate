@@ -30,9 +30,26 @@ export const isValidateField = asyncHandler(async (req, res, next) => {
   if (!(fullName || email || password || crmPassword || phoneNumber || addres)) {
     throw new ApiError(401, "All Fields are Requireds..");
   }
+
+  if (password !== crmPassword) {
+    throw new ApiError(400, "Password is not Same.");
+  }
+
   const user = await User.findOne({ email });
   if (user) {
     throw new ApiError(401, "User Already Exist..");
   }
+
+  next();
+});
+
+
+// signIn form Validation Controller
+
+export const isValidateSignIn = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!(email || password)) throw new ApiError(401, "All Field are Required.")
+
   next();
 });

@@ -17,64 +17,73 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
-    },
-    crmPassword: {
-      type: String,
-      required: [true, "Password Must Bee Required"],
+      required: [true, "Password is required"],
     },
     phoneNumber: {
-      type: Number,
-      required: true,
+      type: String,
+      required: [true, "Phone number is required"],
+      match: [/^\d{10}$/, "Phone number must be 10 digits"],
     },
     address: {
       type: String,
-      // required: true,
     },
     refreshToken: {
       type: String,
-      // required:true,
+      default: null,
+    },
+    role: {
+      type: String,
+      enum: ["User", "Seller", "Agent"],
+      default: "User",
+      required: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
 
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 15);
-  next();
+  try {
+    if (!this.isModified("password")) return next();
+    this.password = await bcrypt.hash(this.password, 15);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
+  if (!this.password) throw new Error("Password not set for this user");
   return await bcrypt.compare(password, this.password);
 };
 
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
-      _id: this._id,
+      id: this._id,
+      role: this.role,
       email: this.email,
       fullName: this.fullName,
     },
-    process.env.ACCESS_TOKEN_SECREAT,
+    process.env.ACCESS_TOKEN_SECRET, // Fixed typo
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRE,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRE || "15m", // Fallback expiration time
     }
   );
 };
 
 userSchema.methods.generateRefreshToken = function () {
-  jwt.sign(
+  return jwt.sign(
     {
-      _id: this._id,
+      id: this._id,
+      role: this.role,
     },
-    process.env.REFRESH_TOKEN_SECREAT,
+    process.env.REFRESH_TOKEN_SECRET, // Fixed typo
     {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRE,
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRE || "7d", // Fallback expiration time
     }
   );
 };
 
-export const User = mongoose.model("user", userSchema);
+export const User = mongoose.model("User", userSchema);

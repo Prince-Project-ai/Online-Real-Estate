@@ -12,14 +12,21 @@ app.use(
     origin: "*",
   })
 );
+
+
 app.get("/", (_, res) => {
   res.send("Welcome to Online Real Estate API");
 });
 
 
-// http://localhost:9999/api/v1/propertyfy/sign-up
-app.use("/api/v1/propertyfy", userRouter); 
+app.use("/api/v1/propertyfy", userRouter);
 app.use(errorHandler);
 
 export { app };
-// user apis
+
+// ======================= API LIST [ USER ] =================
+// http://localhost:9999/api/v1/propertyfy/sign-up
+// http://localhost:9999/api/v1/propertyfy/sign-in
+// http://localhost:9999/api/v1/propertyfy/refresh-token
+
+// ======================= API LIST [ SOMETING (COMING SOON) ] =================
