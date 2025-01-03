@@ -89,8 +89,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     );
     const user = await User.findById(decodeToken.id);
     if (!user) throw new ApiError(401, "Invalid Refresh Token.");
-    if (inComingRefreshToken !== user.refreshToken)
-      throw new ApiError(401, "Invalid Token OR Expire Token.");
+    if (inComingRefreshToken !== user.refreshToken) throw new ApiError(401, "Invalid Token OR Expire Token.");
     const { newRefreshToken, newAccessToken } =
       await generateAccessTokenAndRefreshToken(user._id);
     res
