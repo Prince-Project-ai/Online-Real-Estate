@@ -28,5 +28,6 @@ export { app };
 // http://localhost:9999/api/v1/propertyfy/sign-up
 // http://localhost:9999/api/v1/propertyfy/sign-in
 // http://localhost:9999/api/v1/propertyfy/refresh-token
+// http://localhost:9999/api/v1/propertyfy/logout-user
 
 // ======================= API LIST [ SOMETING (COMING SOON) ] =================
