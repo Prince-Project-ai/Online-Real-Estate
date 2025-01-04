@@ -1,17 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import Count from "./Count";
+import { useMessage } from "../../Contexts/MessageContext";
 
 const Counter = () => {
-  const dispatch = useDispatch();
-
+  const { showToast } = useMessage();
   return (
     <>
-      <button onClick={() => dispatch({ type: "INCREMENT" })}>Increment</button>
-      <Count />
-      <button onClick={() => dispatch({ type: "DECREMENT" })}>Decrement</button>
+      <button onClick={() => showToast("Hello World", "success")}>success</button>
+      <button onClick={() => showToast("Hello World", "error")}>error</button>
     </>
   );
 };
 
-export default Counter;
+export default React.memo(Counter);

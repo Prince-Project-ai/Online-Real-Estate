@@ -11,9 +11,7 @@ export default {
         'heading': ['Vast Shadow', 'cursive'],
         'description': ['Libre Franklin', 'sans-serif'],
       },
-      boxShadow: {
-        'Custom': '4px 4px #2f2f2f',
-      },
+
       colors: {
         'dark': "#17191b",
       },

@@ -109,15 +109,8 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
   console.timeEnd();
 });
 
-// controll flow of logOut process
-
-// 1) fetch the accessToken
-// 2) set the null of the accessToken
-// 3) remove the token from cookis
-// 5) and
-
+// logout current user
 export const userLogOut = asyncHandler(async (req, res) => {
-  console.log(req.user);
   await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -156,3 +149,11 @@ export const userLogOut = asyncHandler(async (req, res) => {
 // 4) is token is not availalbe that called it anauthoruzed
 // 5) user generate access toke nad refresh genrating new tokens ok lets start coding...
 // await is fucking keyword mother f
+
+// controll flow of logOut process
+
+// 1) fetch the accessToken
+// 2) set the null of the accessToken
+// 3) remove the token from cookis
+// 5) and
+
