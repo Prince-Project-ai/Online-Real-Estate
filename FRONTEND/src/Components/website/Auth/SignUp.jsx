@@ -1,93 +1,124 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { signUp } from '../../../Api/website/HandleUserApi';
+import { useMessage } from '../../../Contexts/MessageContext';
 
-const VALIDATION = {
-  FULL_NAME: 'Full name must be above 7 characters',
-  EMAIL: 'Invalid email address',
-  PASSWORD: 'Password must be at least 8 characters',
-  CFM_PASSWORD: 'Passwords do not match',
-  PHONE: 'Phone number must be 10 digits',
-  ADDRESS: 'Address cannot be empty',
-};
+const ROLES = ['User', 'Seller', 'Agent'];
 
-const ROLES = ['user', 'seller', 'agent'];
+let i = 0;
 
-const validateField = (name, value, password) => {
-  switch (name) {
-    case 'fullName':
-      return value.trim().length > 7 ? null : VALIDATION.FULL_NAME;
-    case 'email':
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : VALIDATION.EMAIL;
-    case 'password':
-      return value.length >= 8 ? null : VALIDATION.PASSWORD;
-    case 'cfmPassword':
-      return value === password ? null : VALIDATION.CFM_PASSWORD;
-    case 'phoneNumber':
-      return /^\d{10}$/.test(value) ? null : VALIDATION.PHONE;
-    case 'address':
-      return value.trim() ? null : VALIDATION.ADDRESS;
-    default:
-      return null;
-  }
-};
+const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
+  const { showToast } = useMessage();
 
-const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
-  const [role, setRole] = useState('user');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [role, setRole] = useState('User');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
-    cfmPassword: '',
+    crmPassword: '',
     phoneNumber: '',
     address: '',
   });
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
+
+  const [errors, setErrors] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    crmPassword: '',
+    phoneNumber: '',
+    address: '',
+  });
+
+  useEffect(() => {
+    setFormData(prev => ({ ...prev, role }));
+  }, [role]);
+
+  function validateField(name, value) {
+    switch (name) {
+      case "fullName":
+        if (!value.trim()) {
+          return "Full name is required.";
+        } else if (value.length < 3) {
+          return "Full name must be at least 3 characters.";
+        }
+        break;
+
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value.trim()) {
+          return "Email is required.";
+        } else if (!emailRegex.test(value)) {
+          return "Enter a valid email address.";
+        }
+        break;
+
+      case "password":
+        if (!value.trim()) {
+          return "Password is required.";
+        } else if (value.length < 6) {
+          return "Password must be at least 6 characters.";
+        }
+        break;
+
+      case "crmPassword":
+        if (!value.trim()) {
+          return "CRM Password is required.";
+        } else if (value.length < 6) {
+          return "CRM Password must be at least 6 characters.";
+        } else if (value !== formData.password) {
+          return "Password does not same";
+        }
+        break;
+
+      case "phoneNumber":
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!value.trim()) {
+          return "Phone number is required.";
+        } else if (!phoneRegex.test(value)) {
+          return "Enter a valid 10-digit phone number.";
+        }
+        break;
+
+      case "address":
+        if (!value.trim()) {
+          return "Address is required.";
+        } else if (value.length < 10) {
+          return "Address must be at least 10 characters.";
+        }
+        break;
+
+      default:
+        return "";
+    }
+    return "";
+  }
+
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
+    // Update form data
     setFormData(prev => ({ ...prev, [name]: value }));
-
-    if (touched[name]) {
-      const error = validateField(name, value, name === 'cfmPassword' ? formData.password : null);
-      setErrors(prev => ({ ...prev, [name]: error }));
-    }
-  }, [touched, formData.password]);
-
-  const handleBlur = useCallback((event) => {
-    const { name, value } = event.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    const error = validateField(name, value, name === 'cfmPassword' ? formData.password : null);
-    setErrors(prev => ({ ...prev, [name]: error }));
+    const error = validateField(name, value);
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   }, [formData.password]);
 
-  const isValid = useMemo(() => {
-    return Object.keys(formData).every(key => {
-      const error = validateField(key, formData[key], formData.password);
-      return !error;
-    });
-  }, [formData]);
+  console.info(errors);
+  console.info(i++);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await signUp(formData, showToast);
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+        crmPassword: "",
+        phoneNumber: "",
+        address: "",
+      });
 
-    const newErrors = {};
-    Object.keys(formData).forEach(key => {
-      newErrors[key] = validateField(key, formData[key], formData.password);
-    });
-
-    setErrors(newErrors);
-    setTouched(Object.keys(formData).reduce((acc, key) => ({ ...acc, [key]: true }), {}));
-
-    if (isValid && onSubmit) {
-      setIsSubmitting(true);
-      try {
-        console.log({ ...formData, role });
-      } catch (error) {
-        console.error('Submission error:', error);
-      } finally {
-        setIsSubmitting(false);
-      }
+    } catch (error) {
+      console.error("SignUp Error: ", error);
     }
   };
 
@@ -96,7 +127,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
       <div className="p-6 py-3 border-b border-gray-200">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-semibold text-dark">Create Account</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800">✕</button>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-800" aria-label="Close">✕</button>
         </div>
       </div>
 
@@ -109,8 +140,9 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
               onClick={() => setRole(roleType)}
               className={`p-4 border-2 hover:border-dark flex flex-col items-center gap-2 rounded-lg transition-all
                 ${role === roleType ? "bg-dark text-white shadow-lg" : "bg-white text-gray-600 hover:bg-gray-100"}`}
+              aria-pressed={role === roleType}
             >
-              <i className={`ri-${roleType === "user" ? "user" : roleType === "seller" ? "building-2" : "user-settings"}-fill text-2xl`} />
+              <i className={`ri-${roleType === "User" ? "user" : roleType === "Seller" ? "building-2" : "user-settings"}-fill text-2xl`} />
               <span className="capitalize">{roleType}</span>
             </button>
           ))}
@@ -125,10 +157,8 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
               name="fullName"
               type="text"
               icon="user"
-              error={errors.fullName}
               value={formData.fullName}
               onChange={handleChange}
-              onBlur={handleBlur}
               required
             />
             <FormInput
@@ -136,10 +166,8 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
               name="email"
               type="email"
               icon="mail"
-              error={errors.email}
               value={formData.email}
               onChange={handleChange}
-              onBlur={handleBlur}
               required
             />
             <FormInput
@@ -147,21 +175,17 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
               name="password"
               type="password"
               icon="lock"
-              error={errors.password}
               value={formData.password}
               onChange={handleChange}
-              onBlur={handleBlur}
               required
             />
             <FormInput
               label="Confirm Password"
-              name="cfmPassword"
+              name="crmPassword"
               type="password"
               icon="lock"
-              error={errors.cfmPassword}
-              value={formData.cfmPassword}
+              value={formData.crmPassword}
               onChange={handleChange}
-              onBlur={handleBlur}
               required
             />
             <FormInput
@@ -169,10 +193,8 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
               name="phoneNumber"
               type="tel"
               icon="phone"
-              error={errors.phoneNumber}
               value={formData.phoneNumber}
               onChange={handleChange}
-              onBlur={handleBlur}
               required
             />
             <FormInput
@@ -180,21 +202,18 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn, onSubmit }) => {
               name="address"
               type="text"
               icon="map-pin"
-              error={errors.address}
               value={formData.address}
               onChange={handleChange}
-              onBlur={handleBlur}
               required
             />
           </div>
 
           <button
             type="submit"
-            disabled={isSubmitting || !isValid}
             className="w-full py-2 px-4 tracking-wide bg-dark text-white rounded-md focus:outline-none focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 hover:ring-black focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <i className="ri-user-add-line mr-2" />
-            {isSubmitting ? 'Creating Account...' : 'Create Account'}
+            Create Account
           </button>
         </form>
       </div>
@@ -217,9 +236,8 @@ const FormInput = React.memo(({
   icon,
   required,
   value,
-  error,
   onChange,
-  onBlur,
+  error,
   name
 }) => (
   <div>
@@ -229,24 +247,19 @@ const FormInput = React.memo(({
     </label>
     <div className="relative">
       <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
-        <i className={`ri-${icon}-line ${error ? 'text-red-500' : 'text-gray-500'}`} />
+        <i className={`ri-${icon}-line text-gray-500`} />
       </span>
       <input
         type={type}
         value={value}
         name={name}
         onChange={onChange}
-        onBlur={onBlur}
         required={required}
-        className={`w-full ${error
-            ? 'border-red-500 border-2 focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:ring-offset-2'
-            : 'border-gray-300 focus:ring-1 focus:ring-dark focus:border-dark focus:ring-offset-2'
-          } font-description pl-10 px-4 py-2.5 border rounded-lg outline-none transition-shadow`}
+        className={`w-full border-gray-300 focus:ring-1 focus:ring-dark focus:border-dark focus:ring-offset-2 font-description pl-10 px-4 py-2.5 border rounded-lg outline-none transition-shadow ${error ? 'border-red-500' : ''
+          }`}
       />
     </div>
-    {error && (
-      <p className="mt-1 text-sm text-red-500">{error}</p>
-    )}
+    {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
   </div>
 ));
 

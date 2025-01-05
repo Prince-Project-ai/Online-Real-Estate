@@ -1,5 +1,4 @@
 import React from "react";
-import PropertyCard from "../../Components/website/PropertyCard";
 import HeroFilter from "../../Components/website/HeroFilter";
 let i = 0;
 const Home = () => {
@@ -14,7 +13,7 @@ const Home = () => {
               <h1 className="text-4xl md:text-6xl font-heading text-dark mb-6">
                 Discover Your Perfect Property with PropertiFy
               </h1>
-              <div className="mb-20">
+              <div className="mb-10">
                 <p className="text-lg max-w-4xl mx-auto md:text-xl font-description text-secondary ">
                   Find houses, shops, plots, and farmhouses near you or anywhere you desire. Your dream property is just a click away!
                 </p>
@@ -33,7 +32,7 @@ const Home = () => {
           </div>
         </section>
         <section className="property-categories border-b bg-body py-16">
-          <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 lg:px-0">
             {/* Heading */}
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-4xl font-heading text-dark mb-1">
@@ -106,7 +105,7 @@ const Home = () => {
           </div>
         </section>
         <section className="bg-body py-16">
-          <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 lg:px-0">
             {/* Heading */}
             <div className="text-center mb-8">
               <h2 className="text-4xl md:text-4xl font-heading text-dark mb-2">
@@ -221,26 +220,6 @@ const Home = () => {
               </p>
             </div>
           </div>
-        </section>
-        <section className="bg-body border-t py-16">
-          <PropertyCard
-            imageUrl="https://png.pngtree.com/background/20231101/original/pngtree-3d-rendered-logo-of-white-real-estate-houses-picture-image_5832223.jpg"
-            title="Modern Beachfront Villa"
-            price="$2,850,000"
-            location="Miami Beach, FL"
-            specs={{
-              beds: 4,
-              baths: 3.5,
-              area: 3200,
-              yearBuilt: 2022
-            }}
-            status="For Sale"
-            agent={{
-              name: "Sarah Johnson",
-              image: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2484"
-            }}
-            featured={true}
-          />
         </section>
       </main>
     </>

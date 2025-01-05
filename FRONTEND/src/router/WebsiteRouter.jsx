@@ -2,16 +2,15 @@ import React from "react";
 import WebsiteLayouts from "../layouts/WebsiteLayouts";
 import { Routes, Route } from "react-router-dom";
 import Home from "../Pages/website/Home";
+// import Home from "../Pages/website/Home";
 import SearchResult from "../Pages/website/SearchResult";
-import Header from "../Components/website/Header";
-import Footer from "../Components/website/Footer";
-import SiteInfo from "../Components/website/SiteInfo";
+import Header from "../Components/website/comman/Header";
+import Footer from "../Components/website/comman/Footer";
 import Counter from "../Components/website/Counter";
 
 const WebsiteRouter = () => {
   return (
     <WebsiteLayouts>
-      <SiteInfo />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

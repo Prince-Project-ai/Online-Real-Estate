@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import AuthModalManager from "./AuthModelManager";
+import AuthModalManager from "../Auth/AuthModelManager";
 let i = 0;
 const Header = () => {
   return (
     // Header Section
-    <header className="border border-b">
-      <nav className="max-w-7xl container mx-auto flex items-center justify-between py-3">
+    <header className="border-b">
+      <nav className="max-w-7xl md:px-4 lg:px-0 container mx-auto flex items-center justify-between py-3">
         <div className="logo"><h2 className="text-2xl">PropertyFy</h2></div>
         <div className="menus">
           <ul className="flex flex-wrap items-center space-x-5 tracking-wider">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-
+let i = 0;
 const AuthModalManager = () => {
   const [currentModal, setCurrentModal] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -26,7 +26,7 @@ const AuthModalManager = () => {
   };
 
   console.log(currentModal);
-
+  console.log("from Auth Model : ",i++);
   return (
     <>
       {/* Sign In Button */}
