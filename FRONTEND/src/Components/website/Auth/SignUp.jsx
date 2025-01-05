@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { signUp } from '../../../Api/website/HandleUserApi';
 import { useMessage } from '../../../Contexts/MessageContext';
+import Spinner from '../../core/Spinner';
+import { validateField } from '../../../Utils/ValidationUtils'; // Import the validation utility
 
 const ROLES = ['User', 'Seller', 'Agent'];
-
-let i = 0;
 
 const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
   const { showToast } = useMessage();
 
   const [role, setRole] = useState('User');
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -19,134 +20,103 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
     address: '',
   });
 
-  const [errors, setErrors] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    crmPassword: '',
-    phoneNumber: '',
-    address: '',
-  });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    setFormData(prev => ({ ...prev, role }));
+    setFormData((prev) => ({ ...prev, role }));
   }, [role]);
 
-  function validateField(name, value) {
-    switch (name) {
-      case "fullName":
-        if (!value.trim()) {
-          return "Full name is required.";
-        } else if (value.length < 3) {
-          return "Full name must be at least 3 characters.";
-        }
-        break;
+  const handleChange = useCallback(
+    (event) => {
+      const { name, value } = event.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      const error = validateField(name, value, formData); // Use the imported validation function
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+    },
+    [formData]
+  );
 
-      case "email":
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!value.trim()) {
-          return "Email is required.";
-        } else if (!emailRegex.test(value)) {
-          return "Enter a valid email address.";
-        }
-        break;
-
-      case "password":
-        if (!value.trim()) {
-          return "Password is required.";
-        } else if (value.length < 6) {
-          return "Password must be at least 6 characters.";
-        }
-        break;
-
-      case "crmPassword":
-        if (!value.trim()) {
-          return "CRM Password is required.";
-        } else if (value.length < 6) {
-          return "CRM Password must be at least 6 characters.";
-        } else if (value !== formData.password) {
-          return "Password does not same";
-        }
-        break;
-
-      case "phoneNumber":
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!value.trim()) {
-          return "Phone number is required.";
-        } else if (!phoneRegex.test(value)) {
-          return "Enter a valid 10-digit phone number.";
-        }
-        break;
-
-      case "address":
-        if (!value.trim()) {
-          return "Address is required.";
-        } else if (value.length < 10) {
-          return "Address must be at least 10 characters.";
-        }
-        break;
-
-      default:
-        return "";
-    }
-    return "";
-  }
-
-
-  const handleChange = useCallback((event) => {
-    const { name, value } = event.target;
-    // Update form data
-    setFormData(prev => ({ ...prev, [name]: value }));
-    const error = validateField(name, value);
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-  }, [formData.password]);
-
-  console.info(errors);
-  console.info(i++);
+  const isFormValid = useMemo(() => {
+    return (
+      Object.values(formData).every((value) => value.trim()) &&
+      Object.values(errors).every((error) => !error)
+    );
+  }, [formData, errors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await signUp(formData, showToast);
-      setFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        crmPassword: "",
-        phoneNumber: "",
-        address: "",
-      });
+    setIsLoading(true);
 
+    const newErrors = {};
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!value.trim()) {
+        newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required.`;
+      } else {
+        const error = validateField(key, value, formData); // Use the imported validation function
+        if (error) newErrors[key] = error;
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      Object.values(newErrors).forEach((errorMessage) => showToast(errorMessage, 'error'));
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await signUp(formData, showToast, onSwitchToSignIn);
+      setFormData({
+        fullName: '',
+        email: '',
+        password: '',
+        crmPassword: '',
+        phoneNumber: '',
+        address: '',
+      });
+      setErrors({});
     } catch (error) {
-      console.error("SignUp Error: ", error);
+      console.error('SignUp Error: ', error);
+      showToast('An error occurred during sign-up. Please try again.', 'error');
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const roleButtons = useMemo(
+    () =>
+      ROLES.map((roleType) => (
+        <button
+          key={roleType}
+          type="button"
+          onClick={() => setRole(roleType)}
+          className={`p-4 border-2 hover:border-dark flex flex-col items-center gap-2 rounded-lg transition-all ${role === roleType ? 'bg-dark text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'
+            }`}
+          aria-pressed={role === roleType}
+        >
+          <i
+            className={`ri-${roleType === 'User' ? 'user' : roleType === 'Seller' ? 'building-2' : 'user-settings'
+              }-fill text-2xl`}
+          />
+          <span className="capitalize">{roleType}</span>
+        </button>
+      )),
+    [role]
+  );
 
   return (
     <div className={`bg-white rounded-2xl shadow-lg max-w-2xl w-full relative ${isAnimating ? 'close' : 'open'}`}>
       <div className="p-6 py-3 border-b border-gray-200">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-semibold text-dark">Create Account</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800" aria-label="Close">✕</button>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-800" aria-label="Close">
+            ✕
+          </button>
         </div>
       </div>
 
       <div className="p-2 border-b border-gray-200 bg-gray-50">
-        <div className="grid grid-cols-3 gap-2">
-          {ROLES.map((roleType) => (
-            <button
-              key={roleType}
-              type="button"
-              onClick={() => setRole(roleType)}
-              className={`p-4 border-2 hover:border-dark flex flex-col items-center gap-2 rounded-lg transition-all
-                ${role === roleType ? "bg-dark text-white shadow-lg" : "bg-white text-gray-600 hover:bg-gray-100"}`}
-              aria-pressed={role === roleType}
-            >
-              <i className={`ri-${roleType === "User" ? "user" : roleType === "Seller" ? "building-2" : "user-settings"}-fill text-2xl`} />
-              <span className="capitalize">{roleType}</span>
-            </button>
-          ))}
-        </div>
+        <div className="grid grid-cols-3 gap-2">{roleButtons}</div>
       </div>
 
       <div className="p-6">
@@ -159,6 +129,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
               icon="user"
               value={formData.fullName}
               onChange={handleChange}
+              error={errors.fullName}
               required
             />
             <FormInput
@@ -167,6 +138,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
               type="email"
               icon="mail"
               value={formData.email}
+              error={errors.email}
               onChange={handleChange}
               required
             />
@@ -177,6 +149,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
               icon="lock"
               value={formData.password}
               onChange={handleChange}
+              error={errors.password}
               required
             />
             <FormInput
@@ -186,6 +159,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
               icon="lock"
               value={formData.crmPassword}
               onChange={handleChange}
+              error={errors.crmPassword}
               required
             />
             <FormInput
@@ -195,6 +169,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
               icon="phone"
               value={formData.phoneNumber}
               onChange={handleChange}
+              error={errors.phoneNumber}
               required
             />
             <FormInput
@@ -204,16 +179,21 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
               icon="map-pin"
               value={formData.address}
               onChange={handleChange}
+              error={errors.address}
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 px-4 tracking-wide bg-dark text-white rounded-md focus:outline-none focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 hover:ring-black focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!isFormValid || isLoading}
+            className="w-full py-2 px-4 tracking-wide justify-center items-center bg-dark text-white rounded-md focus:outline-none flex focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 hover:ring-black focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <i className="ri-user-add-line mr-2" />
-            Create Account
+            {isLoading ? <Spinner /> : (
+              <>
+                <i className="ri-user-add-line mr-2" /> Create Account
+              </>
+            )}
           </button>
         </form>
       </div>
@@ -230,16 +210,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
   );
 };
 
-const FormInput = React.memo(({
-  label,
-  type,
-  icon,
-  required,
-  value,
-  onChange,
-  error,
-  name
-}) => (
+const FormInput = React.memo(({ label, type, icon, required, value, onChange, error, name }) => (
   <div>
     <label className="block text-sm font-description font-medium text-gray-700 mb-1">
       {label}
@@ -255,11 +226,11 @@ const FormInput = React.memo(({
         name={name}
         onChange={onChange}
         required={required}
-        className={`w-full border-gray-300 focus:ring-1 focus:ring-dark focus:border-dark focus:ring-offset-2 font-description pl-10 px-4 py-2.5 border rounded-lg outline-none transition-shadow ${error ? 'border-red-500' : ''
+        className={`w-full border-gray-300 font-description pl-10 border px-4 py-2.5 rounded-lg outline-none transition-shadow ${error ? 'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:ring-offset-2' : 'focus:ring-2 focus:ring-dark focus:border-dark focus:ring-offset-2'
           }`}
       />
     </div>
-    {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    {error && <p className="mt-1 text-sm font-description text-red-500">{error}</p>}
   </div>
 ));
 

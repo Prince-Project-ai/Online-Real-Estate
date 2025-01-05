@@ -5,6 +5,7 @@ let i = 0;
 const AuthModalManager = () => {
   const [currentModal, setCurrentModal] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  
 
   const handleModalChange = (modalType) => {
     console.log("Hello something is change.");

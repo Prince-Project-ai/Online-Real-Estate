@@ -9,11 +9,12 @@ export const handleUserApi = axios.create(
 )
 
 // signUp
-export const signUp = async (formData, showToast) => {
+export const signUp = async (formData, showToast, onSwitchToSignIn) => {
   try {
     const response = await handleUserApi.post("/sign-up", formData);
     if (response?.data?.success) {
-      showToast(response?.data?.message, "success")
+      showToast(response?.data?.message, "success");
+      onSwitchToSignIn();
     }
     return response?.data;
   } catch (error) {
