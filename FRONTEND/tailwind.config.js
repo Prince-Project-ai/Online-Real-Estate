@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         'primary': ['Poppins', 'sans-serif'],
-        'heading': ['Vast Shadow', 'cursive'],
+        'heading': ["Lobster", 'serif'],
         'description': ['Libre Franklin', 'sans-serif'],
       },
 
@@ -31,3 +31,5 @@ export default {
   },
   plugins: [],
 };
+
+// 'heading': ['Vast Shadow', 'cursive'],

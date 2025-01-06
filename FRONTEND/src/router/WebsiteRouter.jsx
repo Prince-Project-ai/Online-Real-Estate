@@ -7,6 +7,7 @@ import SearchResult from "../Pages/website/SearchResult";
 import Header from "../Components/website/comman/Header";
 import Footer from "../Components/website/comman/Footer";
 import Counter from "../Components/website/Counter";
+import Profile from "../Pages/website/Profile";
 
 const WebsiteRouter = () => {
   return (
@@ -14,6 +15,7 @@ const WebsiteRouter = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/local" element="<h2>Hello this is main route of the websiteroouter</h2>" />
         <Route path="/search-result" element={<SearchResult />} />
         <Route path="/counter" element={<Counter />} />

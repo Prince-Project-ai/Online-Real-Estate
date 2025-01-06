@@ -1,10 +1,54 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { signIn } from "../../../Api/website/HandleUserApi";
+import { useMessage } from "../../../Contexts/MessageContext";
+import Spinner from "../../core/Spinner";
 
 const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
-  const handleSubmit = (e) => {
+  const { showToast } = useMessage();
+  const [formData, setFromData] = useState({
+    email: "",
+    password: ""
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  function validateField(name, value) {
+    const validations = {
+      email: () => {
+        if (!value.trim()) return 'Email is required.';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Enter a valid email address.';
+        return '';
+      },
+      password: () => {
+        if (!value.trim()) return 'Password is required.';
+        if (value.length < 6) return 'Password must be at least 6 characters.';
+        return '';
+      },
+    }
+    return validations[name] ? validations[name]() : '';
+  }
+
+  const handleChange = useCallback((event) => {
+    const { name, value } = event.target;
+    setFromData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    const validate = validateField(name, value);
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: validate }));
+  }, [formData])
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // onSwitchToSignUp()
-    // Add your sign-in logic here
+    setIsLoading(true);
+    try {
+      await signIn(formData, showToast, onClose);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false)
+    }
   };
 
   return (
@@ -20,41 +64,51 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
         </button>
       </div>
 
-      {/* Modal Body */}
       <div className="p-6">
         <form onSubmit={handleSubmit}>
-          {/* Email Field */}
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email Address
+            <label className="block text-sm font-description font-medium text-gray-700 mb-1">
+              Email
+              <span className="text-red-500 ml-1">*</span>
             </label>
-            <input
-              type="email"
-              id="email"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-dark focus:border-dark text-gray-700"
-              placeholder="Enter your email"
-              required
-            />
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i className="ri-mail-line text-gray-500"></i>
+              </span>
+              <input
+                type="email"
+                value={formData.email}
+                name="email"
+                onChange={handleChange}
+                required
+                className={`w-full border-gray-300 font-description pl-10 border px-4 py-2.5 rounded-lg outline-none transition-shadow ${errors.email ? 'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:ring-offset-2' : 'focus:ring-2 focus:ring-dark focus:border-dark focus:ring-offset-2'
+                  }`}
+              />
+            </div>
+            {errors.email && <p className="mt-1 text-sm font-description text-red-500">{errors.email}</p>}
           </div>
 
           {/* Password Field */}
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-description font-medium text-gray-700 mb-1">
               Password
+              <span className="text-red-500 ml-1">*</span>
             </label>
-            <input
-              type="password"
-              id="password"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-dark focus:border-dark text-gray-700"
-              placeholder="Enter your password"
-              required
-            />
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i className="ri-lock-password-line text-gray-500"></i>
+              </span>
+              <input
+                type="password"
+                value={formData.password}
+                name="password"
+                onChange={handleChange}
+                required
+                className={`w-full border-gray-300 font-description pl-10 border px-4 py-2.5 rounded-lg outline-none transition-shadow ${errors.password ? 'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:ring-offset-2' : 'focus:ring-2 focus:ring-dark focus:border-dark focus:ring-offset-2'
+                  }`}
+              />
+            </div>
+            {errors.password && <p className="mt-1 text-sm font-description text-red-500">{errors.password}</p>}
           </div>
 
           {/* Remember Me and Forgot Password */}
@@ -83,9 +137,12 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 px-4 tracking-wide bg-dark text-white rounded-md focus:outline-none focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 hover:ring-black focus:ring-black"
+            disabled={isLoading}
+            className="w-full py-2 px-4 tracking-wide bg-dark text-white rounded-md focus:outline-none focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 disabled:cursor-not-allowed hover:ring-black focus:ring-black"
           >
-            Sign In
+            {
+              isLoading ? <Spinner /> : "Sign In"
+            }
           </button>
         </form>
       </div>

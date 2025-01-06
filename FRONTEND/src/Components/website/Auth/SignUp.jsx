@@ -187,7 +187,7 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
           <button
             type="submit"
             disabled={!isFormValid || isLoading}
-            className="w-full py-2 px-4 tracking-wide justify-center items-center bg-dark text-white rounded-md focus:outline-none flex focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 hover:ring-black focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 px-4 tracking-wide justify-center items-center bg-dark text-white rounded-md focus:outline-none flex focus:ring hover:ring-2 focus:ring-offset-2 hover:ring-offset-2 hover:ring-black focus:ring-black disabled:cursor-not-allowed"
           >
             {isLoading ? <Spinner /> : (
               <>
