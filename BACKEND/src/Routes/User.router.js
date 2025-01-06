@@ -6,6 +6,7 @@ import {
 } from "../Middlewares/Auth.Middleware.js";
 
 import {
+  currentAuth,
   refreshAccessToken,
   signIn,
   signUp,
@@ -14,6 +15,7 @@ import {
 
 const router = Router();
 
+router.get("/current-auth", verifyJWT, currentAuth);
 // Protected Router With Middleware.
 router.post("/sign-up", isValidateField, signUp);
 router.post("/sign-in", isValidateSignIn, signIn);

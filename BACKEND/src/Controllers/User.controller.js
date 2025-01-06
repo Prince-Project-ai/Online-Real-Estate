@@ -41,7 +41,7 @@ export const signUp = asyncHandler(async (req, res) => {
     res
       .status(201)
       .json(
-        new ApiResponse(201, createdUser, "User Registration successfull..")
+        new ApiResponse(201, createdUser, `${role} Registration successfull..`)
       );
   } catch (error) {
     throw new ApiError(500, error.message || "Something went wrong..");
@@ -69,7 +69,7 @@ export const signIn = asyncHandler(async (req, res) => {
         new ApiResponse(
           200,
           { loggedUser, token: { newAccessToken, newRefreshToken } },
-          "User Logged In Successfully.."
+          "Welcome back to PropertyFy. Let’s get to it!"
         )
       );
   } catch (err) {
@@ -107,6 +107,15 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(500, error.message || "Internal Server Error.");
   }
   console.timeEnd();
+});
+
+// get Current User
+
+export const currentAuth = asyncHandler(async (req, res) => {
+  const currentUser = req?.user;
+  res
+    .status(200)
+    .json(new ApiResponse(200, currentUser, "Current Auth Authorized."));
 });
 
 // logout current user

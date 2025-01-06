@@ -9,6 +9,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
       req.cookies?.accessToken ||
       req?.header("Authorization")?.replace("Bearer ", "");
     if (!Token) throw new ApiError(401, "unAuthorized Request.");
+
     const decode = jwt.verify(Token, process.env.ACCESS_TOKEN_SECRET);
     const user = await User.findById(decode.id).select(
       "-password -refreshToken"
@@ -21,6 +22,17 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
   }
 });
 
+// signIn form Validation Controller
+
+export const isValidateSignIn = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!(email || password)) throw new ApiError(401, "All Field are Required.");
+
+  next();
+});
+
+
 export const isValidateField = asyncHandler(async (req, res, next) => {
   const { fullName, email, password, crmPassword, phoneNumber, addres } =
     req.body;
@@ -31,8 +43,9 @@ export const isValidateField = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "All Fields are Requireds..");
   }
 
+
   if (password !== crmPassword) {
-    throw new ApiError(400, "Password is not Same.");
+    throw new ApiError(400, "Password is not Same 💫.");
   }
 
   const user = await User.findOne({ email });
@@ -43,12 +56,3 @@ export const isValidateField = asyncHandler(async (req, res, next) => {
   next();
 });
 
-// signIn form Validation Controller
-
-export const isValidateSignIn = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-
-  if (!(email || password)) throw new ApiError(401, "All Field are Required.");
-
-  next();
-});

@@ -9,7 +9,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 
@@ -29,5 +30,6 @@ export { app };
 // http://localhost:9999/api/v1/propertyfy/sign-in
 // http://localhost:9999/api/v1/propertyfy/refresh-token
 // http://localhost:9999/api/v1/propertyfy/logout-user
+// http://localhost:9999/api/v1/propertyfy/current-auth
 
 // ======================= API LIST [ SOMETING (COMING SOON) ] =================
