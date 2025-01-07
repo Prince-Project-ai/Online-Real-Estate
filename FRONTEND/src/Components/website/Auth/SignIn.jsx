@@ -2,15 +2,19 @@ import React, { useCallback, useState } from "react";
 import { signIn } from "../../../Api/website/HandleUserApi";
 import { useMessage } from "../../../Contexts/MessageContext";
 import Spinner from "../../core/Spinner";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
   const { showToast } = useMessage();
+  const { setCurrentAuth } = useAuth();
+
   const [formData, setFromData] = useState({
     email: "",
     password: ""
   });
-  const [isLoading, setIsLoading] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+  
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -43,9 +47,9 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signIn(formData, showToast, onClose);
+      await signIn(formData, showToast, onClose, setCurrentAuth);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false)
     }
@@ -163,4 +167,4 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
   );
 };
 
-export default SignIn;
+export default React.memo(SignIn);

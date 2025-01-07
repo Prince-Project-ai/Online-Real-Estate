@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { currentUser } from "../Api/website/HandleUserApi";
+import { useMessage } from "./MessageContext";
 
 export const AuthContext = createContext();
 
@@ -11,12 +12,13 @@ export const useAuth = () => {
 
 
 const AuthProvider = ({ children }) => {
+  const { showToast } = useMessage();
   const [currentAuth, setCurrentAuth] = useState(null);
 
   useEffect(() => {
     const fetchCurrentAuth = async () => {
       try {
-        const res = await currentUser();
+        const res = await currentUser(showToast);
         setCurrentAuth(res?.data);
       } catch (error) {
         console.log(error);
@@ -27,6 +29,7 @@ const AuthProvider = ({ children }) => {
 
   const contextValue = {
     currentAuth,
+    setCurrentAuth,
   }
   return (
     <AuthContext.Provider value={contextValue}>

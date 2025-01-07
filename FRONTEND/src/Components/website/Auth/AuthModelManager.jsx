@@ -1,38 +1,36 @@
-import React, { useState } from "react";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
-let i = 0;
+import React, { useState, Suspense, lazy, useCallback, useRef } from "react";
+
+// Lazy-load SignIn and SignUp components
+const SignIn = lazy(() => import("./SignIn"));
+const SignUp = lazy(() => import("./SignUp"));
+
 const AuthModalManager = () => {
+  const renderCount = useRef(0);
+  renderCount.current += 1;
   const [currentModal, setCurrentModal] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
-  
 
-  const handleModalChange = (modalType) => {
-    console.log("Hello something is change.");
+  // Memoized modal change handler
+  const handleModalChange = useCallback((modalType) => {
     setIsAnimating(true);
-    setTimeout(() => {
-      setCurrentModal(modalType);
-      setIsAnimating(false);
-    }, 800); // Match this with your CSS transition duration
-  };
+    setCurrentModal(modalType);
+    setIsAnimating(false);
+  }, []);
 
-  const handleCloseModal = () => {
-    console.log("Hello something is change.");
-
+  // Memoized modal close handler
+  const handleCloseModal = useCallback(() => {
     setIsAnimating(true);
-    setTimeout(() => {
-      setCurrentModal(null);
-      setIsAnimating(false);
-    }, 600);
-  };
+    setCurrentModal(null);
+    setIsAnimating(false);
+  }, []);
 
-  console.log(currentModal);
-  console.log("from Auth Model : ",i++);
+  // console.log("Component Render. => ", renderCount);
+
   return (
     <>
       {/* Sign In Button */}
       <button
-        onClick={() => setCurrentModal("signin")}
+        onClick={() => handleModalChange("signin")}
         className="bg-dark rounded tracking-wider text-white px-4 py-2 flex items-center gap-2"
       >
         <i className="ri-user-6-line"></i> Sign In
@@ -48,23 +46,25 @@ const AuthModalManager = () => {
           <div className="fixed inset-0 overflow-y-auto">
             <div className="min-h-full flex items-center justify-center p-4">
               {/* Modal Content */}
-              {/* <div className="relative"> */}
-                {currentModal === "signin" && (
+              {currentModal === "signin" && (
+                <Suspense fallback={<p>Loading Sign In...</p>}>
                   <SignIn
                     isAnimating={isAnimating}
                     onClose={handleCloseModal}
                     onSwitchToSignUp={() => handleModalChange("signup")}
                   />
-                )}
+                </Suspense>
+              )}
 
-                {currentModal === "signup" && (
+              {currentModal === "signup" && (
+                <Suspense fallback={<p>Loading Sign Up...</p>}>
                   <SignUp
                     isAnimating={isAnimating}
                     onClose={handleCloseModal}
                     onSwitchToSignIn={() => handleModalChange("signin")}
                   />
-                )}
-              {/* </div> */}
+                </Suspense>
+              )}
             </div>
           </div>
         </div>
@@ -73,4 +73,4 @@ const AuthModalManager = () => {
   );
 };
 
-export default AuthModalManager;
+export default React.memo(AuthModalManager);

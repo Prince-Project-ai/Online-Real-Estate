@@ -5,11 +5,11 @@ import AuthProvider from "./AuthContext";
 export const WebsiteContextStack = createContext();
 const WebsiteContextStackProvider = ({ children }) => {
   return (
-    <AuthProvider>
-      <MessageProvider>
+    <MessageProvider>
+      <AuthProvider>
         {children}
-      </MessageProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </MessageProvider>
   )
 }
 

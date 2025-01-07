@@ -22,7 +22,7 @@ const MessageProvider = ({ children }) => {
   }
   return (
     <MessageContext.Provider value={contextValue}>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       {children}
     </MessageContext.Provider>
   )

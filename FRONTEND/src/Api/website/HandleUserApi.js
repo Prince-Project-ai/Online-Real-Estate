@@ -27,25 +27,37 @@ export const signUp = async (formData, showToast, onSwitchToSignIn) => {
 }
 // singup
 
-export const signIn = async (formData, showToast, onClose) => {
+export const signIn = async (formData, showToast, onClose, setCurrentAuth) => {
   try {
     const res = await handleUserApi.post("/sign-in", formData);
     showToast(res?.data?.message, "success");
     if (res?.data?.success) {
-      localStorage.setItem("currentAuth", JSON.stringify(res?.data?.data?.loggedUser));
+      setCurrentAuth(res?.data?.data?.loggedUser);
       onClose();
     }
   } catch (error) {
-    showToast(error?.response?.data?.message, "error");
+    console.log(error);
+    showToast(error?.response?.data?.message || error?.message, "error");
   }
 }
 
-export const currentUser = async () => {
+export const currentUser = async (showToast) => {
   try {
     const response = await handleUserApi.get("/current-auth");
     return response?.data;
   } catch (error) {
     console.log(error);
-    // alert(error?.message);
+    const isValidateAuth = error?.response?.data?.success;
+    if (!isValidateAuth) showToast("You are Not Sign In First of the sign in then you can access resorces", "error");
   }
-} 
+}
+
+export const logoutAuth = async (showToast, setCurrentAuth) => {
+  try {
+    const response = await handleUserApi.post("/logout-user");
+    if (response?.data?.success) setCurrentAuth(null);
+    showToast(response?.data?.message, "success");
+  } catch (error) {
+    showToast(error, "error");
+  }
+}
