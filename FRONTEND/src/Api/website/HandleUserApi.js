@@ -43,8 +43,9 @@ export const signIn = async (formData, showToast, onClose) => {
 export const currentUser = async () => {
   try {
     const response = await handleUserApi.get("/current-auth");
-    return response.data;
+    return response?.data;
   } catch (error) {
     console.log(error);
+    // alert(error?.message);
   }
 } 

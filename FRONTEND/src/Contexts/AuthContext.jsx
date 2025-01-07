@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
     const fetchCurrentAuth = async () => {
       try {
         const res = await currentUser();
-        setCurrentAuth(res.data);
+        setCurrentAuth(res?.data);
       } catch (error) {
         console.log(error);
       }

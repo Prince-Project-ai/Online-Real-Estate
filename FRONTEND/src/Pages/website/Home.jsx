@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import HeroFilter from "../../Components/website/HeroFilter";
-let i = 0;
 const Home = () => {
+  const renderCount = useRef(0);
+  renderCount.current += 1;
   return (
     <>
-      <p>Render : {i++}</p>
       <main>
         {/* HERO SECTION  */}
+        <p>Render Count: {renderCount.current}</p>
         <section className="hero-section bg-body py-16 border-b bg-grid-pattern bg-grid-size">
           <div className="max-w-7xl mx-auto px-4 lg:px-0 flex flex-col-reverse lg:flex-row items-center gap-2">
             <div className="w-full text-center">
@@ -226,4 +227,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);
