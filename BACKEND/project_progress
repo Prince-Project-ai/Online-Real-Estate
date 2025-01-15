@@ -1,0 +1,43 @@
+first of the heat heat the npm init -y that is the creat of the default packege.json file in this file describe the all dependancy
+
+second crete the src folder in that folder create the 
+Controller
+Models
+Middlewares
+Db
+Routers
+app.js
+index.js
+Constants.js
+.env
+
+
+creating the server if you want to create the server then you create a server using the httpcreatesercver that provide by the node js ok
+
+but here we create server using the express
+
+
+then you want to install the npm install express,nodemon,dotenv,mongoose,cors,Cookie-Parser,jsonwentoken,bcrypt,
+
+
+then you want to create the server in the index file 
+
+i will use the import syntax
+
+first of the import the express packege 
+then you 
+import exress from "express"
+then crreate the instance of the express 
+
+the you can use the instance 
+
+cosnt app = express();
+
+app.get("/", (req,res) => {
+  res.send("My server is running proper.")
+})
+
+  
+app.use(PORT,()=>{
+  console.log("Server is leaning at port 9999");
+})

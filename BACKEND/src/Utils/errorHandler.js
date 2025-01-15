@@ -8,11 +8,12 @@ const errorHandler = (err, req, res, next) => {
       errors: err.errors,
     });
   }
-  
+
+  // console.error(err); // Log the error for debugging purposes
   res.status(500).json({
     success: false,
     message: "Internal Server Error",
-    error: err.message || "something went wrong",
+    error: err.message || "Something went wrong",
   });
 };
 

@@ -36,19 +36,16 @@ export const signIn = async (formData, showToast, onClose, setCurrentAuth) => {
       onClose();
     }
   } catch (error) {
-    console.log(error);
     showToast(error?.response?.data?.message || error?.message, "error");
   }
 }
 
-export const currentUser = async (showToast) => {
+export const currentUser = async () => {
   try {
     const response = await handleUserApi.get("/current-auth");
     return response?.data;
   } catch (error) {
-    console.log(error);
-    const isValidateAuth = error?.response?.data?.success;
-    if (!isValidateAuth) showToast("You are Not Sign In First of the sign in then you can access resorces", "error");
+    throw error;
   }
 }
 

@@ -7,17 +7,14 @@ import Signout from "../Auth/Signout";
 const Header = () => {
   const { currentAuth } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const result = currentAuth ? "logged in" : "You are Exire"
-  console.log(result);
 
   // Memoize the menu items to prevent re-creation on each render
   const menuItems = useMemo(
     () => [
       { path: "/", label: "Home" },
-      { path: "/about", label: "About Us" },
-      { path: "/contact", label: "Contact Us" },
-      { path: "/history", label: "History" },
-      { path: "/profile", label: "Profile" },
+      { path: "/buy", label: "Buy" },
+      { path: "/rent", label: "Rent" },
+      { path: "/sell", label: "Sell" },
     ],
     []
   );

@@ -1,6 +1,7 @@
 import { User } from "../Models/User.model.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
+
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
@@ -26,6 +27,7 @@ export const generateAccessTokenAndRefreshToken = async (id) => {
 export const signUp = asyncHandler(async (req, res) => {
   try {
     const { fullName, email, password, phoneNumber, addres, role } = req.body;
+    
     const user = await User.create({
       fullName,
       email,

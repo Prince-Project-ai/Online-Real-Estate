@@ -3,13 +3,14 @@ import cors from "cors";
 import errorHandler from "./Utils/errorHandler.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./Routes/User.router.js";
+import adminRouter from "./Routes/Admin.router.js";
 
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -19,8 +20,11 @@ app.get("/", (_, res) => {
   res.send("Welcome to Online Real Estate API");
 });
 
-
+// USER
 app.use("/api/v1/propertyfy", userRouter);
+// ADMIN
+app.use("/api/v1/propertyfy", adminRouter);
+
 app.use(errorHandler);
 
 export { app };
@@ -31,5 +35,6 @@ export { app };
 // http://localhost:9999/api/v1/propertyfy/refresh-token
 // http://localhost:9999/api/v1/propertyfy/logout-user
 // http://localhost:9999/api/v1/propertyfy/current-auth
-
-// ======================= API LIST [ SOMETING (COMING SOON) ] =================
+// this is Admin router list======================= API LIST [ SOMETING (COMING SOON) ] =================
+// http://localhost:9999/api/v1/propertyfy/admin-sign-up
+// http://localhost:9999/api/v1/propertyfy/admin-sign-in

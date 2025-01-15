@@ -49,7 +49,6 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
     try {
       await signIn(formData, showToast, onClose, setCurrentAuth);
     } catch (error) {
-      console.error(error);
     } finally {
       setIsLoading(false)
     }
