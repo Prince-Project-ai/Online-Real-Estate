@@ -13,6 +13,7 @@ const userSchema = new Schema(
       required: true,
       trim: true,
       unique: true,
+      index: true,
       lowercase: true,
     },
     password: {
@@ -46,7 +47,7 @@ const userSchema = new Schema(
 userSchema.pre("save", async function (next) {
   try {
     if (!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password, 15);
+    this.password = await bcrypt.hash(this.password, 8);
     next();
   } catch (error) {
     next(error);
@@ -63,8 +64,6 @@ userSchema.methods.generateAccessToken = function () {
     {
       id: this._id,
       role: this.role,
-      email: this.email,
-      fullName: this.fullName,
     },
     process.env.ACCESS_TOKEN_SECRET, // Fixed typo
     {

@@ -22,12 +22,18 @@ export const verifyAdminJWT = asyncHandler(async (req, res, next) => {
 
 
 export const validateField = asyncHandler(async (req, res, next) => {
-
   const { adminName, email, password } = req.body;
+
   if (!(adminName && email && password)) throw new ApiError(401, "All Field are Required.");
-  const admin = await Admin.findOne({ email });
+
+  const admin = await Admin.findOne({
+    $or: [
+      { email: email },
+      { adminName: adminName }]
+  }).select("+email +adminName");
+
   if (admin) {
-    throw new ApiError(401, "Admin Already Exist with this email..");
+    throw new ApiError(401, "Admin Already Exist with this email or username..");
   }
   next();
 

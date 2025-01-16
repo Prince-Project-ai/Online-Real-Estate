@@ -14,6 +14,7 @@ const adminSchema = new Schema(
       required: true,
       unique: true,
       lowercase: true,
+      index:true,
       trim: true,
     },
     password: {
@@ -33,7 +34,7 @@ const adminSchema = new Schema(
 adminSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   try {
-    this.password = await bcrypt.hash(this.password, 15);
+    this.password = await bcrypt.hash(this.password, 8);
     next();
   } catch (error) {
     next(error);
@@ -41,7 +42,7 @@ adminSchema.pre("save", async function (next) {
 });
 
 adminSchema.methods.isPasswordCompare = async function (password) {
-  return bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
 adminSchema.methods.generateAdminAccessToken = function () {

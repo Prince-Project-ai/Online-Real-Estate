@@ -35,17 +35,18 @@ export const signUp = asyncHandler(async (req, res) => {
       addres,
       role,
     });
+
     const createdUser = await User.findById(user._id).select(
-      "-password -refreshToken"
+      "+_id"
     );
     if (!createdUser) throw new ApiError(400, "User Not Registered...");
     res
       .status(201)
       .json(
-        new ApiResponse(201, createdUser, `${role} Registration successfull..`)
+        new ApiResponse(201, {}, `${role} Registration successfull..`)
       );
   } catch (error) {
-    throw new ApiError(500, error.message || "Something went wrong..");
+    throw new ApiError(error.status, error.message || "Something went wrong..");
   }
 });
 
@@ -53,12 +54,18 @@ export const signUp = asyncHandler(async (req, res) => {
 export const signIn = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
+
     const user = await User.findOne({ email: email });
+
     if (!user) throw new ApiError(401, "Invalid User Credincial");
+
     const isPasswordValidate = await user.isPasswordCorrect(password);
+
     if (!isPasswordValidate) throw new ApiError(401, "Invalid User Credincial");
+
     const { newRefreshToken, newAccessToken } =
       await generateAccessTokenAndRefreshToken(user);
+
     res
       .status(200)
       .cookie("accessToken", newAccessToken, options)
@@ -67,13 +74,12 @@ export const signIn = asyncHandler(async (req, res) => {
         new ApiResponse(200, {}, "Welcome back to PropertyFy. Let’s get to it!")
       );
   } catch (err) {
-    throw new ApiError(500, err.message || "Internal server Error.");
+    throw new ApiError(err.status, err.message || "Internal server Error.");
   }
 });
 
 // refresh access token controller
 export const refreshAccessToken = asyncHandler(async (req, res) => {
-  console.time();
   try {
     const inComingRefreshToken = req?.cookies?.refreshToken;
     if (!inComingRefreshToken)
@@ -100,13 +106,11 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
         )
       );
   } catch (error) {
-    throw new ApiError(500, error.message || "Internal Server Error.");
+    throw new ApiError(error.status, error.message || "Internal Server Error.");
   }
-  console.timeEnd();
 });
 
 // get Current User
-
 export const currentAuth = asyncHandler(async (req, res) => {
   const currentUser = req?.user;
   res

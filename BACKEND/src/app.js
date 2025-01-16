@@ -1,4 +1,5 @@
 import express from "express";
+import compression from 'compression';
 import cors from "cors";
 import errorHandler from "./Utils/errorHandler.js";
 import cookieParser from "cookie-parser";
@@ -7,7 +8,8 @@ import adminRouter from "./Routes/Admin.router.js";
 
 const app = express();
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({ limit: "16kb" }));
+app.use(compression()); // Automatically compresses response bodies
 app.use(
   cors({
     origin: "http://localhost:5173",
