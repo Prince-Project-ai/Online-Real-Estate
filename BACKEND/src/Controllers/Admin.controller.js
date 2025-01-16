@@ -3,22 +3,35 @@ import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import nodemailer from "nodemailer";
+import CryptoJS from "crypto-js";
 
 const options = {
   httpOnly: true,
   secure: true,
-}
+};
+
+const generatePassword = function () {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
+  let password = "";
+  const randomBytes = CryptoJS.lib.WordArray.random(16); // Generate random bytes
+  const base64Str = randomBytes.toString(CryptoJS.enc.Base64);
+  for (let i = 0; i < 16; i++) {
+    password += chars.charAt(base64Str.charCodeAt(i) % chars.length); // Ensure valid character selection
+  }
+
+  return password;
+};
 
 // Generate Access Token for Admin
-export const generateAccessToken = async (id) => {
+export const generateAccessToken = (ADMIN) => {
   try {
-    const admin = await Admin.findById(id);
-    const newAccessToken = admin.generateAdminAccessToken();
-    admin.token = newAccessToken;
-    await admin.save({ validateBeforeSave: false });
-    return { newAccessToken };
+    return ADMIN.generateAdminAccessToken();
   } catch (error) {
-    throw new ApiError(500, "Something went wrong while generating token");
+    throw new ApiError(
+      error.status,
+      error.message || "Something went wrong while generating token"
+    );
   }
 };
 
@@ -33,58 +46,46 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Admin SignUp Route Handler
 export const adminSignUp = asyncHandler(async (req, res) => {
-  try {
-    const { adminName, email, password } = req.body;
+  const { adminName, email, password } = req.body;
+  const admin = await Admin.create({
+    adminName,
+    email,
+    password,
+  });
 
-    // Create Admin in the database
-    const admin = await Admin.create({
-      adminName,
-      email,
-      password,
-    });
+  const createdAdmin = await Admin.findById(admin._id).select(
+    "-password -token"
+  );
 
-    const createdAdmin = await Admin.findById(admin._id).select("-password -token");
+  // const { newAccessToken } = await generateAccessToken(admin._id);
 
-    // Generate Access Token for Admin
-    const { newAccessToken } = await generateAccessToken(admin._id);
+  if (!createdAdmin) throw new ApiError(401, "Admin Not Registered.");
+  // await transporter.sendMail({
+  //   from: "bavishiprince90@gmail.com",
+  //   to: email,
+  //   subject: "New Admin AccessToken.",
+  //   text: "Copy this token and use for login",
+  //   html: `Copy : <strong>${generatePassword()}</strong>`,
+  // });
 
-    if (!createdAdmin) throw new ApiError(401, "Admin Not Registered.");
-
-    // Send Access Token via Email
-    const info = await transporter.sendMail({
-      from: 'bavishiprince90@gmail.com',
-      to: email,
-      subject: "New Admin AccessToken.",
-      text: "Copy this token and use for login",
-      html: `Copy : <strong>${newAccessToken}</strong>`,
-    });
-
-    res
-      .status(201)
-      .json(new ApiResponse(201, createdAdmin, "Registration successful."));
-  } catch (error) {
-    throw new ApiError(500, error.message || "Something went wrong..");
-  }
+  res.status(201).json(new ApiResponse(201, {}, "Registration successful."));
 });
 
-
 export const adminSignIn = asyncHandler(async (req, res) => {
-  try {
-    const { email, password, token } = req.body;
-    if (!(email && password && token)) throw new ApiError(401, "All Field are required.");
-    const userExist = await Admin.findOne({ email });
-    if (!userExist) throw new ApiError(401, "Invalid Credincial.");
-    const isPasswordValidate = await userExist.isPasswordCompare(password);
-    if (!isPasswordValidate) throw new ApiError(401, "Invalid Credincial");
-    if (token !== userExist.token) throw new ApiError(401, "Invalid Credincial");
-    const loggedAdmin = await Admin.findById(userExist._id).select("-password -token");
-    res
-      .status(200)
-      .cookie("adminAccessToken", userExist.token, options)
-      .json(new ApiResponse(200, { token }, "Login Successfully..."))
-  } catch (error) {
-    throw new ApiError(error.status, error.message || "Something went wrong..");
-  }
+  const { email, password } = req.body;
+
+  if (!(email && password)) throw new ApiError(401, "All Field are required.");
+
+  const admin = await Admin.findOne({ email });
+
+  if (!admin) throw new ApiError(401, "Invalid Credincial.");
+
+  const isPasswordValidate = await admin.isPasswordCompare(password);
+
+  if (!isPasswordValidate) throw new ApiError(401, "Invalid Credincial");
+  res
+    .status(200)
+    .cookie("adminAccessToken", generateAccessToken(admin), options)
+    .json(new ApiResponse(200, {}, "Login Successfully..."));
 });

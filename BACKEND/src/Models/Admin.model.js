@@ -22,16 +22,16 @@ const adminSchema = new Schema(
     },
     token: {
       type: String,
-      default: null
+      default: null,
     },
   },
   {
     timestamps: true,
   }
-)
+);
 
-adminSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+adminSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
   try {
     this.password = await bcrypt.hash(this.password, 15);
     next();
@@ -41,10 +41,8 @@ adminSchema.pre('save', async function (next) {
 });
 
 adminSchema.methods.isPasswordCompare = async function (password) {
-  if (!this.password) throw new Error("Password is not set");
-
-  return await bcrypt.compare(password, this.password);
-}
+  return bcrypt.compare(password, this.password);
+};
 
 adminSchema.methods.generateAdminAccessToken = function () {
   return jwt.sign(
@@ -55,7 +53,7 @@ adminSchema.methods.generateAdminAccessToken = function () {
     {
       expiresIn: process.env.ADMIN_ACCESS_TOKEN_EXPIRY,
     }
-  )
-}
+  );
+};
 
 export const Admin = mongoose.model("admin", adminSchema);

@@ -10,9 +10,8 @@ const options = {
   secure: true,
 };
 // accessToken and refreshToken generator function
-export const generateAccessTokenAndRefreshToken = async (id) => {
+export const generateAccessTokenAndRefreshToken = async (user) => {
   try {
-    const user = await User.findById(id);
     const newAccessToken = user.generateAccessToken();
     const newRefreshToken = user.generateRefreshToken();
     user.refreshToken = newRefreshToken;
@@ -27,7 +26,7 @@ export const generateAccessTokenAndRefreshToken = async (id) => {
 export const signUp = asyncHandler(async (req, res) => {
   try {
     const { fullName, email, password, phoneNumber, addres, role } = req.body;
-    
+
     const user = await User.create({
       fullName,
       email,
@@ -59,25 +58,19 @@ export const signIn = asyncHandler(async (req, res) => {
     const isPasswordValidate = await user.isPasswordCorrect(password);
     if (!isPasswordValidate) throw new ApiError(401, "Invalid User Credincial");
     const { newRefreshToken, newAccessToken } =
-      await generateAccessTokenAndRefreshToken(user._id);
-    const loggedUser = await User.findById(user._id).select(
-      "-password -refreshToken"
-    );
+      await generateAccessTokenAndRefreshToken(user);
     res
       .status(200)
       .cookie("accessToken", newAccessToken, options)
       .cookie("refreshToken", newRefreshToken, options)
       .json(
-        new ApiResponse(
-          200,
-          { loggedUser, token: { newAccessToken, newRefreshToken } },
-          "Welcome back to PropertyFy. Let’s get to it!"
-        )
+        new ApiResponse(200, {}, "Welcome back to PropertyFy. Let’s get to it!")
       );
   } catch (err) {
     throw new ApiError(500, err.message || "Internal server Error.");
   }
 });
+
 // refresh access token controller
 export const refreshAccessToken = asyncHandler(async (req, res) => {
   console.time();
@@ -91,7 +84,8 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     );
     const user = await User.findById(decodeToken.id);
     if (!user) throw new ApiError(401, "Invalid Refresh Token.");
-    if (inComingRefreshToken !== user.refreshToken) throw new ApiError(401, "Invalid Token OR Expire Token.");
+    if (inComingRefreshToken !== user.refreshToken)
+      throw new ApiError(401, "Invalid Token OR Expire Token.");
     const { newRefreshToken, newAccessToken } =
       await generateAccessTokenAndRefreshToken(user._id);
     res
@@ -167,4 +161,3 @@ export const userLogOut = asyncHandler(async (req, res) => {
 // 2) set the null of the accessToken
 // 3) remove the token from cookis
 // 5) and
-
