@@ -5,7 +5,7 @@ import { useAuth } from "../../../Contexts/AuthContext";
 import Signout from "../Auth/Signout";
 
 const Header = () => {
-  const { currentAuth } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Memoize the menu items to prevent re-creation on each render
@@ -36,12 +36,11 @@ const Header = () => {
         {/* Navigation Menu */}
         <NavigationMenu
           menuItems={menuItems}
-          currentAuth={currentAuth}
           isMenuOpen={isMenuOpen}
         />
 
         {/* Authentication Section */}
-        <AuthSection currentAuth={currentAuth} />
+        <AuthSection isAuthenticated={isAuthenticated} />
       </nav>
     </header>
   );
@@ -53,7 +52,7 @@ const Logo = React.memo(() => (
   </div>
 ));
 
-const NavigationMenu = React.memo(({ menuItems, currentAuth, isMenuOpen }) => (
+const NavigationMenu = React.memo(({ menuItems, isMenuOpen }) => (
   <div
     className={`menus lg:flex lg:items-center ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 pointer-events-none"
       } lg:opacity-100 lg:translate-y-0 lg:pointer-events-auto transition-all duration-300 absolute lg:static bg-white w-full lg:w-auto top-full left-0 shadow-md lg:shadow-none z-40`}
@@ -92,12 +91,12 @@ const NavigationMenu = React.memo(({ menuItems, currentAuth, isMenuOpen }) => (
 ));
 
 
-const AuthSection = React.memo(({ currentAuth }) => (
+const AuthSection = React.memo(({ isAuthenticated }) => (
   <div className="menu hidden lg:flex flex-shrink-0 items-center">
     <div className="auth">
 
       {
-        currentAuth ? <Signout /> : <AuthModalManager />
+        isAuthenticated ? <Signout /> : <AuthModalManager />
       }
       {/* <AuthModalManager /> */}
     </div>

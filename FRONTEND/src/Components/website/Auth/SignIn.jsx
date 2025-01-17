@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from "react";
-import { signIn } from "../../../Api/website/HandleUserApi";
+import React, { useCallback, useState, Suspense, lazy } from "react";
+import { signInApi } from "../../../Api/website/HandleUserApi";
 import { useMessage } from "../../../Contexts/MessageContext";
 import Spinner from "../../core/Spinner";
 import { useAuth } from "../../../Contexts/AuthContext";
 
 const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
   const { showToast } = useMessage();
-  const { setCurrentAuth } = useAuth();
+  const { setIsAuthenticated } = useAuth();
 
   const [formData, setFromData] = useState({
     email: "",
@@ -14,7 +14,7 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -47,7 +47,7 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signIn(formData, showToast, onClose, setCurrentAuth);
+      await signInApi(formData, showToast, onClose, setIsAuthenticated);
     } catch (error) {
     } finally {
       setIsLoading(false)

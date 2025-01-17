@@ -56,6 +56,7 @@ export const signIn = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
+    console.log(user);
 
     if (!user) throw new ApiError(401, "Invalid User Credincial");
 
@@ -71,7 +72,7 @@ export const signIn = asyncHandler(async (req, res) => {
       .cookie("accessToken", newAccessToken, options)
       .cookie("refreshToken", newRefreshToken, options)
       .json(
-        new ApiResponse(200, {}, "Welcome back to PropertyFy. Let’s get to it!")
+        new ApiResponse(200, {}, "Welcome back to PropertyFy. Let's get to it!")
       );
   } catch (err) {
     throw new ApiError(err.status, err.message || "Internal server Error.");

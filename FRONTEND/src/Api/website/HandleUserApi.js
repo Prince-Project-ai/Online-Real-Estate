@@ -27,12 +27,12 @@ export const signUp = async (formData, showToast, onSwitchToSignIn) => {
 }
 // singup
 
-export const signIn = async (formData, showToast, onClose, setCurrentAuth) => {
+export const signInApi = async (formData, showToast, onClose, setIsAuthenticated) => {
   try {
     const res = await handleUserApi.post("/sign-in", formData);
     showToast(res?.data?.message, "success");
     if (res?.data?.success) {
-      setCurrentAuth(res?.data?.data?.loggedUser);
+      setIsAuthenticated(true);
       onClose();
     }
   } catch (error) {
@@ -49,10 +49,13 @@ export const currentUser = async () => {
   }
 }
 
-export const logoutAuth = async (showToast, setCurrentAuth) => {
+export const logoutAuth = async (showToast, setCurrentAuth, setIsAuthenticated) => {
   try {
     const response = await handleUserApi.post("/logout-user");
-    if (response?.data?.success) setCurrentAuth(null);
+    if (response?.data?.success) {
+      setCurrentAuth(null)
+      setIsAuthenticated(false);
+    };
     showToast(response?.data?.message, "success");
   } catch (error) {
     showToast(error, "error");

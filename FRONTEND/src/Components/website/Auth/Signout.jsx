@@ -6,14 +6,14 @@ import { useAuth } from "../../../Contexts/AuthContext";
 
 const Signout = () => {
   const { showToast } = useMessage();
-  const { setCurrentAuth } = useAuth();
+  const { setCurrentAuth, setIsAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await logoutAuth(showToast, setCurrentAuth);
+      await logoutAuth(showToast, setCurrentAuth, setIsAuthenticated);
     } catch (error) {
       console.log("Error From The logout button : ", error);
     } finally {

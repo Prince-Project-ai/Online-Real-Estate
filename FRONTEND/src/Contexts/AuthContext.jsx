@@ -11,6 +11,7 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { showToast } = useMessage();
   const [currentAuth, setCurrentAuth] = useState(null);
 
@@ -18,6 +19,7 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await currentUser();
       setCurrentAuth(res?.data);
+      setIsAuthenticated(res?.success);
     } catch (error) {
       const isValidateAuth = error?.response?.data?.success;
       if (!isValidateAuth) {
@@ -40,7 +42,9 @@ const AuthProvider = ({ children }) => {
 
   const contextValue = {
     currentAuth,
+    isAuthenticated,
     setCurrentAuth,
+    setIsAuthenticated,
   };
 
   return (

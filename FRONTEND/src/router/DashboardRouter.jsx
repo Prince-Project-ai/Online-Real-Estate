@@ -1,20 +1,48 @@
 import DashboardHome from "../Components/dashboard/DashboardHome";
-import { Routes, Route } from "react-router-dom";
+// import TotalUser from "../Components/dashboard/TotalUser"; // Ensure this component is correctly imported
+import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardLayouts from "../layouts/DashboardLayouts";
 import SignIn from "../Pages/dashboard/SignIn";
-import SignUp from "../Pages/dashboard/SignUp";
 import NotFound from "../Components/dashboard/NotFound";
+import AdminContextProvider, { useAdminAuth } from "../Contexts/ADMIN/AdminAuth";
+
+// PrivateRoute Component
+const PrivateRoute = ({ children }) => {
+  const { isAdminAuthenticated } = useAdminAuth();
+
+  if (!isAdminAuthenticated) {
+    return <Navigate to="/dashboard/sign-in" replace />;
+  }
+
+  return children;
+};
 
 const DashboardRouter = () => {
   return (
-    <DashboardLayouts>
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<DashboardHome />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-      </Routes>
-    </DashboardLayouts>
+    <AdminContextProvider>
+      <DashboardLayouts>
+        <Routes>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <DashboardHome />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <PrivateRoute>
+                {/* <TotalUser /> */}
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </DashboardLayouts>
+    </AdminContextProvider>
   );
 };
 
