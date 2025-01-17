@@ -42,3 +42,7 @@ app.get("/", (req,res) => {
 app.use(PORT,()=>{
   console.log("Server is leaning at port 9999");
 })
+
+first of the install the node-mailer,node-cron,
+
+then node-cron

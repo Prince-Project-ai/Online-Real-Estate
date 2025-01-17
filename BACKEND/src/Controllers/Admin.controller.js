@@ -2,6 +2,59 @@ import { Admin } from "../Models/Admin.model.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
+import { Transporter } from "../Utils/transporter.js";
+import cron from "node-cron";
+import CryptoJS from "crypto-js";
+import bcrypt from "bcrypt";
+
+const sendmail = async function (to, subject, text, html) {
+  await Transporter.sendMail({
+    from: "gayatridairy2001@gmail.com",
+    to: to,
+    subject: subject,
+    text: text,
+    html: html,
+  });
+}
+
+const generatePassword = () => {
+  // Generate a 16-character password using random bytes
+  const randomBytes = CryptoJS.lib.WordArray.random(8); // 8 bytes = 16 characters in hex
+  return randomBytes.toString(CryptoJS.enc.Hex);
+};
+
+const passwordUpdateJob = cron.schedule(
+  "0 0 * * *", // Runs daily at midnight
+  () => {
+    updatePasswordAndSendEmail();
+  },
+  {
+    scheduled: false, // Do not start automatically
+  }
+);
+
+const updatePasswordAndSendEmail = async () => {
+  try {
+    const admins = await Admin.find(); // Fetch all admins
+    for (const admin of admins) {
+      const newPassword = generatePassword(); // Generate a new random password
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 8);
+      // Update the admin's password in the database
+      await Admin.updateOne({ _id: admin._id }, { password: hashedPassword });
+      // Send an email with the new (plain text) password
+      await sendmail(
+        admin.email,
+        "Your New Password",
+        `Hello,\n\nYour new password is: ${newPassword}\n\nPlease use this password to log in.`
+      );
+    }
+    console.log("Passwords updated and emails sent successfully!");
+  } catch (err) {
+    console.error("Error updating passwords or sending emails:", err);
+  }
+};
+
 
 const options = {
   httpOnly: true,
@@ -38,21 +91,20 @@ export const adminSignIn = asyncHandler(async (req, res) => {
 
   if (!(email && password)) throw new ApiError(401, "All fields are required.");
 
-  console.time("Database Query");
   const admin = await Admin.findOne({ email }).select("+password");
-  console.timeEnd("Database Query");
 
   if (!admin) throw new ApiError(401, "Invalid Credentials.");
 
-  console.time("Password Validation");
   const isPasswordValid = await admin.isPasswordCompare(password);
-  console.timeEnd("Password Validation");
 
   if (!isPasswordValid) throw new ApiError(401, "Invalid Credentials.");
 
-  console.time("Token Generation");
   const token = generateAccessToken(admin);
-  console.timeEnd("Token Generation");
+
+  if (!passwordUpdateJob.running) {
+    console.log("Starting password update cron job...");
+    passwordUpdateJob.start();
+  }
 
   res
     .status(200)

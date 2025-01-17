@@ -3,6 +3,7 @@ import WebsiteLayouts from "../layouts/WebsiteLayouts";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "../Pages/website/Profile";
 import WebsiteContextStackProvider from "../Contexts/WebsiteContextStack";
+import HeaderSkeleton from "../Components/website/comman/HeaderSkeleton";
 
 const Home = lazy(() => import("../Pages/website/Home"));
 const SearchResult = lazy(() => import("../Pages/website/SearchResult"));
@@ -13,7 +14,7 @@ const WebsiteRouter = () => {
   return (
     <WebsiteContextStackProvider>
       <WebsiteLayouts>
-        <Suspense fallback={<h1>Loading header...</h1>}>
+        <Suspense fallback={<HeaderSkeleton />}>
           <Header />
         </Suspense>
 

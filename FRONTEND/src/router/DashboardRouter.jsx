@@ -1,4 +1,6 @@
-import DashboardHome from "../Components/dashboard/DashboardHome";
+import React, { lazy, Suspense } from "react";
+const DashboardHome = lazy(() => import("../Components/dashboard/DashboardHome"));
+// import DashboardHome from "";
 // import TotalUser from "../Components/dashboard/TotalUser"; // Ensure this component is correctly imported
 import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardLayouts from "../layouts/DashboardLayouts";
@@ -26,9 +28,11 @@ const DashboardRouter = () => {
           <Route
             path="/"
             element={
-              <PrivateRoute>
-                <DashboardHome />
-              </PrivateRoute>
+              <Suspense fallback={<h1>Dashboard is loading...</h1>}>
+                <PrivateRoute>
+                  <DashboardHome />
+                </PrivateRoute>
+              </Suspense>
             }
           />
           <Route
