@@ -10,13 +10,12 @@ export const HandleAdminApi = axios.create({
 });
 
 // admin sign in
-export const AdminSignIn = async () => {
-  try {
-    const res = await HandleAdminApi.post("/admin-sign-in");
-    console.log(res?.data);
-  } catch (error) {
-    console.log(error?.response || error.message);
-  }
+export const AdminSignIn = async (form) => {
+  return await HandleAdminApi.post("/admin-sign-in", form);
+}
+
+export const AdminAuth = async () => {
+  return await HandleAdminApi.get("/current-admin");
 }
 
 // what is my process of admin sign in

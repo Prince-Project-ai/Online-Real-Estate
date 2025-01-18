@@ -6,7 +6,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardLayouts from "../layouts/DashboardLayouts";
 import SignIn from "../Pages/dashboard/SignIn";
 import NotFound from "../Components/dashboard/NotFound";
-import AdminContextProvider, { useAdminAuth } from "../Contexts/ADMIN/AdminAuth";
+import AdminContextProvider, { useAdminAuth } from "../Contexts/ADMIN/AdminAuthContext";
+import MessageProvider from "../Contexts/MessageContext";
 
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
@@ -21,32 +22,34 @@ const PrivateRoute = ({ children }) => {
 
 const DashboardRouter = () => {
   return (
-    <AdminContextProvider>
-      <DashboardLayouts>
-        <Routes>
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<h1>Dashboard is loading...</h1>}>
+    <MessageProvider>
+      <AdminContextProvider>
+        <DashboardLayouts>
+          <Routes>
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={<h1>Dashboard is loading...</h1>}>
+                  <PrivateRoute>
+                    <DashboardHome />
+                  </PrivateRoute>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/user"
+              element={
                 <PrivateRoute>
-                  <DashboardHome />
+                  {/* <TotalUser /> */}
                 </PrivateRoute>
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user"
-            element={
-              <PrivateRoute>
-                {/* <TotalUser /> */}
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </DashboardLayouts>
-    </AdminContextProvider>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </DashboardLayouts>
+      </AdminContextProvider>
+    </MessageProvider>
   );
 };
 
