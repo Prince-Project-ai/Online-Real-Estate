@@ -37,6 +37,8 @@ export { app };
 // http://localhost:9999/api/v1/propertyfy/refresh-token
 // http://localhost:9999/api/v1/propertyfy/logout-user
 // http://localhost:9999/api/v1/propertyfy/current-auth
-// this is Admin router list======================= API LIST [ SOMETING (COMING SOON) ] =================
+
+
+// ======================= API LIST [ SOMETING (COMING SOON) ] =================
 // http://localhost:9999/api/v1/propertyfy/admin-sign-up
 // http://localhost:9999/api/v1/propertyfy/admin-sign-in

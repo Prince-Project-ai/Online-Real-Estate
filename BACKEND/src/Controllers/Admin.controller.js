@@ -35,7 +35,8 @@ const passwordUpdateJob = cron.schedule(
 
 const updatePasswordAndSendEmail = async () => {
   try {
-    const admins = await Admin.find(); // Fetch all admins
+    const admins = await Admin.find().select("+password +_id"); // Fetch all admins
+    console.log(admins);
     for (const admin of admins) {
       const newPassword = generatePassword(); // Generate a new random password
       // Hash the new password
