@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import AuthModalManager from "../Auth/AuthModelManager";
 import { useAuth } from "../../../Contexts/AuthContext";
-import Signout from "../Auth/Signout";
+import AccessMenu from "../Header/AccessMenu";
+import AuthModelManager from "../Auth/AuthModelManager";
 
 const Header = () => {
-  const { isAuthenticated } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { isAuthenticated } = useAuth();
   // Memoize the menu items to prevent re-creation on each render
   const menuItems = useMemo(
     () => [
@@ -75,30 +74,17 @@ const NavigationMenu = React.memo(({ menuItems, isMenuOpen }) => (
           </NavLink>
         </li>
       ))}
-
-      {/* {currentAuth && (
-        <li className="border-b lg:border-0 transition-border duration-200 border-white hover:border-black lg:hover:border-none">
-          <NavLink
-            to="/profile"
-            className="block px-4 py-2 lg:p-0 text-center lg:text-left"
-          >
-            {currentAuth.fullName}
-          </NavLink>
-        </li>
-      )} */}
     </ul>
   </div>
 ));
 
 
 const AuthSection = React.memo(({ isAuthenticated }) => (
-  <div className="menu hidden lg:flex flex-shrink-0 items-center">
-    <div className="auth">
-
+  <div className="menu hidden lg:flex  items-center">
+    <div className="auth flex items-center">
       {
-        isAuthenticated ? <Signout /> : <AuthModalManager />
+        isAuthenticated ? <AccessMenu /> : <AuthModelManager />
       }
-      {/* <AuthModalManager /> */}
     </div>
   </div>
 ));

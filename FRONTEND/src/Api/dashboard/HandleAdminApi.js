@@ -18,6 +18,9 @@ export const AdminAuth = async () => {
   return await HandleAdminApi.get("/current-admin");
 }
 
+export const AdminLogoutApi = async () => {
+  return await HandleAdminApi.post("/admin-logout");
+}
 // what is my process of admin sign in
 
 // first of the i will create the api call and print the response and erro in log

@@ -107,8 +107,21 @@ export const adminSignIn = asyncHandler(async (req, res) => {
     passwordUpdateJob.start();
   }
 
+  options.maxAge = 60 * 60 * 1000 * 24;
+
   res
     .status(200)
     .cookie("adminAccessToken", token, options) // Cookie configuration optimized
     .json(new ApiResponse(200, {}, "Login Successfully..."));
+});
+
+export const logoutAdmin = asyncHandler(async (req, res) => {
+  try {
+    res
+      .status(200)
+      .clearCookie("adminAccessToken", options)
+      .json(new ApiResponse(200, {}, "Admin Logout Successfully."));
+  } catch (error) {
+    throw new ApiError(error.status, error.message || "INTERNAL SERVER ERROR FROM ADMIN CONTROLLER");
+  }
 });

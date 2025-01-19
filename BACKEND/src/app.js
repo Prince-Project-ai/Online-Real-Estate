@@ -43,3 +43,4 @@ export { app };
 // http://localhost:9999/api/v1/propertyfy/admin-sign-up
 // http://localhost:9999/api/v1/propertyfy/admin-sign-in
 // http://localhost:9999/api/v1/propertyfy/current-admin
+// http://localhost:9999/api/v1/propertyfy/admin-logout

@@ -24,7 +24,7 @@ const Signout = () => {
   return (
     <button
       onClick={handleLogout}
-      className="bg-dark rounded tracking-wider text-white px-4 py-2 flex items-center gap-2">
+      className="flex bg-secondary w-full justify-center py-1 rounded border hover:bg-dark  hover:text-white duration-200 items-center gap-2">
       {
         isLoading ? <Spinner /> : <> Logout
           <i className="ri-logout-circle-r-line"></i></>

@@ -49,7 +49,8 @@ const HeroFilter = () => {
   };
   return (
     <div className="bg-white border shadow-lg p-6 rounded-md">
-      <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-5 gap-4 p-4">
+      <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-4 gap-4 p-4">
+
         {/* Service Type */}
         <div className="w-full relative">
           <button className="rounded bg-secondary w-full py-3 flex items-center justify-between px-4">
@@ -99,16 +100,6 @@ const HeroFilter = () => {
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-dark"
         />
 
-        {/* Price Range */}
-        <div className="relative w-full">
-          <input
-            type="range"
-            placeholder="Price Range"
-            className="w-full outline-none"
-          />
-          <span className="absolute top-1 left-3 text-sm text-gray-600">$345</span>
-        </div>
-
         {/* Submit Button */}
         <button
           type="submit"
@@ -116,6 +107,7 @@ const HeroFilter = () => {
         >
           Search
         </button>
+
       </form>
     </div>
   );

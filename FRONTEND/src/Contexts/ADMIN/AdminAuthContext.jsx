@@ -11,14 +11,18 @@ export const useAdminAuth = () => {
 
 const AdminContextProvider = ({ children }) => {
 
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(null);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchCurrentAdmin = useCallback(async () => {
+
     try {
-      const response = await AdminAuth();
+      await AdminAuth();
       setIsAdminAuthenticated(true);
     } catch (error) {
       console.error(false || error?.message);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -31,6 +35,7 @@ const AdminContextProvider = ({ children }) => {
 
   const contextValue = {
     isAdminAuthenticated,
+    isLoading,
     setIsAdminAuthenticated,
   };
 

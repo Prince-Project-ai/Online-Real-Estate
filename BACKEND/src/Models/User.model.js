@@ -63,7 +63,6 @@ userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
       id: this._id,
-      role: this.role,
     },
     process.env.ACCESS_TOKEN_SECRET, // Fixed typo
     {
@@ -76,7 +75,6 @@ userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
       id: this._id,
-      role: this.role,
     },
     process.env.REFRESH_TOKEN_SECRET, // Fixed typo
     {
