@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { currentUser } from "../Api/website/HandleUserApi";
 import { useMessage } from "./MessageContext";
 
@@ -31,13 +37,14 @@ const AuthProvider = ({ children }) => {
         showToast("An unexpected error occurred. Please try again.", "error");
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    window.addEventListener("load", fetchCurrentAuth)
-    return () => {
-      window.removeEventListener("load", fetchCurrentAuth);
-    }
+    // window.addEventListener("load", fetchCurrentAuth)
+    // return () => {
+    //   window.removeEventListener("load", fetchCurrentAuth);
+    // }
+    fetchCurrentAuth();
   }, [fetchCurrentAuth]);
 
   const contextValue = {
@@ -48,9 +55,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 

@@ -9,6 +9,7 @@ const options = {
   httpOnly: true,
   secure: true,
 };
+
 // accessToken and refreshToken generator function
 export const generateAccessTokenAndRefreshToken = async (user) => {
   try {
@@ -36,15 +37,11 @@ export const signUp = asyncHandler(async (req, res) => {
       role,
     });
 
-    const createdUser = await User.findById(user._id).select(
-      "+_id"
-    );
+    const createdUser = await User.findById(user._id).select("+_id");
     if (!createdUser) throw new ApiError(400, "User Not Registered...");
     res
       .status(201)
-      .json(
-        new ApiResponse(201, {}, `${role} Registration successfull..`)
-      );
+      .json(new ApiResponse(201, {}, `${role} Registration successfull..`));
   } catch (error) {
     throw new ApiError(error.status, error.message || "Something went wrong..");
   }
@@ -54,18 +51,12 @@ export const signUp = asyncHandler(async (req, res) => {
 export const signIn = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await User.findOne({ email: email });
-
     if (!user) throw new ApiError(401, "Invalid User Credincial");
-
     const isPasswordValidate = await user.isPasswordCorrect(password);
-
     if (!isPasswordValidate) throw new ApiError(401, "Invalid User Credincial");
-
     const { newRefreshToken, newAccessToken } =
       await generateAccessTokenAndRefreshToken(user);
-
     res
       .status(200)
       .cookie("accessToken", newAccessToken, options)

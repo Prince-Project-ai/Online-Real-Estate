@@ -1,6 +1,5 @@
 import React from "react";
 import Signout from "../Auth/Signout.jsx";
-import AuthModalManager from "../Auth/AuthModelManager.jsx";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 // import { useAuth } from "../../../Contexts/AuthContext.jsx";

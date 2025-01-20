@@ -43,6 +43,7 @@ export const signInApi = async (formData, showToast, onClose, setIsAuthenticated
 export const currentUser = async () => {
   try {
     const response = await handleUserApi.get("/current-auth");
+    console.log(response);
     return response?.data;
   } catch (error) {
     throw error;

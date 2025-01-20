@@ -5,10 +5,8 @@ import "./styles/index.css";
 import App from "./App.jsx";
 // import WebsiteContextStackProvider from "./Contexts/WebsiteContextStack.jsx";
 
-createRoot(document.getElementById('PropertyFy')).render(
+createRoot(document.getElementById("PropertyFy")).render(
   <StrictMode>
-    {/* <WebsiteContextStackProvider> */}
     <App />
-    {/* </WebsiteContextStackProvider> */}
-  </StrictMode>,
-)
+  </StrictMode>
+);
