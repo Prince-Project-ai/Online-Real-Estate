@@ -13,31 +13,15 @@ export const handleUserApi = axios.create(
 )
 
 // signUp
-export const signUp = async (formData, showToast, onSwitchToSignIn) => {
-  try {
-    const response = await handleUserApi.post("/sign-up", formData);
-    if (response?.data?.success) {
-      showToast(response?.data?.message, "success");
-      onSwitchToSignIn();
-    }
-    return response?.data;
-  } catch (error) {
-    showToast(error?.response?.data?.message || error?.message, "error")
-  }
+export const signUpApi = async (formData) => {
+  const res = await handleUserApi.post("/sign-up", formData);
+  return res?.data;
 }
-// singup
 
-export const signInApi = async (formData, showToast, onClose, setIsAuthenticated) => {
-  try {
-    const res = await handleUserApi.post("/sign-in", formData);
-    showToast(res?.data?.message, "success");
-    if (res?.data?.success) {
-      setIsAuthenticated(true);
-      onClose();
-    }
-  } catch (error) {
-    showToast(error?.response?.data?.message || error?.message, "error");
-  }
+// SignIn
+export const signInApi = async (formData) => {
+  const res = await handleUserApi.post("/sign-in", formData);
+  return res.data;
 }
 
 export const currentUser = async () => {

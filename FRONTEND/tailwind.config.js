@@ -10,6 +10,7 @@ export default {
         'primary': ['Poppins', 'sans-serif'],
         'heading': ["Lobster", 'serif'],
         'description': ['Libre Franklin', 'sans-serif'],
+        'inter': ["Inter", 'serif'],
       },
 
       colors: {

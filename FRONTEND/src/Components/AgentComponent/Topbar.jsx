@@ -11,21 +11,16 @@ const Topbar = () => {
           </button>
         </div>
         <div className="profile flex items-center space-x-2">
-          <button className="profile-img h-8 w-8 bg-secondary text-xl rounded-lg">
+          <button className="profile-img relative h-9 w-9 bg-secondary text-xl rounded-lg">
             <i className="ri-user-3-line"></i>
+            <span className="live absolute -top-[1px] -right-3px h-2 rounded-full border-2 border-white w-2 bg-green-600"></span>
           </button>
-          <div className="toggle-menu cursor-pointer">
-            <button
-              onClick={() => setIsOpenDrawer((prev) => !prev)}
-              className="text-[18px] me-2"
-            >
-              Super Admin
-            </button>
-            <i className="ri-arrow-down-wide-fill"></i>
+          <div className="cursor-pointer">
+            <div className="name-role leading-3"><p className="">Prince Bavishi</p><p className="role text-xs text-zinc-500">Agent</p></div>
           </div>
         </div>
       </header>
-      <div
+      {/* <div
         className={`${
           isOpenDrawer
             ? "translate-y-0 opacity-100"
@@ -39,7 +34,7 @@ const Topbar = () => {
           <li>Home</li>
           <li>Home</li>
         </ul>
-      </div>
+      </div> */}
     </>
   );
 };

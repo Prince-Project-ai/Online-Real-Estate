@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import { signUp } from '../../../Api/website/HandleUserApi';
+import { signUpApi } from '../../../Api/website/HandleUserApi';
 import { useMessage } from '../../../Contexts/MessageContext';
 import Spinner from '../../core/Spinner';
 import { validateField } from '../../../Utils/ValidationUtils'; // Import the validation utility
@@ -43,6 +43,9 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
     );
   }, [formData, errors]);
 
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -65,19 +68,24 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
     }
 
     try {
-      await signUp(formData, showToast, onSwitchToSignIn);
-      setFormData({
-        fullName: '',
-        email: '',
-        password: '',
-        crmPassword: '',
-        phoneNumber: '',
-        address: '',
-      });
+      const response = await signUpApi(formData);
+      console.log(response);
+      if (response?.success) {
+        showToast(response?.message, "success");
+        onSwitchToSignIn();
+        setFormData({
+          fullName: '',
+          email: '',
+          password: '',
+          crmPassword: '',
+          phoneNumber: '',
+          address: '',
+        });
+      }
       setErrors({});
+
     } catch (error) {
-      console.error('SignUp Error: ', error);
-      showToast('An error occurred during sign-up. Please try again.', 'error');
+      showToast(error?.response?.data?.message || error?.message, "error");
     } finally {
       setIsLoading(false);
     }

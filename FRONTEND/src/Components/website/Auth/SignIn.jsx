@@ -47,8 +47,18 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signInApi(formData, showToast, onClose, setIsAuthenticated);
+      const response = await signInApi(formData);
+      if (response.success) {
+        setFromData({
+          email: '',
+          password: '',
+        });
+        showToast(response?.message, "success");
+        setIsAuthenticated(true);
+        onClose();
+      }
     } catch (error) {
+      showToast(error?.response?.data?.message || error?.message, "error");
     } finally {
       setIsLoading(false)
     }

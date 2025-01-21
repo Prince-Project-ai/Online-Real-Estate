@@ -7,90 +7,107 @@ const Sidebar = () => {
   return (
     <aside className="max-w-60 w-full border-r border-gray-300 flex flex-col h-screen max-h-screen">
       <div className="logo p-2 h-12 flex justify-center items-center border-b border-gray-300">
-        <h2 className="text-2xl text-center text-black">
+        <h2 className="text-2xl text-center font-heading text-black">
           <span>
             <i className="ri-home-4-line"></i>
           </span>{" "}
           PropertyFy
         </h2>
       </div>
-      <div className="p-2 mb-2 h-12 flex justify-center items-center border-b border-gray-300">
-        <button
-          type="button"
-          className="bg-dark py-2 outline-none text-white w-full rounded-lg"
-        >
-          <span className="me-2 text-start">
-            <i className=" ri-dashboard-horizontal-line"></i>
-          </span>
-          Dashboard
-        </button>
-      </div>
+
 
       <div className="menu-lists flex-1 max-h-screen overflow-hidden overflow-y-auto">
         <ul className="list-none px-2 space-y-2">
-          <li className="bg-secondary  p-2 rounded-lg">
-            <span>
-              <i className="me-3 ri-verified-badge-line"></i>
+
+          <li className="cursor-pointer bg-dark py-3 mt-2 px-3 rounded-lg">
+            <span className="me-2">
+              <i className="text-white ri-dashboard-horizontal-line"></i>
             </span>
-            <NavLink to="">Total Visiting</NavLink>
-            <i className="ri-arrow-down-s-line"></i>
+            <NavLink to="/dashboard-agent" className="text-white font-description">Dashboard</NavLink>
           </li>
 
-          <li className="listing relative">
+          <li className="listing hover:bg-secondary hover:transition-all duration-150 rounded-lg cursor-pointer relative">
             <div
               onClick={() => setIsOpenList((prev) => !prev)}
-              className="main-list flex items-start p-2 rounded-lg justify-between"
+              className="main-list font-description flex items-start p-2 rounded-lg justify-between"
             >
-              <NavLink to="">
+              <NavLink to="" className="font-description">
                 <span>
-                  <i className="me-3 ri-home-3-fill"></i>
+                  <i className="me-3 ri-user-3-fill"></i>
                 </span>
-                Listning
+                Profile
               </NavLink>
               <span>
-                <i className="ri-arrow-down-s-line"></i>
+                {/* <i className="ri-arrow-down-s-line"></i> */}
+                <i className={`${isOpenList ? 'ri-subtract-fill' : 'ri-arrow-down-wide-line'}`}></i>
+
+
               </span>
             </div>
             {isOpenList && (
-              <div className="subList flex">
+              <div className="subList flex mt-1">
                 {/* <div className="veri-line h-100 bg-black w-[1px] me-auto"></div> */}
-                <ul className="ms-9 w-full rounded-lg space-x-3 bg-secondary">
-                  <li>Hello</li>
-                  <li>Hello</li>
-                  <li>Hello</li>
+                <ul className="ms-9 w-full rounded-lg mb-2 space-y-1">
+                  <li className="hover:bg-white me-2 font-description py-2 px-3 rounded-lg">
+                    <NavLink to="/dashboard-agent/profile">
+                      <i className="ri-user-settings-fill me-2"></i>Edit Profile
+                    </NavLink>
+                  </li>
+                  <li className="hover:bg-white me-2 font-description py-2 px-3 rounded-lg"><i className="ri-shield-check-fill me-2"></i>Approvals</li>
+                  {/* <li className="bg-secondary py-1 px-3 rounded-lg">Hello</li > */}
                 </ul>
               </div>
             )}
           </li>
-          <li className="bg-secondary  p-2 rounded-lg">
-            <span>
-              <i className="me-3 ri-verified-badge-line"></i>
-            </span>
-            <a href="">Dashboard</a>
+
+          <li className="listing cursor-pointer relative">
+            <div
+              onClick={() => setIsOpenList((prev) => !prev)}
+              className="main-list font-description flex items-start p-2 rounded-lg justify-between"
+            >
+              <NavLink to="" className="font-description">
+                <span>
+                  <i className="me-3 ri-home-3-fill"></i>
+                </span>
+                My Listings
+              </NavLink>
+              <span>
+                {/* <i className="ri-arrow-down-s-line"></i> */}
+                <i className={`${isOpenList ? 'ri-subtract-fill' : 'ri-arrow-down-wide-line'}`}></i>
+
+
+              </span>
+            </div>
+            {isOpenList && (
+              <div className="subList flex mt-1">
+                {/* <div className="veri-line h-100 bg-black w-[1px] me-auto"></div> */}
+                <ul className="ms-9 w-full rounded-lg space-y-1">
+                  <li className="font-description py-2 px-3 rounded-lg"><i className="ri-home-gear-line me-2"></i>My Listing</li>
+                  <li className="font-description py-2 px-3 rounded-lg"><i className="ri-shield-check-fill me-2"></i>Approvals</li>
+                  {/* <li className="bg-secondary py-1 px-3 rounded-lg">Hello</li > */}
+                </ul>
+              </div>
+            )}
           </li>
-          <li className="bg-secondary  p-2 rounded-lg">
+
+          <li className="cursor-pointer p-2 rounded-lg">
             <span>
               <i className="me-3 ri-verified-badge-line"></i>
             </span>
-            <a href="">Dashboard</a>
+            <NavLink className="font-description">Dashboard</NavLink>
           </li>
-          <li className="bg-secondary  p-2 rounded-lg">
+
+          <li className="cursor-pointer p-2 rounded-lg">
             <span>
               <i className="me-3 ri-verified-badge-line"></i>
             </span>
-            <a href="">Dashboard</a>
+            <NavLink className="font-description">Dashboard</NavLink>
           </li>
-          <li className="bg-secondary  p-2 rounded-lg">
+          <li className="p-2 rounded-lg">
             <span>
               <i className="me-3 ri-verified-badge-line"></i>
             </span>
-            <a href="">Dashboard</a>
-          </li>
-          <li className="bg-secondary  p-2 rounded-lg">
-            <span>
-              <i className="me-3 ri-verified-badge-line"></i>
-            </span>
-            <a href="">Dashboard</a>
+            <NavLink className="font-description">Dashboard</NavLink>
           </li>
           {/* <li className="bg-secondary  p-2 rounded-lg"><span><i className="me-3 ri-verified-badge-line"></i></span><a href="">Dashboard</a></li>
           <li className="bg-secondary  p-2 rounded-lg"><span><i className="me-3 ri-verified-badge-line"></i></span><a href="">Dashboard</a></li>
@@ -109,17 +126,19 @@ const Sidebar = () => {
             <span>
               <i className="me-3 ri-verified-badge-line"></i>
             </span>
-            <a href="">Dashboard</a>
+            <NavLink path="/client" className="font-description">View Client</NavLink>
+
           </li>
           <li className="bg-secondary  p-2 rounded-lg">
             <span>
               <i className="me-3 ri-verified-badge-line"></i>
             </span>
-            <a href="">Dashboard</a>
+            <NavLink className="font-description">Dashboard</NavLink>
+
           </li>
         </ul>
       </div>
-      <div className="footer p-2 h-12 border-t border-gray-300">
+      <div className="footer p-2 h-14 border-t border-gray-300">
         <button
           type="button"
           className="bg-red-500 text-white h-full p-1 w-full rounded-lg"

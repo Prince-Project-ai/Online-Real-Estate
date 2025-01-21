@@ -24,8 +24,8 @@ const AccessMenu = () => {
         </div>
         <div className={`${isOpen ? 'absolute' : 'hidden'} border mt-2 shadow absolute rounded-lg bg-white top-auto left-0 right-0 menu-list-drawer`}>
           <ul className="p-2 space-y-2">
-            <li className="font-description w-full text-[17px] space-x-1"><i className="ri-user-line bg-secondary p-1 rounded border"></i> <NavLink to={"/profile"} className="font-description">Profile</NavLink></li>
-            <li className="font-description w-full text-[17px] space-x-1"><i className="ri-dashboard-fill bg-secondary p-1 rounded border"></i><NavLink to={"/dashboard-agent/profile"} className="font-description">Dashboard</NavLink></li>
+            <li className="font-description w-full text-[17px] space-x-1"><i className="ri-user-line bg-secondary p-1 rounded border"></i> <NavLink to={"/dashboard-agent/profile"} className="font-description">Profile</NavLink></li>
+            <li className="font-description w-full text-[17px] space-x-1"><i className="ri-dashboard-fill bg-secondary p-1 rounded border"></i><NavLink to={"/dashboard-agent"} className="font-description">Dashboard</NavLink></li>
             {/* <li><AuthModalManager /></li> */}
           </ul>
           <ul className="border-t w-full p-2">

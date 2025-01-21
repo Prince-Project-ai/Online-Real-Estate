@@ -1,12 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import SellerLayout from "../layouts/SellerLayout";
-import SellerHome from "../Components/SellerComponent/SellerHome";
+import DashContent from "../Components/SellerComponent/DashContent";
+import SellerProfile from "../Components/SellerComponent/SellerProfile";
+
 const SellerDashboardRouter = () => {
   return (
     <SellerLayout>
       <Routes>
-        <Route path="/" element={<SellerHome />} />
+        <Route path="/" element={<DashContent />} />
+        <Route path="/profile" element={<SellerProfile />} />
       </Routes>
     </SellerLayout>
   );
