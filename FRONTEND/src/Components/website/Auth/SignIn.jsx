@@ -6,7 +6,7 @@ import { useAuth } from "../../../Contexts/AuthContext";
 
 const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
   const { showToast } = useMessage();
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, setCurrentAuth } = useAuth();
 
   const [formData, setFromData] = useState({
     email: "",
@@ -54,6 +54,7 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
           password: '',
         });
         showToast(response?.message, "success");
+        setCurrentAuth(response?.data?.currentAuth);
         setIsAuthenticated(true);
         onClose();
       }

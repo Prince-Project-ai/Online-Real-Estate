@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { currentUser } from "../Api/website/HandleUserApi";
-import { useMessage } from "./MessageContext";
+// import { useMessage } from "./MessageContext";
 
 export const AuthContext = createContext();
 
@@ -18,7 +18,8 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { showToast } = useMessage();
+  const [isLoading, setIsLoading] = useState(true);
+  // const { showToast } = useMessage();
   const [currentAuth, setCurrentAuth] = useState(null);
 
   const fetchCurrentAuth = useCallback(async () => {
@@ -28,14 +29,17 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(res?.success);
     } catch (error) {
       const isValidateAuth = error?.response?.data?.success;
-      if (!isValidateAuth) {
-        showToast(
-          "You are not signed in. Please sign in to access resources.",
-          "error"
-        );
-      } else {
-        showToast("An unexpected error occurred. Please try again.", "error");
-      }
+      !isValidateAuth && console.log("Please signIn");
+      // if (!isValidateAuth) {
+      //   showToast(
+      //     "You are not signed in. Please sign in to access resources.",
+      //     "error"
+      //   );
+      // } else {
+      //   showToast("An unexpected error occurred. Please try again.", "error");
+      // }
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -50,6 +54,7 @@ const AuthProvider = ({ children }) => {
   const contextValue = {
     currentAuth,
     isAuthenticated,
+    isLoading,
     setCurrentAuth,
     setIsAuthenticated,
   };

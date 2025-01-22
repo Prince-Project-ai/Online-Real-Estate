@@ -7,8 +7,11 @@ import userRouter from "./Routes/User.router.js";
 import adminRouter from "./Routes/Admin.router.js";
 
 const app = express();
+
 app.use(cookieParser());
 app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true }));
+
 app.use(compression()); // Automatically compresses response bodies
 app.use(
   cors({
@@ -18,12 +21,14 @@ app.use(
 );
 
 
+
 app.get("/", (_, res) => {
   res.send("Welcome to Online Real Estate API");
 });
 
 // USER
 app.use("/api/v1/propertyfy", userRouter);
+
 // ADMIN
 app.use("/api/v1/propertyfy", adminRouter);
 
@@ -31,16 +36,26 @@ app.use(errorHandler);
 
 export { app };
 
-// ======================= API LIST [ USER ] =================
-// http://localhost:9999/api/v1/propertyfy/sign-up
-// http://localhost:9999/api/v1/propertyfy/sign-in
-// http://localhost:9999/api/v1/propertyfy/refresh-token
-// http://localhost:9999/api/v1/propertyfy/logout-user
-// http://localhost:9999/api/v1/propertyfy/current-auth
 
 
-// ======================= API LIST [ SOMETING (COMING SOON) ] =================
-// http://localhost:9999/api/v1/propertyfy/admin-sign-up
-// http://localhost:9999/api/v1/propertyfy/admin-sign-in
-// http://localhost:9999/api/v1/propertyfy/current-admin
-// http://localhost:9999/api/v1/propertyfy/admin-logout
+/*
+=============================================== [API LIST START] ========================================
+
+
+      ======================= API LIST [ USER ] =================
+      http://localhost:9999/api/v1/propertyfy/sign-up
+      http://localhost:9999/api/v1/propertyfy/sign-in
+      http://localhost:9999/api/v1/propertyfy/refresh-token
+      http://localhost:9999/api/v1/propertyfy/logout-user
+      http://localhost:9999/api/v1/propertyfy/current-auth
+
+
+      ======================= API LIST [ SOMETING (COMING SOON) ] =================
+      http://localhost:9999/api/v1/propertyfy/admin-sign-up
+      http://localhost:9999/api/v1/propertyfy/admin-sign-in
+      http://localhost:9999/api/v1/propertyfy/current-admin
+      http://localhost:9999/api/v1/propertyfy/admin-logout
+
+
+=============================================== [API LIST END] ========================================
+*/

@@ -4,6 +4,7 @@ import Security from "./ProfileComponent/Security";
 import Notification from "./ProfileComponent/Notification";
 
 const SellerProfile = () => {
+  
   const menuItems = useMemo(() => ["Profile", "Security", "Notification"], []);
 
   const [selectedMenu, setSelectedMenu] = useState("Profile");

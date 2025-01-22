@@ -11,50 +11,32 @@ const Header = lazy(() => import("../Components/website/comman/Header"));
 const Footer = lazy(() => import("../Components/website/comman/Footer"));
 
 const WebsiteRouter = () => {
-  return (
-    <WebsiteContextStackProvider>
-      <WebsiteLayouts>
-        <Suspense fallback={<HeaderSkeleton />}>
-          <Header />
-        </Suspense>
+    return (
+        <WebsiteContextStackProvider>
+            <WebsiteLayouts>
+                <Suspense fallback={<HeaderSkeleton />}>
+                    <Header />
+                </Suspense>
 
-        <Routes>
-
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<h1>Loading home...</h1>}>
-                <Home />
-              </Suspense>
-            }
-          />
-
-          <Route path="/profile" element={<Profile />} />
-
-          <Route
-            path="/local"
-            element={
-              <h2>Hello, this is the main route of the WebsiteRouter</h2>
-            }
-          />
-
-          <Route
-            path="/search-result"
-            element={
-              <Suspense fallback={<h2>Loading search results...</h2>}>
-                <SearchResult />
-              </Suspense>
-            }
-          />
-
-        </Routes>
-
-        <Suspense fallback={<h1>Loading footer...</h1>}>
-          <Footer />
-        </Suspense>
-      </WebsiteLayouts>
-    </WebsiteContextStackProvider>
-  );
+                <Routes>
+                    <Route path="/" element={<Suspense fallback={<h1>Loading home...</h1>}><Home /></Suspense>} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route
+                        path="/local"
+                        element={<h2>Hello, this is the main route of the WebsiteRouter</h2>}
+                    />
+                    <Route
+                        path="/search-result"
+                        element={<Suspense fallback={<h2>Loading search results...</h2>}><SearchResult /></Suspense>}
+                    />
+                </Routes>
+                
+                <Suspense fallback={<h1>Loading footer...</h1>}>
+                    <Footer />
+                </Suspense>
+            </WebsiteLayouts>
+        </WebsiteContextStackProvider>
+    );
 };
 
 export default WebsiteRouter;

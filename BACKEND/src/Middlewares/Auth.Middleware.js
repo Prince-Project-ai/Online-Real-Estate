@@ -19,7 +19,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     next();
   } catch (error) {
     throw new ApiError(401, error?.message || "Invalid Request");
-  } 
+  }
 });
 
 // signIn form Validation Controller
@@ -31,28 +31,3 @@ export const isValidateSignIn = asyncHandler(async (req, res, next) => {
 
   next();
 });
-
-
-export const isValidateField = asyncHandler(async (req, res, next) => {
-  const { fullName, email, password, crmPassword, phoneNumber, addres } =
-    req.body;
-
-  if (
-    !(fullName || email || password || crmPassword || phoneNumber || addres)
-  ) {
-    throw new ApiError(401, "All Fields are Requireds..");
-  }
-
-
-  if (password !== crmPassword) {
-    throw new ApiError(400, "Password is not Same 💫.");
-  }
-
-  const user = await User.findOne({ email });
-  if (user) {
-    throw new ApiError(401, "User Already Exist..");
-  }
-
-  next();
-});
-

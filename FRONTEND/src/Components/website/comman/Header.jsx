@@ -6,7 +6,7 @@ import AuthModelManager from "../Auth/AuthModelManager";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, currentAuth } = useAuth();
   // Memoize the menu items to prevent re-creation on each render
   const menuItems = useMemo(
     () => [
@@ -19,7 +19,7 @@ const Header = () => {
   );
 
   return (
-    <header className="border-b">
+    <header className="border-b border-dark px-5">
       <nav className="max-w-7xl md:px-4 lg:px-0 container mx-auto flex items-center justify-between py-2 relative">
         {/* Logo Section */}
         <Logo />

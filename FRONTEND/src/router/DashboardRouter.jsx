@@ -10,58 +10,52 @@ import DashboardSkeleton from "../Components/dashboard/comman/DashboardSkeleton"
 
 
 const DashboardRouter = () => {
-  return (
-    <MessageProvider>
-      <AdminContextProvider>
-        <DashboardLayouts>
-          <Routes>
-
-
-            <Route path="/sign-in" element={<SignIn />} />
-
-
-            <Route
-              path="/"
-              element={
-                <Suspense fallback={<DashboardSkeleton />}>
-                  <PrivateRoute>
-                    <DashboardHome />
-                  </PrivateRoute>
-                </Suspense>
-              }
-            />
-
-
-            <Route
-              path="/user"
-              element={
-                <PrivateRoute>
-                  {/* <TotalUser /> */}
-                </PrivateRoute>
-              }
-            />
-
-
-            <Route path="*" element={<NotFound />} />
-
-          </Routes>
-        </DashboardLayouts>
-      </AdminContextProvider>
-    </MessageProvider>
-  );
+    return (
+        <MessageProvider>
+            <AdminContextProvider>
+                <DashboardLayouts>
+                    <Routes>
+                        <Route path="/sign-in" element={<SignIn />} />
+                        <Route
+                            path="/"
+                            element={
+                                <Suspense fallback={<DashboardSkeleton />}>
+                                    <PrivateRoute>
+                                        <DashboardHome />
+                                    </PrivateRoute>
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path="/user"
+                            element={
+                                <PrivateRoute>
+                                    {/* <TotalUser /> */}
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </DashboardLayouts>
+            </AdminContextProvider>
+        </MessageProvider>
+    );
 };
+
+
+
 
 export default DashboardRouter;
 
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
-  const { isAdminAuthenticated, isLoading } = useAdminAuth();
-  if (isLoading) {
-    return <DashboardSkeleton />
-  }
-  if (!isAdminAuthenticated) {
-    return <Navigate to="/dashboard/sign-in" replace />;
-  }
+    const { isAdminAuthenticated, isLoading } = useAdminAuth();
+    if (isLoading) {
+        return <DashboardSkeleton />
+    }
+    if (!isAdminAuthenticated) {
+        return <Navigate to="/dashboard/sign-in" replace />;
+    }
 
-  return children;
+    return children;
 };
