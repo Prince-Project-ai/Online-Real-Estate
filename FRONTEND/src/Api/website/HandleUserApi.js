@@ -41,3 +41,12 @@ export const logoutAuth = async (showToast, setCurrentAuth, setIsAuthenticated) 
 		showToast(error, "error");
 	}
 }
+
+// AGENT API END POINT LOGIC START
+
+export const UpdateAgentProfile = async (updatedData) => {
+	const response = await handleUserApi.patch("/update-agent-profile", updatedData);
+}
+
+
+// AGENT API END POINT LOGIC END 

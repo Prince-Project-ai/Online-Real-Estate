@@ -3,12 +3,10 @@ import multer from "multer";
 // Configure Multer to store files temporarily
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log("Files : ", file);
     cb(null, "src/uploads/profileImg/");
   },
   filename: (req, file, cb) => {
-    console.log("Request : ", req);
-    const uniqueName = `${Date.now()}_${file.originalname}`;
+    const uniqueName = `${Date.now()}_${req.user._id}`;
     cb(null, uniqueName);
   },
 });

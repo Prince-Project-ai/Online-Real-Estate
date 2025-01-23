@@ -3,7 +3,9 @@ import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
-// import cloudinary from "../Config/Cloudinary.js";
+import cloudinary from "../Config/Cloudinary.js";
+import fs from "fs";
+
 
 const options = {
   httpOnly: true,
@@ -98,38 +100,79 @@ export const signUp = asyncHandler(async (req, res) => {
     );
 });
 
+
 export const updateAgentProfile = asyncHandler(async (req, res) => {
   try {
-    console.log("REQ : ", req.file);
-    console.log("AGENT : ", req.user);
-    // const agentId = req.user._id;
-    // const updatedField = {};
+    const agentId = req.user._id;
+    const updatedField = {};
+    const { fullName, email, phoneNumber, address } = req.body;
 
-    // const { avatar, fullName, email, phoneNumber, address } = req.body();
-    // if (avatar) updatedField.avatar = avatar;
-    // if (fullName) updatedField.fullName = fullName;
-    // if (email) updatedField.email = email;
-    // if (phoneNumber) updatedField.phoneNumber = phoneNumber;
-    // if (address) updatedField.address = address;
+    // Handle file upload for avatar
+    console.time("FILE UPLOADING TIME : ");
+    if (req.file && req.file.path) {
+      const newProfileImage = await cloudinary.uploader.upload(req.file.path, {
+        folder: "PropertyFy/profile_imgs",
+        transformation: [
+          {
+            width: 200,
+            height: 200,
+            crop: "thumb",
+            gravity: "face",
+          },
+        ],
+      });
 
-    // const updatedAgent = User.findByIdAndUpdate(
-    //   agentId,
-    //   {
-    //     $set: updatedField,
-    //   },
-    //   {
-    //     new: true,
-    //   }
-    // );
+      updatedField.avatar = newProfileImage.secure_url;
+      console.log("Uploaded Image Path:", req.file.path);
 
-    // if (!updatedAgent) throw new ApiError(404, "User not Found.");
+      // Unlink the file from the local machine
+      fs.unlinkSync(req.file.path, (err) => {
+        if (err) {
+          console.error("Failed to delete local file : ", err);
+        } else {
+          console.log("Local file deleted successfully : ", req.file.path);
+        }
+      });
+    }
+    console.timeEnd("FILE UPLOADING TIME : ");
+
+
+    // Add other fields to update if they exist
+    if (fullName) updatedField.fullName = fullName;
+    if (email) updatedField.email = email;
+    if (phoneNumber) updatedField.phoneNumber = phoneNumber;
+    if (address) updatedField.address = address;
+
+    // Update the agent profile
+    const updatedAgent = await User.findByIdAndUpdate(
+      agentId,
+      {
+        $set: updatedField,
+      },
+      {
+        new: true, // Return the updated document
+      }
+    ).select("-password -refreshToken");
+
+    if (!updatedAgent) {
+      throw new ApiError(404, "User not found.");
+    }
+
+    res.status(200).json(
+      new ApiResponse(200, updatedAgent, "Agent profile updated successfully.")
+    );
+
   } catch (error) {
-    throw new ApiError(
-      error.status,
-      error.message || "INTERNAL SERVER ERROR FROM UPDATE AGENT PROFILE"
+    console.error("Error updating agent profile:", error);
+    res.status(error.status || 500).json(
+      new ApiError(
+        error.status || 500,
+        error.message || "Internal server error while updating agent profile."
+      )
     );
   }
 });
+
 
 // Sign-In Controller
 export const signIn = asyncHandler(async (req, res) => {
