@@ -24,12 +24,13 @@ const AgentDashboardRouter = () => {
 };
 
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
-  if (isLoading) return <p className="bg-dark text-white text-5xl">LOADING...</p>
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />
+  const { isAuthenticated, isLoading, currentAuth } = useAuth();
+  if (isLoading)
+    return <p className="bg-dark text-white text-5xl">LOADING...</p>;
+  if (!isAuthenticated || currentAuth.role !== "Agent") {
+    return <Navigate to="/" replace />;
   }
-  return { children };
-}
+  return children;
+};
 
 export default React.memo(AgentDashboardRouter);

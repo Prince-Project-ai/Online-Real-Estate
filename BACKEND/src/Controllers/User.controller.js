@@ -3,179 +3,223 @@ import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
-import cloudinary from "../Config/Cloudinary.js";
+// import cloudinary from "../Config/Cloudinary.js";
 
 const options = {
-    httpOnly: true,
-    secure: true,
+  httpOnly: true,
+  secure: true,
 };
 
 // accessToken and refreshToken generator function
 export const generateAccessTokenAndRefreshToken = async (user) => {
-    try {
-        const newAccessToken = user.generateAccessToken();
-        const newRefreshToken = user.generateRefreshToken();
-        user.refreshToken = newRefreshToken;
-        await user.save({ validateBeforeSave: false });
-        return { newRefreshToken, newAccessToken };
-    } catch (error) {
-        throw new ApiError(500, "Something went wrong while generating token");
-    }
+  try {
+    const newAccessToken = user.generateAccessToken();
+    const newRefreshToken = user.generateRefreshToken();
+    user.refreshToken = newRefreshToken;
+    await user.save({ validateBeforeSave: false });
+    return { newRefreshToken, newAccessToken };
+  } catch (error) {
+    throw new ApiError(500, "Something went wrong while generating token");
+  }
 };
 
 export const signUp = asyncHandler(async (req, res) => {
-    const { fullName, email, password, crmPassword, phoneNumber, address, role } = req.body;
-    console.log(req.body);
-    console.log(req.headers);
-    if (!(fullName || email || password || crmPassword || phoneNumber || address || role)) {
-        throw new ApiError(401, "All Fields are Required..");
-    }
+  const { fullName, email, password, crmPassword, phoneNumber, address, role } =
+    req.body;
+  console.log(req.body);
+  console.log(req.headers);
+  if (
+    !(
+      fullName ||
+      email ||
+      password ||
+      crmPassword ||
+      phoneNumber ||
+      address ||
+      role
+    )
+  ) {
+    throw new ApiError(401, "All Fields are Required..");
+  }
 
-    if (password !== crmPassword) {
-        throw new ApiError(400, "Password is not Same 💫.");
-    }
+  if (password !== crmPassword) {
+    throw new ApiError(400, "Password is not Same 💫.");
+  }
 
-    const user = await User.findOne({ email }).select("+_id");
+  const user = await User.findOne({ email }).select("+_id");
 
-    if (user) {
-        throw new ApiError(401, "User Already Exist..");
-    }
-    // console.log("Form Body : ", req.body);
-    // console.log("file", req.file);
+  if (user) {
+    throw new ApiError(401, "User Already Exist..");
+  }
+  // console.log("Form Body : ", req.body);
+  // console.log("file", req.file);
 
-    // Default avatar URL - replace with your default image URL from Cloudinary
+  // Default avatar URL - replace with your default image URL from Cloudinary
+  //   {
+  //     "success": false,
+  //     "message": "Must supply api_key"
+  // }
+  const defaultAvatarUrl =
+    "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg";
+
+  // if (!req.file) {
+  //     res.status(400).json({ message: "file not found" });
+  // }
+
+  // const newProfileImage = await cloudinary.uploader.upload(req.file.path, {
+  //     folder: "PropertyFy/profile_imgs",
+  //     transformation: [
+  //         {
+  //             width: 200,
+  //             height: 200,
+  //             crop: "thumb",
+  //             gravity: "face",
+  //         },
+  //     ],
+  // });
+
+  const newUser = await User.create({
+    fullName,
+    email,
+    password,
+    phoneNumber,
+    address,
+    role,
+    avatar: defaultAvatarUrl,
+  });
+
+  const createdUser = await User.findById(newUser._id);
+  if (!createdUser) throw new ApiError(400, "User not registered");
+
+  res
+    .status(201)
+    .json(
+      new ApiResponse(201, createdUser, `${role} registration successful.`)
+    );
+});
+
+export const updateAgentProfile = asyncHandler(async (req, res) => {
+  try {
+    console.log("REQ : ", req.file);
+    console.log("AGENT : ", req.user);
+    // const agentId = req.user._id;
+    // const updatedField = {};
+
+    // const { avatar, fullName, email, phoneNumber, address } = req.body();
+    // if (avatar) updatedField.avatar = avatar;
+    // if (fullName) updatedField.fullName = fullName;
+    // if (email) updatedField.email = email;
+    // if (phoneNumber) updatedField.phoneNumber = phoneNumber;
+    // if (address) updatedField.address = address;
+
+    // const updatedAgent = User.findByIdAndUpdate(
+    //   agentId,
     //   {
-    //     "success": false,
-    //     "message": "Must supply api_key"
-    // }
-    const defaultAvatarUrl =
-        "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg";
+    //     $set: updatedField,
+    //   },
+    //   {
+    //     new: true,
+    //   }
+    // );
 
-    // if (!req.file) {
-    //     res.status(400).json({ message: "file not found" });
-    // }
-
-    // const newProfileImage = await cloudinary.uploader.upload(req.file.path, {
-    //     folder: "PropertyFy/profile_imgs",
-    //     transformation: [
-    //         {
-    //             width: 200,
-    //             height: 200,
-    //             crop: "thumb",
-    //             gravity: "face",
-    //         },
-    //     ],
-    // });
-
-    const newUser = await User.create({
-        fullName,
-        email,
-        password,
-        phoneNumber,
-        address,
-        role,
-        avatar: defaultAvatarUrl,
-    });
-
-    const createdUser = await User.findById(newUser._id);
-    if (!createdUser) throw new ApiError(400, "User not registered");
-
-    res
-        .status(201)
-        .json(
-            new ApiResponse(201, createdUser, `${role} registration successful.`)
-        );
+    // if (!updatedAgent) throw new ApiError(404, "User not Found.");
+  } catch (error) {
+    throw new ApiError(
+      error.status,
+      error.message || "INTERNAL SERVER ERROR FROM UPDATE AGENT PROFILE"
+    );
+  }
 });
 
 // Sign-In Controller
 export const signIn = asyncHandler(async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email: email });
-        if (!user) throw new ApiError(401, "Invalid User Credincial");
-        const isPasswordValidate = await user.isPasswordCorrect(password);
-        if (!isPasswordValidate) throw new ApiError(401, "Invalid User Credincial");
-        const { newRefreshToken, newAccessToken } =
-            await generateAccessTokenAndRefreshToken(user);
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) throw new ApiError(401, "Invalid User Credincial");
+    const isPasswordValidate = await user.isPasswordCorrect(password);
+    if (!isPasswordValidate) throw new ApiError(401, "Invalid User Credincial");
+    const { newRefreshToken, newAccessToken } =
+      await generateAccessTokenAndRefreshToken(user);
 
-        const loggedUser = await User.findById(user._id).select(
-            "-password -refreshToken"
-        );
-        res
-            .status(200)
-            .cookie("accessToken", newAccessToken, options)
-            .cookie("refreshToken", newRefreshToken, options)
-            .json(
-                new ApiResponse(
-                    200,
-                    { currentAuth: loggedUser },
-                    "Welcome back to PropertyFy. Let's get to it!"
-                )
-            );
-    } catch (err) {
-        throw new ApiError(err.status, err.message || "Internal server Error.");
-    }
+    const loggedUser = await User.findById(user._id).select(
+      "-password -refreshToken"
+    );
+    res
+      .status(200)
+      .cookie("accessToken", newAccessToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          { currentAuth: loggedUser },
+          "Welcome back to PropertyFy. Let's get to it!"
+        )
+      );
+  } catch (err) {
+    throw new ApiError(err.status, err.message || "Internal server Error.");
+  }
 });
 
 // refresh access token controller
 export const refreshAccessToken = asyncHandler(async (req, res) => {
-    try {
-        const inComingRefreshToken = req?.cookies?.refreshToken;
-        if (!inComingRefreshToken)
-            throw new ApiError(401, "UnAuthorized User Requrest.");
-        const decodeToken = jwt.verify(
-            inComingRefreshToken,
-            process.env.REFRESH_TOKEN_SECRET
-        );
-        const user = await User.findById(decodeToken.id);
-        if (!user) throw new ApiError(401, "Invalid Refresh Token.");
-        if (inComingRefreshToken !== user.refreshToken)
-            throw new ApiError(401, "Invalid Token OR Expire Token.");
-        const { newRefreshToken, newAccessToken } =
-            await generateAccessTokenAndRefreshToken(user._id);
-        res
-            .status(200)
-            .cookie("accessToken", newAccessToken, options)
-            .cookie("refreshToken", newRefreshToken, options)
-            .json(
-                new ApiResponse(
-                    200,
-                    { token: { newAccessToken, newRefreshToken } },
-                    "AccessToken Refresh SuccessFully."
-                )
-            );
-    } catch (error) {
-        throw new ApiError(error.status, error.message || "Internal Server Error.");
-    }
+  try {
+    const inComingRefreshToken = req?.cookies?.refreshToken;
+    if (!inComingRefreshToken)
+      throw new ApiError(401, "UnAuthorized User Requrest.");
+    const decodeToken = jwt.verify(
+      inComingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+    const user = await User.findById(decodeToken.id);
+    if (!user) throw new ApiError(401, "Invalid Refresh Token.");
+    if (inComingRefreshToken !== user.refreshToken)
+      throw new ApiError(401, "Invalid Token OR Expire Token.");
+    const { newRefreshToken, newAccessToken } =
+      await generateAccessTokenAndRefreshToken(user._id);
+    res
+      .status(200)
+      .cookie("accessToken", newAccessToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          { token: { newAccessToken, newRefreshToken } },
+          "AccessToken Refresh SuccessFully."
+        )
+      );
+  } catch (error) {
+    throw new ApiError(error.status, error.message || "Internal Server Error.");
+  }
 });
 
 // get Current User
 export const currentAuth = asyncHandler(async (req, res) => {
-    const currentUser = req?.user;
-    res
-        .status(200)
-        .json(new ApiResponse(200, currentUser, "Current Auth Authorized."));
+  const currentUser = req?.user;
+  res
+    .status(200)
+    .json(new ApiResponse(200, currentUser, "Current Auth Authorized."));
 });
 
 // logout current user
 export const userLogOut = asyncHandler(async (req, res) => {
-    await User.findByIdAndUpdate(
-        req.user._id,
-        {
-            $set: {
-                refreshToken: null,
-            },
-        },
-        {
-            new: true,
-        }
-    );
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        refreshToken: null,
+      },
+    },
+    {
+      new: true,
+    }
+  );
 
-    res
-        .status(200)
-        .clearCookie("accessToken", options)
-        .clearCookie("refreshToken", options)
-        .json(new ApiResponse(200, {}, "User Logout SuccessFully."));
+  res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, {}, "User Logout SuccessFully."));
 });
 
 // signin Controller

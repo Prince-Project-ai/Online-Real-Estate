@@ -49,6 +49,11 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/logout-user
       http://localhost:9999/api/v1/propertyfy/current-auth
 
+  
+      ======================= API LIST [ AGENT ] =================
+      http://localhost:9999/api/v1/propertyfy/update-agent-profile
+
+      
 
       ======================= API LIST [ SOMETING (COMING SOON) ] =================
       http://localhost:9999/api/v1/propertyfy/admin-sign-up
