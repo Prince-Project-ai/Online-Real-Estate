@@ -25,11 +25,10 @@ export const generateAccessTokenAndRefreshToken = async (user) => {
   }
 };
 
+// Useer signup profile
 export const signUp = asyncHandler(async (req, res) => {
   const { fullName, email, password, crmPassword, phoneNumber, address, role } =
     req.body;
-  console.log(req.body);
-  console.log(req.headers);
   if (
     !(
       fullName ||
@@ -100,7 +99,7 @@ export const signUp = asyncHandler(async (req, res) => {
     );
 });
 
-
+// Agent update profile 
 export const updateAgentProfile = asyncHandler(async (req, res) => {
   try {
     const agentId = req.user._id;
@@ -108,7 +107,6 @@ export const updateAgentProfile = asyncHandler(async (req, res) => {
     const { fullName, email, phoneNumber, address } = req.body;
 
     // Handle file upload for avatar
-    console.time("FILE UPLOADING TIME : ");
     if (req.file && req.file.path) {
       const newProfileImage = await cloudinary.uploader.upload(req.file.path, {
         folder: "PropertyFy/profile_imgs",
@@ -123,19 +121,14 @@ export const updateAgentProfile = asyncHandler(async (req, res) => {
       });
 
       updatedField.avatar = newProfileImage.secure_url;
-      console.log("Uploaded Image Path:", req.file.path);
 
       // Unlink the file from the local machine
       fs.unlinkSync(req.file.path, (err) => {
         if (err) {
           console.error("Failed to delete local file : ", err);
-        } else {
-          console.log("Local file deleted successfully : ", req.file.path);
         }
       });
     }
-    console.timeEnd("FILE UPLOADING TIME : ");
-
 
     // Add other fields to update if they exist
     if (fullName) updatedField.fullName = fullName;
@@ -163,7 +156,6 @@ export const updateAgentProfile = asyncHandler(async (req, res) => {
     );
 
   } catch (error) {
-    console.error("Error updating agent profile:", error);
     res.status(error.status || 500).json(
       new ApiError(
         error.status || 500,
@@ -172,7 +164,6 @@ export const updateAgentProfile = asyncHandler(async (req, res) => {
     );
   }
 });
-
 
 // Sign-In Controller
 export const signIn = asyncHandler(async (req, res) => {

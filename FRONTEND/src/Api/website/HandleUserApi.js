@@ -6,9 +6,6 @@ axios.defaults.withCredentials = true;
 export const handleUserApi = axios.create(
 	{
 		baseURL: "http://localhost:9999/api/v1/propertyfy/",
-		headers: {
-			"Content-Type": "application/json",
-		}
 	}
 )
 
@@ -29,24 +26,23 @@ export const currentUser = async () => {
 	return response?.data;
 }
 
-export const logoutAuth = async (showToast, setCurrentAuth, setIsAuthenticated) => {
-	try {
-		const response = await handleUserApi.post("/logout-user");
-		if (response?.data?.success) {
-			setCurrentAuth(null)
-			setIsAuthenticated(false);
-		};
-		showToast(response?.data?.message, "success");
-	} catch (error) {
-		showToast(error, "error");
-	}
+export const logoutAuth = async () => {
+	const response = await handleUserApi.post("/logout-user");
+	return response.data;
 }
 
 // AGENT API END POINT LOGIC START
 
-export const UpdateAgentProfile = async (updatedData) => {
-	const response = await handleUserApi.patch("/update-agent-profile", updatedData);
-}
-
-
+export const UpdateAgentProfile = async (formData) => {
+	const response = await handleUserApi.patch(
+		"/update-agent-profile", // Use the correct API endpoint
+		formData,
+		{
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		}
+	);
+	return response.data;
+};
 // AGENT API END POINT LOGIC END 

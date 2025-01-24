@@ -1,0 +1,35 @@
+/* From Uiverse.io by Siyu1017 */
+.windows_loading_spinner {
+  box-sizing: border-box;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 2px;
+  overflow: visible;
+}
+
+.windows_loading_spinner > circle {
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  transform-origin: 50% 50%;
+  transition: all 0.2s ease-in-out 0s;
+  animation: 2s linear 0s infinite normal none running loading_spinner;
+}
+
+@keyframes loading_spinner {
+  0% {
+    stroke-dasharray: 0.01px, 43.97px;
+    transform: rotate(0);
+  }
+
+  50% {
+    stroke-dasharray: 21.99px, 21.99px;
+    transform: rotate(450deg);
+  }
+
+  100% {
+    stroke-dasharray: 0.01px, 43.97px;
+    transform: rotate(1080deg);
+  }
+}
