@@ -16,7 +16,7 @@ const AccessMenu = () => {
       } */}
       <div className="relative w-full">
         <div className="profile-name flex items-center">
-          <div className="profile me-1 text-center leading-7 rounded-lg w-7 h-7 bg-dark">
+          <div className="profile me-1 text-center leading-7 rounded-lg overflow-hidden w-7 h-7 bg-dark">
             <img src={currentAuth?.avatar} alt={currentAuth?.avatar} />
           </div>
           <div className="name" onClick={() => setIsOpen((prev) => (!prev))}>

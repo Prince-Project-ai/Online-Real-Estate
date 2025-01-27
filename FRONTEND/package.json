@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-leaflet/core": "^3.0.0",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "leaflet": "^1.9.4",

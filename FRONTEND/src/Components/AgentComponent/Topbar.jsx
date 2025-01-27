@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useAuth } from "../../Contexts/AuthContext";
 
 const Topbar = () => {
+  const { currentAuth } = useAuth();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   return (
     <>
@@ -16,7 +18,7 @@ const Topbar = () => {
             <span className="live absolute -top-[1px] -right-3px h-2 rounded-full border-2 border-white w-2 bg-green-600"></span>
           </button>
           <div className="cursor-pointer">
-            <div className="name-role leading-3"><p className="">Prince Bavishi</p><p className="role text-xs text-zinc-500">Agent</p></div>
+            <div className="name-role leading-4 font-inter"><p className="font-inter">{currentAuth?.fullName}</p><p className="role font-inter text-xs text-zinc-500">{currentAuth?.role}</p></div>
           </div>
         </div>
       </header>

@@ -21,14 +21,17 @@ export const signInApi = async (formData) => {
 	return res.data;
 }
 
+// fetch current auth
 export const currentUser = async () => {
 	const response = await handleUserApi.get("/current-auth");
 	return response?.data;
 }
 
+// logout user,agent,seller
 export const logoutAuth = async () => {
 	const response = await handleUserApi.post("/logout-user");
 	return response.data;
+
 }
 
 // AGENT API END POINT LOGIC START
@@ -45,4 +48,5 @@ export const UpdateAgentProfile = async (formData) => {
 	);
 	return response.data;
 };
+
 // AGENT API END POINT LOGIC END 

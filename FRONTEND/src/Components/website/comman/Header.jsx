@@ -33,12 +33,13 @@ const Header = () => {
         </button>
 
         {/* Navigation Menu */}
+
+        {/* Authentication Section */}
+
         <NavigationMenu
           menuItems={menuItems}
           isMenuOpen={isMenuOpen}
         />
-
-        {/* Authentication Section */}
         <AuthSection isAuthenticated={isAuthenticated} />
       </nav>
     </header>
@@ -54,7 +55,7 @@ const Logo = React.memo(() => (
 const NavigationMenu = React.memo(({ menuItems, isMenuOpen }) => (
   <div
     className={`menus lg:flex lg:items-center ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 pointer-events-none"
-      } lg:opacity-100 lg:translate-y-0 lg:pointer-events-auto transition-all duration-300 absolute lg:static bg-white w-full lg:w-auto top-full left-0 shadow-md lg:shadow-none z-40`}
+      } lg:opacity-100 lg:translate-y-0 lg:pointer-events-auto transition-all duration-300 rounded-lg  absolute lg:static bg-white w-full lg:w-auto top-full left-0 shadow-md lg:shadow-none z-40`}
   >
     <ul className="flex flex-col lg:flex-row items-center lg:space-x-5 lg:tracking-wider">
       {menuItems.map(({ path, label }) => (
@@ -74,13 +75,20 @@ const NavigationMenu = React.memo(({ menuItems, isMenuOpen }) => (
           </NavLink>
         </li>
       ))}
+      {/* <div className="menu lg:hidden mb-2 items-center">
+        <div className="auth flex items-center">
+          {
+            isAuthenticated ? <AccessMenu /> : <AuthModelManager />
+          }
+        </div>
+      </div> */}
     </ul>
   </div>
 ));
 
 
 const AuthSection = React.memo(({ isAuthenticated }) => (
-  <div className="menu hidden lg:flex  items-center">
+  <div className="menu lg:flex items-center">
     <div className="auth flex items-center">
       {
         isAuthenticated ? <AccessMenu /> : <AuthModelManager />

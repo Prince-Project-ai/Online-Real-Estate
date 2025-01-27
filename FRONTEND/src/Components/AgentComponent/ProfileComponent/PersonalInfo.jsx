@@ -27,10 +27,15 @@ const PersonalInfo = () => {
     const handleChange = useCallback((e) => {
         const { name, value, files } = e.target;
         const file = files?.[0];
-
         if (name === "avatar" && file) {
+            console.log("file size in kb : ", (file.size / 1024 / 1024).toFixed(2)); //default file object file size is in bytes if you wanbt ot make the in kb then convert by logic
             if (!VALID_IMAGE_TYPES.includes(file.type)) {
                 showToast("Please upload a valid image file (JPG, JPEG, PNG)", "error");
+                return;
+            }
+
+            if ((file.size / 1024 / 1024).toFixed(2) > 5) {
+                showToast("Please upload a MAX size of 5MB", "error");
                 return;
             }
 

@@ -31,7 +31,7 @@ const AuthModalManager = () => {
       {/* Sign In Button */}
       <button
         onClick={() => handleModalChange("signin")}
-        className="bg-dark rounded tracking-wider text-white px-4 py-2 flex items-center gap-2"
+        className="bg-dark rounded text-xs px-2 py-1 tracking-wider text-white lg:px-4 lg:py-2 flex items-center gap-1 lg:gap-2"
       >
         <i className="ri-user-6-line"></i> Sign In
       </button>
