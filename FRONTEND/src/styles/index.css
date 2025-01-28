@@ -10,6 +10,19 @@
   accent-color: black;
 }
 
+select {
+  -webkit-appearance: none; /* For Chrome, Safari, and Edge */
+  -moz-appearance: none; /* For Firefox */
+  appearance: none; /* Standard syntax */
+}
+
+/* Optional: Add custom styling to the select element */
+select {
+  background: white; /* Ensure the background matches your design */
+  padding-right: 2rem; /* Adjust for spacing where the icon used to be */
+  background-image: none; /* Remove any background arrow */
+}
+
 body {
   font-family: "Poppins", sans-serif;
   accent-color: black;
