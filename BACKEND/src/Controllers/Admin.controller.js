@@ -138,11 +138,12 @@ export const allUserAgentSeller = asyncHandler(async (req, res) => {
   try {
     // console.time("All DATA TIME : ");
     const data = await User.find().select("-password -refreshToken");
-    console.log("DB DATA : ", data);
     if (!data) {
       throw new ApiError(401, "Data Not Found");
     }
-    res.status(200, data, "Data Fetch Successfully.");
+    res
+      .status(200)
+      .json(new ApiResponse(200, data, "Data Fetch Successfully."));
     // console.timeEnd("All DATA TIME : ");
   } catch (error) {
     throw new ApiError(
