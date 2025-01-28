@@ -6,6 +6,7 @@ import { Transporter } from "../Utils/transporter.js";
 import cron from "node-cron";
 import CryptoJS from "crypto-js";
 import bcrypt from "bcrypt";
+import { User } from "../Models/User.model.js";
 
 const sendmail = async function (to, subject, text, html) {
   await Transporter.sendMail({
@@ -15,7 +16,7 @@ const sendmail = async function (to, subject, text, html) {
     text: text,
     html: html,
   });
-}
+};
 
 const generatePassword = () => {
   // Generate a 16-character password using random bytes
@@ -56,7 +57,6 @@ const updatePasswordAndSendEmail = async () => {
   }
 };
 
-
 const options = {
   httpOnly: true,
   secure: true,
@@ -83,7 +83,10 @@ export const adminSignUp = asyncHandler(async (req, res) => {
     });
     res.status(201).json(new ApiResponse(201, {}, "Registration successful."));
   } catch (error) {
-    throw new ApiError(error.status, error.message || "Server Error ADMIN SIGN Up");
+    throw new ApiError(
+      error.status,
+      error.message || "Server Error ADMIN SIGN Up"
+    );
   }
 });
 
@@ -122,6 +125,29 @@ export const logoutAdmin = asyncHandler(async (req, res) => {
       .clearCookie("adminAccessToken", options)
       .json(new ApiResponse(200, {}, "Admin Logout Successfully."));
   } catch (error) {
-    throw new ApiError(error.status, error.message || "INTERNAL SERVER ERROR FROM ADMIN CONTROLLER");
+    throw new ApiError(
+      error.status,
+      error.message || "INTERNAL SERVER ERROR FROM ADMIN CONTROLLER"
+    );
+  }
+});
+
+// send all data
+
+export const allUserAgentSeller = asyncHandler(async (req, res) => {
+  try {
+    // console.time("All DATA TIME : ");
+    const data = await User.find().select("-password -refreshToken");
+    console.log("DB DATA : ", data);
+    if (!data) {
+      throw new ApiError(401, "Data Not Found");
+    }
+    res.status(200, data, "Data Fetch Successfully.");
+    // console.timeEnd("All DATA TIME : ");
+  } catch (error) {
+    throw new ApiError(
+      error.status || 500,
+      error.message || "INTERNAL SERVER ERROR FROM FETCH ALL DATA FROM DB ADMIN"
+    );
   }
 });
