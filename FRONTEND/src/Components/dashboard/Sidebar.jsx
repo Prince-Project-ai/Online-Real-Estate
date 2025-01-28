@@ -9,7 +9,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { setIsAdminAuthenticated } = useAdminAuth();
   const { showToast } = useMessage();
-  const [isLoading, isSetLoading] = useState(false);
+  const [isLoading, isSetLoading] = useState(false)
 
   const AdminLogout = async () => {
     isSetLoading(true);
