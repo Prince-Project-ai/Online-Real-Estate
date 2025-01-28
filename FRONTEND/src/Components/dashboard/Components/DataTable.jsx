@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ModelManager from "./ModelManager";
 
-const DataTable = () => {
+const DataTable = ({ data }) => {
   return (
     <div className="p-5 bg-white border-dark border rounded-lg shadow-lg">
       {/* Top Controls */}
@@ -77,24 +77,35 @@ const DataTable = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {Array.from({ length: rowsPerPage }).map((_, index) => ( */}
-            <tr
-              // key={index}
-              className="text-gray-700 border-b hover:bg-gray-100"
-            >
-              {/* <td className="py-2 px-4">{(currentPage - 1) * rowsPerPage + index + 1}Hello</td> */}
-              {/* <td className="py-2 px-4">0 * 5+1+1</td> */}
-              <td className="py-2 px-4">1</td>
-              <td className="py-2 px-4">John Doe</td>
-              <td className="py-2 px-4">johndoe@example.com</td>
-              <td className="py-2 px-4">User</td>
-              <td className="py-2 px-4">Active</td>
-              <td>
-                <ModelManager />
-              </td>
-            </tr>
-
-            {/* ))} */}
+            {data?.map((user, index) => {
+              const { fullName, email, phoneNumber, address, role, avatar } =
+                user;
+              return (
+                <tr
+                  key={index}
+                  className="text-gray-700 border-b hover:bg-gray-100"
+                >
+                  {/* <td className="py-2 px-4">{(currentPage - 1) * rowsPerPage + index + 1}Hello</td> */}
+                  {/* <td className="py-2 px-4">0 * 5+1+1</td> */}
+                  <td className="py-2 px-4">{index + 1}</td>
+                  <td className="py-2 px-4">
+                    <img
+                      src={avatar}
+                      alt={email}
+                      className="w-10 h-10 rounded-full object-fill"
+                    />
+                  </td>
+                  <td className="py-2 px-4">{fullName}</td>
+                  <td className="py-2 px-4">{email}</td>
+                  <td className="py-2 px-4">{phoneNumber}</td>
+                  <td className="py-2 px-4">{address}</td>
+                  <td className="py-2 px-4">{role}</td>
+                  <td>
+                    <ModelManager />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

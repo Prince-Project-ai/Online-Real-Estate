@@ -136,7 +136,6 @@ export const logoutAdmin = asyncHandler(async (req, res) => {
 
 export const allUserAgentSeller = asyncHandler(async (req, res) => {
   try {
-    // console.time("All DATA TIME : ");
     const data = await User.find().select("-password -refreshToken");
     if (!data) {
       throw new ApiError(401, "Data Not Found");
@@ -144,7 +143,6 @@ export const allUserAgentSeller = asyncHandler(async (req, res) => {
     res
       .status(200)
       .json(new ApiResponse(200, data, "Data Fetch Successfully."));
-    // console.timeEnd("All DATA TIME : ");
   } catch (error) {
     throw new ApiError(
       error.status || 500,

@@ -1,5 +1,5 @@
 import express from "express";
-import compression from 'compression';
+import compression from "compression";
 import cors from "cors";
 import errorHandler from "./Utils/errorHandler.js";
 import cookieParser from "cookie-parser";
@@ -20,8 +20,6 @@ app.use(
   })
 );
 
-
-
 app.get("/", (_, res) => {
   res.send("Welcome to Online Real Estate API");
 });
@@ -30,13 +28,11 @@ app.get("/", (_, res) => {
 app.use("/api/v1/propertyfy", userRouter);
 
 // ADMIN
-app.use("/api/v1/propertyfy", adminRouter);
+app.use("/api/v1/propertyfy/admin/", adminRouter);
 
 app.use(errorHandler);
 
 export { app };
-
-
 
 /*
 =============================================== [API LIST START] ========================================
@@ -60,6 +56,12 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/admin-sign-in
       http://localhost:9999/api/v1/propertyfy/current-admin
       http://localhost:9999/api/v1/propertyfy/admin-logout
+
+
+
+      ======================= API LIST [ SOMETING (ADMIN) ] =================
+      http://localhost:9999/api/v1/propertyfy/admin/all-users
+
 
 
 =============================================== [API LIST END] ========================================
