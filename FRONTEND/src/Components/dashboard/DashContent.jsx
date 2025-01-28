@@ -1,13 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
-import DataTable from "./Components/DataTable";
+import React, { useCallback, useEffect, useState, lazy, Suspense } from "react";
+// import DataTable from "";
+const DataTable = lazy(() => import("./Components/DataTable"));
 import { allUserInfo } from "../../Api/dashboard/HandleAdminApi";
 import { useMessage } from "../../Contexts/MessageContext";
+import { useMemo } from "react";
+import TableSkeleton from "./Components/skeletion/TableSkeleton";
+
 
 const DashContent = () => {
+  // const allUsers = { hash: "hash", avatar: "avatar", fullName: "fullName", email: "email", phoneNumber: "phoneNumber", role: "role", address: "address", id: "_id" }
+  const thFieldForAllUser = useMemo(() => ["#", "Profile", "Name", "Email", "Phone", "Role", "Actions"], []);
+  const renderField = { hash: "hash", avatar: "avatar", fullName: "fullName", email: "email", phoneNumber: "phoneNumber", role: "role", id: "_id", permition: "permition" }
   //data fetching for all user in dashboard
   const { showToast } = useMessage();
-  const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllUser = useCallback(async () => {
     setIsLoading(true);
@@ -29,6 +36,11 @@ const DashContent = () => {
   useEffect(() => {
     fetchAllUser();
   }, []);
+
+  if (isLoading) {
+    return <TableSkeleton />
+  }
+
 
   return (
     <div className=" w-full p-5 page-body flex-1 overflow-hidden overflow-y-auto">
@@ -70,7 +82,14 @@ const DashContent = () => {
           </div>
         </div>
       </div>
-      <DataTable data={userInfo} />
+      <Suspense fallback={<TableSkeleton />}>
+        <DataTable
+          data={userInfo}
+          // need={allUsers}
+          thField={thFieldForAllUser}
+          renderField={renderField}
+        />
+      </Suspense>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, Suspense, lazy } from "react";
 const Sidebar = lazy(() => import("./Sidebar"));
 const Topbar = lazy(() => import("./Topbar"));
-const DashContent = lazy(() => import("./DashContent"));
+import DashContent from "./DashContent";
 const Footer = lazy(() => import("./Footer"));
 
 const DashboardHome = () => {
@@ -27,9 +27,7 @@ const DashboardHome = () => {
                 />
               </Suspense>
             </div>
-            <Suspense fallback={<p>Loading Main Content..</p>}>
-              <DashContent />
-            </Suspense>
+            <DashContent />
             <div className="page-footer">
               <Suspense fallback={<p>Loading Footer..</p>}>
                 <Footer />

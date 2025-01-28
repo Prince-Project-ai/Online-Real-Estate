@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from "react";
-const DashboardHome = lazy(() => import("../Components/dashboard/DashboardHome"));
 import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardLayouts from "../layouts/DashboardLayouts";
 import SignIn from "../Pages/dashboard/SignIn";
 import NotFound from "../Components/dashboard/NotFound";
+import DashboardHome from "../Components/dashboard/DashboardHome";
 import AdminContextProvider, { useAdminAuth } from "../Contexts/ADMIN/AdminAuthContext";
 import MessageProvider from "../Contexts/MessageContext";
 import DashboardSkeleton from "../Components/dashboard/comman/DashboardSkeleton";
@@ -19,11 +19,9 @@ const DashboardRouter = () => {
                         <Route
                             path="/"
                             element={
-                                <Suspense fallback={<DashboardSkeleton />}>
-                                    <PrivateRoute>
-                                        <DashboardHome />
-                                    </PrivateRoute>
-                                </Suspense>
+                                <PrivateRoute>
+                                    <DashboardHome />
+                                </PrivateRoute>
                             }
                         />
                         <Route

@@ -5,6 +5,8 @@ export default {
     extend: {
       animation: {
         tada: "tada 1s ease-in-out",
+        slideDown: "slideDown 0.5s ease-in-out",
+        bounce: "bounce 1s ease-in-out",
       },
       keyframes: {
         tada: {
@@ -13,6 +15,26 @@ export default {
           "30%, 50%, 70%, 90%": { transform: "scale(1.1) rotate(3deg)" },
           "40%, 60%, 80%": { transform: "scale(1.1) rotate(-3deg)" },
           "100%": { transform: "scale(1) rotate(0)" },
+        },
+        slideDown: {
+          "0%": {
+            transform: "translateY(-50%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
+        bounce: {
+          "0%, 100%": {
+            transform: "translateY(0)",
+            animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)",
+          },
+          "50%": {
+            transform: "translateY(-20px)",
+            animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)",
+          },
         },
       },
       fontFamily: {

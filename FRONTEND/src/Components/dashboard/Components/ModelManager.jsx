@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
-import CreateForm from "./CreateForm";
 import UpdateForm from "./UpdateForm";
+import Permission from "./Permission";
+import Model from "../comman/Model";
 
 const ModelManager = () => {
   const [modelState, setModelState] = useState({
@@ -18,14 +19,10 @@ const ModelManager = () => {
 
   const renderModelContent = useCallback(() => {
     switch (modelState.type) {
-      case "createModel":
-        return <CreateForm onClose={closeModel} />;
-
-      case "updateModel":
-        return <UpdateForm onClose={closeModel} />;
-
-      default:
-        return null;
+      case "permisstionModel": return <Permission openModel={openModel} onClose={closeModel} />;
+      case "updateModel": return <UpdateForm onClose={closeModel} />;
+      case "Permission": return <Model onClose={closeModel} />;
+      default: return null;
     }
   }, [modelState.type]);
 
@@ -33,14 +30,8 @@ const ModelManager = () => {
     <>
       <div className="model-button flex items-center justify-center gap-x-2">
         <button
-          onClick={() => openModel("createModel")}
-          className="bg-secondary border py-2 px-4 rounded-lg text-dark font-inter text-xs"
-        >
-          create
-        </button>
-        <button
           onClick={() => openModel("updateModel")}
-          className="bg-secondary border py-2 px-4 rounded-lg text-dark font-inter text-xs"
+          className="bg-dark border py-2 px-4 rounded-lg text-white font-inter text-xs"
         >
           Update
         </button>
@@ -49,8 +40,6 @@ const ModelManager = () => {
         <div className="fixed inset-0 z-50">
           <div className="fixed inset-0 overflow-y-auto backdrop-blur-sm bg-secondary/10">
             <div className="min-h-full flex items-center justify-center border p-4">
-              {/* {currentModel === "createModel" && <CreateForm />}
-              {currentModel === "updateModel" && <UpdateForm />} */}
               {renderModelContent()}
             </div>
           </div>

@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 // import WebsiteContextStackProvider from "./Contexts/WebsiteContextStack.jsx";
 
 createRoot(document.getElementById("PropertyFy")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+  // <StrictMode>
+  <App />
+  // </StrictMode>
 );

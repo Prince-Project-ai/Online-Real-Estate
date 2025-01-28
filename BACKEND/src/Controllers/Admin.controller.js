@@ -136,7 +136,7 @@ export const logoutAdmin = asyncHandler(async (req, res) => {
 
 export const allUserAgentSeller = asyncHandler(async (req, res) => {
   try {
-    const data = await User.find().select("-password -refreshToken");
+    const data = await User.find().select("-password -refreshToken -__v -createdAt -updatedAt");
     if (!data) {
       throw new ApiError(401, "Data Not Found");
     }
