@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ModelManager from "./ModelManager";
 
 const DataTable = () => {
-
   return (
     <div className="p-5 bg-white border-dark border rounded-lg shadow-lg">
       {/* Top Controls */}
@@ -57,11 +56,24 @@ const DataTable = () => {
         <table className="w-full border-collapse bg-white rounded-lg overflow-hidden">
           <thead className="border">
             <tr className="text-white bg-dark">
-              <th className="py-2 text-start font-inter text-sm border border-white px-4">#</th>
-              <th className="py-2 text-start font-inter text-sm border border-white px-4">Name</th>
-              <th className="py-2 text-start font-inter text-sm border border-white px-4">Email</th>
-              <th className="py-2 text-start font-inter text-sm border border-white px-4">Role</th>
-              <th className="py-2 text-start font-inter text-sm border border-white px-4">Status</th>
+              <th className="py-2 text-start font-inter text-sm border border-white px-4">
+                #
+              </th>
+              <th className="py-2 text-start font-inter text-sm border border-white px-4">
+                Name
+              </th>
+              <th className="py-2 text-start font-inter text-sm border border-white px-4">
+                Email
+              </th>
+              <th className="py-2 text-start font-inter text-sm border border-white px-4">
+                Role
+              </th>
+              <th className="py-2 text-start font-inter text-sm border border-white px-4">
+                Status
+              </th>
+              <th className="py-2 text-start font-inter text-sm border border-white px-4">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -77,7 +89,9 @@ const DataTable = () => {
               <td className="py-2 px-4">johndoe@example.com</td>
               <td className="py-2 px-4">User</td>
               <td className="py-2 px-4">Active</td>
-              <td><ModelManager /></td>
+              <td>
+                <ModelManager />
+              </td>
             </tr>
 
             {/* ))} */}
@@ -91,7 +105,6 @@ const DataTable = () => {
           {/* Showing {(currentPage - 1) * rowsPerPage + 1}- */}
           {/* {Math.min(currentPage * rowsPerPage, totalRows)} of {totalRows} rows */}
         </p>
-
 
         <div className="flex items-center gap-2">
           <button
