@@ -1,8 +1,6 @@
 import React from "react";
-import Model from "../comman/Model";
-// import ModelManager from "./ModelManager";
 
-const DataTable = ({ data, thField, renderField }) => {
+const DataTable = ({ thField, children }) => {
 
     return (
         <div className="p-5 bg-white border rounded-lg shadow">
@@ -64,22 +62,7 @@ const DataTable = ({ data, thField, renderField }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            data.map((item, i) => {
-                                return (
-                                    <tr key={i} className="hover:bg-secondary border-b">
-                                        {
-                                            Object.values(renderField).map((needItem, index) => {
-                                                if (needItem === "avatar") return <TdImg key={index} FieldValue={item[needItem]} />
-                                                if (needItem === "hash") return <TdHash key={index} hash={i + 1} />
-                                                if (needItem === "permition") return <TdModel key={index} />
-                                                if (needItem !== "_id") return <Td key={index} FieldValue={item[needItem]} />
-                                            })
-                                        }
-                                    </tr>
-                                )
-                            })
-                        }
+                        {children}
                     </tbody>
                 </table>
             </div>
@@ -113,30 +96,30 @@ const Th = React.memo(({ Field }) => (
     </th>
 ))
 
-const TdHash = React.memo(({ hash }) => (
-    <th className="py-2 text-start font-inter text-sm px-4">
-        {hash}
-    </th>
-))
+// const TdHash = React.memo(({ hash }) => (
+//     <td className="py-2 text-start font-inter text-sm px-4">
+//         {hash}
+//     </td>
+// ))
 
-const Td = React.memo(({ FieldValue }) => (
-    <td className="text-xs font-inter py-2 px-4">{FieldValue}</td>
-))
+// const Td = React.memo(({ FieldValue }) => (
+//     <td className="text-xs font-inter py-2 px-4">{FieldValue}</td>
+// ))
 
-const TdImg = React.memo(({ FieldValue }) => (
-    <td className="text-xs py-2 px-4">
-        <img
-            src={FieldValue}
-            alt={FieldValue}
-            className="w-10 h-10 rounded-full object-fill"
-        />
-    </td>
-))
+// const TdImg = React.memo(({ FieldValue }) => (
+//     <td className="text-xs py-2 px-4">
+//         <img
+//             src={FieldValue}
+//             alt={FieldValue}
+//             className="w-10 h-10 rounded-full object-fill"
+//         />
+//     </td>
+// ))
 
-const TdModel = React.memo(() => (
-    <td>
-        <Model lable="Permission" modelInsideBtn="Deny" ModelOutSideBtn="Action">
-            <p>Congratulaton! It's Working Bro..</p>
-        </Model>
-    </td>
-))
+// const TdModel = React.memo(() => (
+//     <td>
+//         <Model lable="Permission" modelInsideBtn="Deny" ModelOutSideBtn="Action">
+//             <p>Congratulaton! It's Working Bro..</p>
+//         </Model>
+//     </td>
+// ))
