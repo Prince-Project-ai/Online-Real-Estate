@@ -29,7 +29,7 @@ const Sidebar = () => {
             setIsLoading(false);
         }
     }
-    
+
     return (
         <aside className="max-w-60 w-full border-r border-gray-300 flex flex-col h-screen max-h-screen">
             <div className="logo p-2 h-12 flex justify-center items-center border-b border-gray-300">
@@ -147,7 +147,6 @@ const Sidebar = () => {
                             <i className="me-3 ri-verified-badge-line"></i>
                         </span>
                         <NavLink className="font-description">Dashboard</NavLink>
-
                     </li>
                 </ul>
             </div>
