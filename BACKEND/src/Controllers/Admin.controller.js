@@ -8,6 +8,13 @@ import CryptoJS from "crypto-js";
 import bcrypt from "bcrypt";
 import { User } from "../Models/User.model.js";
 
+// this is options for cookies
+const OPTIONS = {
+  httpOnly: true,
+  secure: true,
+};
+
+// mail sending for change password every 4h
 const sendmail = async function (to, subject, text, html) {
   await Transporter.sendMail({
     from: "gayatridairy2001@gmail.com",
@@ -18,12 +25,14 @@ const sendmail = async function (to, subject, text, html) {
   });
 };
 
+// generate password for sending mail
 const generatePassword = () => {
   // Generate a 16-character password using random bytes
   const randomBytes = CryptoJS.lib.WordArray.random(8); // 8 bytes = 16 characters in hex
   return randomBytes.toString(CryptoJS.enc.Hex);
 };
 
+// update password to set getting new mail password JOB
 const passwordUpdateJob = cron.schedule(
   "0 0 * * *", // Runs daily at midnight
   () => {
@@ -34,6 +43,7 @@ const passwordUpdateJob = cron.schedule(
   }
 );
 
+// update passwword controller (update password for admin security reason)
 const updatePasswordAndSendEmail = async () => {
   try {
     const admins = await Admin.find().select("+password +_id"); // Fetch all admins
@@ -57,11 +67,7 @@ const updatePasswordAndSendEmail = async () => {
   }
 };
 
-const options = {
-  httpOnly: true,
-  secure: true,
-};
-
+// this controller generate the access Token for accessing resourses
 export const generateAccessToken = (ADMIN) => {
   try {
     return ADMIN.generateAdminAccessToken();
@@ -73,6 +79,7 @@ export const generateAccessToken = (ADMIN) => {
   }
 };
 
+// admin signup using post man no fronted required
 export const adminSignUp = asyncHandler(async (req, res) => {
   try {
     const { adminName, email, password } = req.body;
@@ -90,6 +97,7 @@ export const adminSignUp = asyncHandler(async (req, res) => {
   }
 });
 
+//admin signin using fronted (Controller)
 export const adminSignIn = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -110,19 +118,20 @@ export const adminSignIn = asyncHandler(async (req, res) => {
     passwordUpdateJob.start();
   }
 
-  options.maxAge = 60 * 60 * 1000 * 24;
+  OPTIONS.maxAge = 60 * 60 * 1000 * 24;
 
   res
     .status(200)
-    .cookie("adminAccessToken", token, options) // Cookie configuration optimized
+    .cookie("adminAccessToken", token, OPTIONS) // Cookie configuration optimized
     .json(new ApiResponse(200, {}, "Login Successfully..."));
 });
 
+// admin Logout Controller
 export const logoutAdmin = asyncHandler(async (req, res) => {
   try {
     res
       .status(200)
-      .clearCookie("adminAccessToken", options)
+      .clearCookie("adminAccessToken", OPTIONS)
       .json(new ApiResponse(200, {}, "Admin Logout Successfully."));
   } catch (error) {
     throw new ApiError(
@@ -132,8 +141,7 @@ export const logoutAdmin = asyncHandler(async (req, res) => {
   }
 });
 
-// send all data
-
+// that controller is usec for send all USER,AGENT,SELLER 
 export const allUserAgentSeller = asyncHandler(async (req, res) => {
   try {
     const data = await User.find().select("-password -refreshToken -__v -createdAt -updatedAt");
@@ -148,5 +156,22 @@ export const allUserAgentSeller = asyncHandler(async (req, res) => {
       error.status || 500,
       error.message || "INTERNAL SERVER ERROR FROM FETCH ALL DATA FROM DB ADMIN"
     );
+  }
+});
+
+// remove access [MANUALLY] the USER,AGENT,SELLER
+
+export const removeAccessAuth = asyncHandler(async (req, res) => {
+  try {
+    const auth_id = req.params.auth_id;
+    const deleteAuth = await User.findByIdAndDelete(auth_id);
+    if (!deleteAuth) throw new ApiError(401, "Auth Not Found");
+    res
+      .status(200)
+      .clearCookie("accessToken", OPTIONS)
+      .clearCookie("refreshToken", OPTIONS)
+      .json(new ApiResponse(200, {}, "Auth Delete Successfully"));
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM REMOVE ACCESS AUTHS [ADMIN SIDE]");
   }
 });

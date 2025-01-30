@@ -19,13 +19,13 @@ const SearchResult = () => {
       </div>
 
       {/* Property Cards Section */}
-      <div className="w-full lg:w-1/2 p-6 overflow-y-auto">
+      <div className="w-full lg:w-1/8 p-6 overflow-y-auto">
         <header className="mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Search Results</h1>
           <p className="text-gray-600">Properties near your location</p>
         </header>
 
-        <div className=" grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Single Card */}
           {[...Array(6)].map((_, index) => (
             <div

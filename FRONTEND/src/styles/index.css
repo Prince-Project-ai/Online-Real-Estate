@@ -7,13 +7,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  accent-color: black;
+  accent-color: #17191b;
 }
 
 select {
   -webkit-appearance: none; /* For Chrome, Safari, and Edge */
   -moz-appearance: none; /* For Firefox */
-  appearance: none; /* Standard syntax */
+  appearance: none !important;
+}
+
+select option {
+  accent-color: #17191b !important;
+  background: white;
 }
 
 /* Optional: Add custom styling to the select element */

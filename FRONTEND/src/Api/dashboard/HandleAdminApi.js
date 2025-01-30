@@ -27,6 +27,11 @@ export const allUserInfo = async () => {
   return res?.data;
 };
 
+export const RemoveAuthAccess = async (authId) => {
+  const res = await HandleAdminApi.delete(`/remove-auth/${authId}`);
+  return res?.data;
+};
+
 // what is my process of admin sign in
 
 // first of the i will create the api call and print the response and erro in log

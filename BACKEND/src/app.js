@@ -61,6 +61,7 @@ export { app };
 
       ======================= API LIST [ SOMETING (ADMIN) ] =================
       http://localhost:9999/api/v1/propertyfy/admin/all-users
+      http://localhost:9999/api/v1/propertyfy/admin/remove-auth
 
 
 

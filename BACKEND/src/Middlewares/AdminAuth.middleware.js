@@ -9,6 +9,7 @@ import jwt from "jsonwebtoken";
 export const verifyAdminJWT = asyncHandler(async (req, res, next) => {
   try {
     const Token = req?.cookies?.adminAccessToken;
+
     if (!Token) {
       throw new ApiError(401, "Unauthorized request. No token provided.");
     }
@@ -17,12 +18,12 @@ export const verifyAdminJWT = asyncHandler(async (req, res, next) => {
     if (!decodedToken?.id) {
       throw new ApiError(401, "Unauthorized request. Invalid token.");
     }
+    
     // Find admin by decoded token ID
     const admin = await Admin.findById(decodedToken.id).select("-password -token");
     if (!admin) {
       throw new ApiError(401, "Unauthorized request. Admin not found.");
     }
-    // Attach admin to request object
     req.admin = admin;
     next();
   } catch (error) {
