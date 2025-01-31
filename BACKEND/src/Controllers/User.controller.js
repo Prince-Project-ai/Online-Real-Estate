@@ -256,6 +256,31 @@ export const userLogOut = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User Logout SuccessFully."));
 });
 
+// reset Password functionality
+
+export const resetPassword = asyncHandler(async (req, res) => {
+  try {
+    const { password } = req.body;
+    const reNew = await User.findByIdAndUpdate(req._id,
+      {
+        $set: { password }
+      },
+      {
+        new: true
+      }
+    );
+    if (!reNew) throw new ApiError(404, "User Not Found");
+    res
+      .status(200)
+      .json(new ApiResponse(200, reNew, "Password updated successfully"));
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM RESET PASSWORD");
+  }
+});
+
+
+
+
 // signin Controller
 // 1) seprate the part for accessing
 // 2) for fetch the email from database is available or not

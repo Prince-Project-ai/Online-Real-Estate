@@ -1,4 +1,5 @@
 import React, { useState, Suspense, lazy, useCallback, useRef } from "react";
+import ResetPassword from "./ResetPassword";
 
 // Lazy-load SignIn and SignUp components
 const SignIn = lazy(() => import("./SignIn"));
@@ -52,6 +53,7 @@ const AuthModalManager = () => {
                     isAnimating={isAnimating}
                     onClose={handleCloseModal}
                     onSwitchToSignUp={() => handleModalChange("signup")}
+                    onSwitchToResetPassword={() => handleModalChange("resetPassword")}
                   />
                 </Suspense>
               )}
@@ -65,6 +67,17 @@ const AuthModalManager = () => {
                   />
                 </Suspense>
               )}
+
+              {currentModal === "resetPassword" && (
+                <Suspense fallback={<p>Loading Reset Password...</p>}>
+                  <ResetPassword
+                    isAnimating={isAnimating}
+                    onClose={handleCloseModal}
+                  // onSwitchToS={() => handleModalChange("signin")}
+                  />
+                </Suspense>
+              )}
+
             </div>
           </div>
         </div>

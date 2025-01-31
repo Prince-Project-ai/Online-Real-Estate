@@ -4,7 +4,7 @@ import { useMessage } from "../../../Contexts/MessageContext";
 import Spinner from "../../core/Spinner";
 import { useAuth } from "../../../Contexts/AuthContext";
 
-const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
+const SignIn = ({ isAnimating, onClose, onSwitchToSignUp, onSwitchToResetPassword }) => {
   const { showToast } = useMessage();
   const { setIsAuthenticated, setCurrentAuth } = useAuth();
 
@@ -140,12 +140,9 @@ const SignIn = ({ isAnimating, onClose, onSwitchToSignUp }) => {
                 Remember Me
               </label>
             </div>
-            <a
-              href="#"
-              className="text-sm text-dark hover:underline"
-            >
-              Forgot Password?
-            </a>
+            <button onClick={onSwitchToResetPassword} className="text-sm text-dark hover:underline">
+              Reset Password?
+            </button>
           </div>
 
           {/* Submit Button */}

@@ -31,8 +31,17 @@ export const currentUser = async () => {
 export const logoutAuth = async () => {
 	const response = await handleUserApi.post("/logout-user");
 	return response.data;
-
 }
+
+// Reset Password
+// export const emailVerifying = async (email) => {
+// 	const res = await handleUserApi.post("/verify-email", email);
+// 	return res?.data;
+// }
+// export const resetPassword = async (email) => {
+// 	const res = await handleUserApi.post("/reset-password");
+// 	return res?.data;
+// }
 
 // AGENT API END POINT LOGIC START
 
