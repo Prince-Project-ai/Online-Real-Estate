@@ -27,21 +27,14 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
 export const isValidateSignIn = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!(email || password)) throw new ApiError(401, "All Field are Required.")
+  if (!(email || password)) throw new ApiError(401, "All Field are Required.");
 
   next();
 });
-
 
 export const isEmailExist = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const isExist = await User.findOne(email).select("+_id");
   if (!isExist) throw new ApiError(401, "Email does not Exist.");
-  res
-    .status(200)
-    .json(200, {}, "Email Verifyed Successfully.");
-  // next();
-  // const reNew = await User.findByIdAndUpdate(isExist._id, {
-  //   $set: { password }
-  // })
+  res.status(200).json(200, {}, "Email Verifyed Successfully.");
 });

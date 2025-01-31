@@ -1,14 +1,18 @@
 import { Router } from "express";
-import { isEmailExist, isValidateSignIn, verifyJWT } from "../Middlewares/Auth.Middleware.js";
+import {
+  isEmailExist,
+  isValidateSignIn,
+  verifyJWT,
+} from "../Middlewares/Auth.Middleware.js";
 
 import {
   currentAuth,
   refreshAccessToken,
-  resetPassword,
   signIn,
   signUp,
   updateAgentProfile,
   userLogOut,
+  veryfyEmail,
 } from "../Controllers/User.controller.js";
 
 import { upload } from "../Middlewares/multer.middleware.js";
@@ -25,8 +29,8 @@ router.post("/sign-up", signUp);
 router.post("/sign-in", isValidateSignIn, signIn);
 router.post("/refresh-token", refreshAccessToken);
 router.post("/logout-user", verifyJWT, userLogOut);
-router.post("/verify-email", isEmailExist);
-router.post("/reset-password", resetPassword);
+router.post("/verify-email", veryfyEmail);
+// router.post("/reset-password", resetPassword);
 
 // AGENT ROUTES
 

@@ -44,6 +44,7 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/refresh-token
       http://localhost:9999/api/v1/propertyfy/logout-user
       http://localhost:9999/api/v1/propertyfy/current-auth
+      http://localhost:9999/api/v1/propertyfy/verify-email
 
   
       ======================= API LIST [ AGENT ] =================

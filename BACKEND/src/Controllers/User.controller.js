@@ -5,11 +5,22 @@ import { asyncHandler } from "../Utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import cloudinary from "../Config/Cloudinary.js";
 import fs from "fs";
-
+import { Transporter } from "../Utils/transporter.js";
 
 const options = {
   httpOnly: true,
   secure: true,
+};
+
+// mail sending for change password every 4h
+const sendmail = async function (to, subject, text, html) {
+  await Transporter.sendMail({
+    from: "gayatridairy2001@gmail.com",
+    to: to,
+    subject: subject,
+    text: text,
+    html: html,
+  });
 };
 
 // accessToken and refreshToken generator function
@@ -99,7 +110,7 @@ export const signUp = asyncHandler(async (req, res) => {
     );
 });
 
-// Agent update profile 
+// Agent update profile
 export const updateAgentProfile = asyncHandler(async (req, res) => {
   try {
     const agentId = req.user._id;
@@ -151,17 +162,24 @@ export const updateAgentProfile = asyncHandler(async (req, res) => {
       throw new ApiError(404, "User not found.");
     }
 
-    res.status(200).json(
-      new ApiResponse(200, updatedAgent, "Agent profile updated successfully.")
-    );
-
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedAgent,
+          "Agent profile updated successfully."
+        )
+      );
   } catch (error) {
-    res.status(error.status || 500).json(
-      new ApiError(
-        error.status || 500,
-        error.message || "Internal server error while updating agent profile."
-      )
-    );
+    res
+      .status(error.status || 500)
+      .json(
+        new ApiError(
+          error.status || 500,
+          error.message || "Internal server error while updating agent profile."
+        )
+      );
   }
 });
 
@@ -258,28 +276,51 @@ export const userLogOut = asyncHandler(async (req, res) => {
 
 // reset Password functionality
 
-export const resetPassword = asyncHandler(async (req, res) => {
+export const veryfyEmail = asyncHandler(async (req, res) => {
   try {
-    const { password } = req.body;
-    const reNew = await User.findByIdAndUpdate(req._id,
-      {
-        $set: { password }
-      },
-      {
-        new: true
-      }
+    const { email } = req.body;
+    const isExist = await User.findOne(email).select("+_id +email");
+    if (!isExist) throw new ApiError(401, "Email Does Not Exist.");
+
+    await sendmail(
+      isExist.email,
+      "Your Reset Password Verification Code",
+      `Hello,\n\n Your new Reset Code : ${isExist._id} \n\nPlease use this code to Reset the Password.`
     );
-    if (!reNew) throw new ApiError(404, "User Not Found");
     res
       .status(200)
-      .json(new ApiResponse(200, reNew, "Password updated successfully"));
+      .json(new ApiResponse(200, {}, "Code Send in Mail, Mail Verifyed."));
   } catch (error) {
-    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM RESET PASSWORD");
+    throw new ApiError(
+      error.status || 500,
+      error.message || "INTERNAL SERVER ERROR FROM VERIFYEMAIL"
+    );
   }
 });
 
-
-
+// export const resetPassword = asyncHandler(async (req, res) => {
+//   try {
+//     const { password } = req.body;
+//     const reNew = await User.findByIdAndUpdate(
+//       req._id,
+//       {
+//         $set: { password },
+//       },
+//       {
+//         new: true,
+//       }
+//     );
+//     if (!reNew) throw new ApiError(404, "User Not Found");
+//     res
+//       .status(200)
+//       .json(new ApiResponse(200, reNew, "Password updated successfully"));
+//   } catch (error) {
+//     throw new ApiError(
+//       error.status || 500,
+//       error.message || "INTERNAL SERVER ERROR FROM RESET PASSWORD"
+//     );
+//   }
+// });
 
 // signin Controller
 // 1) seprate the part for accessing
