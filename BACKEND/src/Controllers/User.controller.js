@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import cloudinary from "../Config/Cloudinary.js";
 import fs from "fs";
 import { Transporter } from "../Utils/transporter.js";
+import bcrypt from "bcrypt";  
 
 const options = {
   httpOnly: true,
@@ -279,14 +280,36 @@ export const userLogOut = asyncHandler(async (req, res) => {
 export const veryfyEmail = asyncHandler(async (req, res) => {
   try {
     const { email } = req.body;
-    const isExist = await User.findOne(email).select("+_id +email");
+    if (!email) {
+      throw new ApiError(401, "Please fill the Email");
+    }
+
+    const isExist = await User.findOne({ email }).select("+_id +email");
+
     if (!isExist) throw new ApiError(401, "Email Does Not Exist.");
+
+    const TokenCode = jwt.sign(
+      {
+        id: isExist._id,
+        email: isExist.email,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "10m",
+      }
+    );
+
+    const encodedCode = Buffer.from(TokenCode).toString("base64url");
 
     await sendmail(
       isExist.email,
       "Your Reset Password Verification Code",
-      `Hello,\n\n Your new Reset Code : ${isExist._id} \n\nPlease use this code to Reset the Password.`
+      `
+        ${encodedCode}
+      `
     );
+
+
     res
       .status(200)
       .json(new ApiResponse(200, {}, "Code Send in Mail, Mail Verifyed."));
@@ -298,29 +321,41 @@ export const veryfyEmail = asyncHandler(async (req, res) => {
   }
 });
 
-// export const resetPassword = asyncHandler(async (req, res) => {
-//   try {
-//     const { password } = req.body;
-//     const reNew = await User.findByIdAndUpdate(
-//       req._id,
-//       {
-//         $set: { password },
-//       },
-//       {
-//         new: true,
-//       }
-//     );
-//     if (!reNew) throw new ApiError(404, "User Not Found");
-//     res
-//       .status(200)
-//       .json(new ApiResponse(200, reNew, "Password updated successfully"));
-//   } catch (error) {
-//     throw new ApiError(
-//       error.status || 500,
-//       error.message || "INTERNAL SERVER ERROR FROM RESET PASSWORD"
-//     );
-//   }
-// });
+export const resetPassword = asyncHandler(async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!(token && password)) throw new ApiError(401, "token and password is required");
+
+    const decodeTokenBase64 = Buffer.from(token, "base64url").toString("utf-8");
+
+    const accessToken = jwt.verify(decodeTokenBase64, process.env.ACCESS_TOKEN_SECRET);
+
+    const newPassword = await bcrypt.hash(password, 8);
+
+    const updatePassword = await User.findByIdAndUpdate(accessToken.id,
+      {
+        $set: { password: newPassword }
+      },
+      {
+        new: true,
+      }
+    ).select("-password -refreshToken");
+
+
+
+    if (!updatePassword) throw new ApiError(404, "User Not Found");
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, updatePassword, "Password updated successfully"));
+  } catch (error) {
+    throw new ApiError(
+      error.status || 500,
+      error.message || "INTERNAL SERVER ERROR FROM RESET PASSWORD"
+    );
+  }
+});
 
 // signin Controller
 // 1) seprate the part for accessing

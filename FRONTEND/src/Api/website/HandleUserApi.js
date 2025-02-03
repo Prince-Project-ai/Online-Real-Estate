@@ -33,15 +33,17 @@ export const logoutAuth = async () => {
 	return response.data;
 }
 
-// Reset Password
-// export const emailVerifying = async (email) => {
-// 	const res = await handleUserApi.post("/verify-email", email);
-// 	return res?.data;
-// }
-// export const resetPassword = async (email) => {
-// 	const res = await handleUserApi.post("/reset-password");
-// 	return res?.data;
-// }
+// Email Verifying
+export const emailVerifying = async (email) => {
+	const res = await handleUserApi.post("/verify-email", email);
+	return res?.data;
+}
+
+// reser Password
+export const resetPasswordApi = async (resetPasswordData) => {
+	const res = await handleUserApi.patch("/reset-password", resetPasswordData);
+	return res?.data;
+}
 
 // AGENT API END POINT LOGIC START
 

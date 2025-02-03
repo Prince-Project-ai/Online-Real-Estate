@@ -1,0 +1,157 @@
+const mongoose = require("mongoose");
+
+const propertyListingSchema = new mongoose.Schema({
+  // Seller/Owner Information
+  sellerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", // Reference to the User collection (assuming sellers are users)
+    required: true,
+  },
+  sellerName: {
+    type: String,
+    required: true,
+  },
+  sellerContact: {
+    type: String,
+    required: true,
+  },
+
+  // Basic Property Details
+  propertyTitle: {
+    type: String,
+    required: true,
+  },
+  propertyType: {
+    type: String,
+    enum: ["Apartment", "House", "Office", "Shop", "Other"],
+    required: true,
+  },
+  listingType: {
+    type: String,
+    enum: ["For Sale", "For Rent"],
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  priceNegotiable: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: Number,
+    required: true,
+  },
+  sizeUnit: {
+    type: String,
+    enum: ["sq. ft", "sq. m", "acres"],
+    default: "sq. ft",
+  },
+  bedrooms: {
+    type: Number,
+    required: true,
+  },
+  bathrooms: {
+    type: Number,
+    required: true,
+  },
+  furnished: {
+    type: String,
+    enum: ["Fully", "Semi", "Unfurnished"],
+    required: true,
+  },
+
+  // Location Details
+  address: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  postalCode: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  mapLocation: {
+    type: {
+      latitude: Number,
+      longitude: Number,
+    },
+    required: true,
+  },
+
+  // Property Features & Amenities
+  parkingSpaces: {
+    type: Number,
+    default: 0,
+  },
+  balconyTerrace: {
+    type: Boolean,
+    default: false,
+  },
+  gardenYard: {
+    type: Boolean,
+    default: false,
+  },
+  swimmingPool: {
+    type: Boolean,
+    default: false,
+  },
+  gym: {
+    type: Boolean,
+    default: false,
+  },
+  securitySystem: {
+    type: Boolean,
+    default: false,
+  },
+  nearbyFacilities: {
+    type: [String], // Array of strings for nearby facilities
+    default: [],
+  },
+
+  // Media Upload
+  propertyImages: {
+    type: [String], // Array of image URLs
+    default: [],
+  },
+  propertyVideo: {
+    type: String, // URL for the video
+    default: "",
+  },
+  virtualTour: {
+    type: String, // URL for the 360° virtual tour
+    default: "",
+  },
+
+  // Timestamps
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// Update the `updatedAt` field before saving
+propertyListingSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
+  next();
+});
+
+const PropertyListing = mongoose.model("PropertyListing", propertyListingSchema);
+
+module.exports = PropertyListing;

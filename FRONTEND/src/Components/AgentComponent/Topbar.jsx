@@ -9,7 +9,7 @@ const Topbar = () => {
       <header className="relative w-full h-12 py-3 border-b border-gray-300 flex justify-between items-center px-5">
         <div className="toggle-bar">
           <button>
-            sd
+            sd agent
           </button>
         </div>
         <div className="profile flex items-center space-x-2">

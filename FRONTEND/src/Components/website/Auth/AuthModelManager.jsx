@@ -1,4 +1,5 @@
 import React, { useState, Suspense, lazy, useCallback, useRef } from "react";
+import EmailVerification from "./EmailVerification";
 import ResetPassword from "./ResetPassword";
 
 // Lazy-load SignIn and SignUp components
@@ -46,6 +47,8 @@ const AuthModalManager = () => {
           {/* Scrollable Container */}
           <div className="fixed inset-0 overflow-y-auto">
             <div className="min-h-full flex items-center justify-center p-4">
+
+
               {/* Modal Content */}
               {currentModal === "signin" && (
                 <Suspense fallback={<p>Loading Sign In...</p>}>
@@ -53,7 +56,7 @@ const AuthModalManager = () => {
                     isAnimating={isAnimating}
                     onClose={handleCloseModal}
                     onSwitchToSignUp={() => handleModalChange("signup")}
-                    onSwitchToResetPassword={() => handleModalChange("resetPassword")}
+                    onSwitchToResetPassword={() => handleModalChange("EmailVerification")}
                   />
                 </Suspense>
               )}
@@ -68,12 +71,22 @@ const AuthModalManager = () => {
                 </Suspense>
               )}
 
-              {currentModal === "resetPassword" && (
+              {currentModal === "EmailVerification" && (
+                <Suspense fallback={<p>Loading Reset Password...</p>}>
+                  <EmailVerification
+                    isAnimating={isAnimating}
+                    onClose={handleCloseModal}
+                    onSwitchToReset={() => handleModalChange("ResetPassword")}
+                  />
+                </Suspense>
+              )}
+
+              {currentModal === "ResetPassword" && (
                 <Suspense fallback={<p>Loading Reset Password...</p>}>
                   <ResetPassword
                     isAnimating={isAnimating}
                     onClose={handleCloseModal}
-                  // onSwitchToS={() => handleModalChange("signin")}
+                    onSwitchToSignIn={() => handleModalChange("signin")}
                   />
                 </Suspense>
               )}

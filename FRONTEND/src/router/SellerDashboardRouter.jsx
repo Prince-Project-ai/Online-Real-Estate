@@ -5,6 +5,7 @@ import DashContent from "../Components/SellerComponent/DashContent";
 import SellerProfile from "../Components/SellerComponent/SellerProfile";
 import MessageProvider from "../Contexts/MessageContext";
 import AuthProvider, { useAuth } from "../Contexts/AuthContext";
+import AddListing from "../Components/SellerComponent/listing/AddListing";
 
 const SellerDashboardRouter = () => {
   return (
@@ -15,6 +16,7 @@ const SellerDashboardRouter = () => {
             <Routes>
               <Route path="/" element={<DashContent />} />
               <Route path="/profile" element={<SellerProfile />} />
+              <Route path="/add-listing" element={<AddListing />} />
             </Routes>
           </SellerLayout>
         </PrivateRoute>
@@ -25,12 +27,8 @@ const SellerDashboardRouter = () => {
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, isLoading, currentAuth } = useAuth();
-  console.log(currentAuth);
-  if (isLoading)
-    return <p className="bg-dark text-white text-5xl">LOADING...</p>;
-  if (!isAuthenticated || currentAuth.role !== "Seller") {
-    return <Navigate to="/" replace />;
-  }
+  if (isLoading) return <p className="bg-dark text-white text-5xl">LOADING...</p>;
+  if (!isAuthenticated || currentAuth.role !== "Seller") return <Navigate to="/" replace />;
   return children;
 };
 
