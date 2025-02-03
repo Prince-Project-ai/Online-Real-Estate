@@ -35,7 +35,7 @@ const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
     }
   };
   return (
-    <aside className={`${sidebarToggle ? 'lg:flex hidden' : 'lg:hidden absolute inset-0 bg-white z-10'} max-w-60 w-full border-r border-gray-300 flex flex-col h-screen`}>
+    <aside className={`${sidebarToggle ? 'lg:flex hidden' : 'lg:hidden absolute inset-0 bg-white z-10'} max-w-64 w-full border-r border-gray-300 flex flex-col h-screen`}>
       <div className="logo p-2 h-12 flex lg:justify-center justify-between items-center border-b border-gray-300">
         <h2 className="text-2xl font-heading text-black">
           <i className="ri-home-4-line"></i> PropertyFy

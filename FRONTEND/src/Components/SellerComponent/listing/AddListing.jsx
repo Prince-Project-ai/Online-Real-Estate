@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BasicDetails from "./BasicDetails";
+import PropertyType from "./PropertyType";
 import LocationDetails from "./LocationDetails";
 import FeaturesAmenities from "./FeaturesAmenities";
 import MediaUpload from "./MediaUpload";
@@ -19,7 +19,7 @@ const AddListing = () => {
     bedrooms: "",
     bathrooms: "",
     furnished: "",
-    
+
     // Location Details
     address: "",
     city: "",
@@ -60,58 +60,92 @@ const AddListing = () => {
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <BasicDetails formData={formData} handleChange={handleChange} />;
+        return <PropertyType formData={formData} handleChange={handleChange} />;
       case 2:
         return <LocationDetails formData={formData} handleChange={handleChange} />;
       case 3:
-        return <FeaturesAmenities formData={formData} handleChange={handleChange} />;
-      case 4:
         return <MediaUpload formData={formData} handleChange={handleChange} />;
+      case 4:
+        return <FeaturesAmenities formData={formData} handleChange={handleChange} />;
       default:
         return null;
     }
   };
 
   return (
-    // <div className="container mx-auto p-4">
     <>
-      <h1 className="text-2xl font-bold font-inter mb-4">Property Listing.</h1>
-      <div className="bg-white rounded-lg p-5 border">
-        <div className="grid grid-cols-12">
-          <div className="col-span-4"></div>
-          <div className="col-span-8"> {renderStep()}</div>
+      {/* <div className="bg-white px-5 py-3 rounded-lg border mb-2">
+        <h1 className="text-sm">Property Listing.</h1>
+      </div> */}
+      <div className="grid grid-cols-12 gap-x-5">
+
+        <div className="bg-white rounded-lg self-start border p-5 col-span-8">
+          {renderStep()}
+
+          <div className="flex justify-between mt-6">
+            {step > 1 && (
+              <button
+                onClick={prevStep}
+                className="border font-inter tracking-wide border-dark text-dark  px-4 py-2 rounded-lg"
+              >
+                <i className="ri-arrow-left-long-line me-1"></i>
+                Previous
+              </button>
+            )}
+            {step < 4 ? (
+              <button
+                onClick={nextStep}
+                className="bg-dark font-inter tracking-wider text-white px-4 py-2 rounded-lg"
+              >
+                Next
+                <i className="ri-arrow-right-long-line ms-2"></i>
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                className="bg-green-500 text-white px-4 py-2 rounded-lg"
+              >
+                Submit
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="flex justify-between mt-6">
-          {step > 1 && (
-            <button
-              onClick={prevStep}
-              className="border font-inter tracking-wide border-dark text-dark  px-4 py-2 rounded-lg"
-            >
-              <i className="ri-arrow-left-long-line me-1"></i>
-              Previous
-            </button>
-          )}
-          {step < 4 ? (
-            <button
-              onClick={nextStep}
-              className="bg-dark font-inter tracking-wider text-white px-4 py-2 rounded-lg"
-            >
-              Next
-              <i className="ri-arrow-right-long-line ms-2"></i>
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg"
-            >
-              Submit
-            </button>
-          )}
+        <div className="bg-white rounded-lg self-start border p-5  col-span-4 sticky top-0">
+          <ul className="space-y-4 rounded-lg overflow-hidden">
+            <li className="flex items-center bg-secondary py-2 p-3">
+              <i className="ri-arrow-right-circle-line text-xl me-2"></i>
+              <p className="font-inter text-sm">Property Type</p>
+            </li>
+
+            <li className="flex items-center bg-secondary py-2 p-3">
+              <i className="ri-arrow-right-circle-line text-xl me-2"></i>
+              <p className="font-inter text-sm">Location</p>
+            </li>
+
+            <li className="flex items-center bg-secondary py-2 p-3">
+              <i className="ri-arrow-right-circle-line text-xl me-2"></i>
+              <p className="font-inter text-sm">Photos and videos</p>
+            </li>
+
+            <li className="flex items-center bg-secondary py-2 p-3">
+              <i className="ri-arrow-right-circle-line text-xl me-2"></i>
+              <p className="font-inter text-sm">Property details</p>
+            </li>
+
+            <li className="flex items-center bg-secondary py-2 p-3">
+              <i className="ri-arrow-right-circle-line text-xl me-2"></i>
+              <p className="font-inter text-sm">Contact info</p>
+            </li>
+
+            <li className="flex items-center bg-secondary py-2 p-3">
+              <i className="ri-arrow-right-circle-line text-xl me-2"></i>
+              <p className="font-inter text-sm">Ad promotion</p>
+            </li>
+          </ul>
         </div>
       </div>
     </>
-    // </div>
   );
 };
 
