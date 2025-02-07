@@ -92,8 +92,8 @@ const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
 
           <li id="Chat" className="relative">
             <div className="flex justify-between cursor-pointer">
-              <NavLink to="/dashboard-seller/chat" className={({ isActive }) => isActive ? "text-white font-inter py-3 px-3 bg-dark w-full flex items-center" : "flex items-center py-3 px-3 hover:bg-secondary w-full font-inter border"}>
-                <i className="ri-message-fill me-2"></i> Chating
+              <NavLink to="/dashboard-seller/seller-supprot" className={({ isActive }) => isActive ? "text-white font-inter py-3 px-3 bg-dark w-full flex items-center" : "flex items-center py-3 px-3 hover:bg-secondary w-full font-inter border"}>
+                <i className="ri-message-fill me-2"></i> Chat
               </NavLink>
             </div>
           </li>

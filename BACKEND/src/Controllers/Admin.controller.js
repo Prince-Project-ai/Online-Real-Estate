@@ -55,7 +55,7 @@ const updatePasswordAndSendEmail = async () => {
       // Update the admin's password in the database
       await Admin.updateOne({ _id: admin._id }, { password: hashedPassword });
       // Send an email with the new (plain text) password
-      await sendmail(
+      sendmail(
         admin.email,
         "Your New Password",
         `Hello,\n\nYour new password is: ${newPassword}\n\nPlease use this password to log in.`

@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import cloudinary from "../Config/Cloudinary.js";
 import fs from "fs";
 import { Transporter } from "../Utils/transporter.js";
-import bcrypt from "bcrypt";  
+import bcrypt from "bcrypt";
 
 const options = {
   httpOnly: true,
@@ -301,14 +301,13 @@ export const veryfyEmail = asyncHandler(async (req, res) => {
 
     const encodedCode = Buffer.from(TokenCode).toString("base64url");
 
-    await sendmail(
+    sendmail(
       isExist.email,
       "Your Reset Password Verification Code",
       `
         ${encodedCode}
       `
     );
-
 
     res
       .status(200)

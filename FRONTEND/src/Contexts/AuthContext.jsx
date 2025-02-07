@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 import { currentUser } from "../Api/website/HandleUserApi";
-// import { useMessage } from "./MessageContext";
 
 export const AuthContext = createContext();
 
@@ -19,7 +18,6 @@ export const useAuth = () => {
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  // const { showToast } = useMessage();
   const [currentAuth, setCurrentAuth] = useState(null);
 
   const fetchCurrentAuth = useCallback(async () => {

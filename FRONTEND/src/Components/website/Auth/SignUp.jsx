@@ -12,7 +12,6 @@ const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
   const [role, setRole] = useState('User');
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
     password: '',
     crmPassword: '',

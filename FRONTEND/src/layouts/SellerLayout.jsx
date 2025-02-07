@@ -18,7 +18,7 @@ const SellerLayout = ({ children }) => {
             <div className="page-header">
               <Topbar setSidebarToggle={setSidebarToggle} sidebarToggle={sidebarToggle} />
             </div>
-            <div className="w-full p-5 page-body bg-secondary flex-1 overflow-hidden overflow-y-auto">
+            <div className="w-full p-4 page-body bg-secondary flex-1 overflow-hidden overflow-y-auto">
               {children}
             </div>
             <div className="page-footer">

@@ -6,6 +6,7 @@ import SellerProfile from "../Components/SellerComponent/SellerProfile";
 import MessageProvider from "../Contexts/MessageContext";
 import AuthProvider, { useAuth } from "../Contexts/AuthContext";
 import AddListing from "../Components/SellerComponent/listing/AddListing";
+import SellerSupport from "../Components/SellerComponent/Chating/SellerSupport";
 
 const SellerDashboardRouter = () => {
   return (
@@ -17,6 +18,7 @@ const SellerDashboardRouter = () => {
               <Route path="/" element={<DashContent />} />
               <Route path="/profile" element={<SellerProfile />} />
               <Route path="/add-listing" element={<AddListing />} />
+              <Route path="/seller-supprot" element={<SellerSupport />} />
             </Routes>
           </SellerLayout>
         </PrivateRoute>

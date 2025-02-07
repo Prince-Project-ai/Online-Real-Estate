@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, LayersControl } from "react-lea
 import MapPing from "../../../../assets/sellerDashboard/MapPing.png";
 import { Icon } from "leaflet";
 
-const MarkerLocation = () => {
+const MarkerLocation = ({ latitude, longitude }) => {
     const customIcon = new Icon({
         iconUrl: MapPing,
         iconSize: [38, 38], // Size of the icon
@@ -12,48 +12,53 @@ const MarkerLocation = () => {
 
     return (
         <div className="h-full w-full">
-            <MapContainer center={[21.6015, 71.2204]} zoom={13} className="h-full w-full">
+            {
+                (latitude && longitude) ? (
+                    <MapContainer center={[latitude, longitude]} zoom={13} className="h-full w-full">
 
-                <LayersControl position="topright">
+                        <LayersControl position="topright">
 
-                    {/* Satellite Map */}
-                    <LayersControl.BaseLayer checked name="Satellite Map">
-                        <TileLayer
-                            attribution="Google Maps"
-                            url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
-                            maxZoom={20}
-                            subdomains={["mt0", "mt1", "mt2", "mt3"]}
-                        />
-                    </LayersControl.BaseLayer>
+                            {/* Satellite Map */}
+                            <LayersControl.BaseLayer checked name="Satellite Map">
+                                <TileLayer
+                                    attribution="Google Maps"
+                                    url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
+                                    maxZoom={20}
+                                    subdomains={["mt0", "mt1", "mt2", "mt3"]}
+                                />
+                            </LayersControl.BaseLayer>
 
-                    <LayersControl.BaseLayer name="Regular Map">
-                        <TileLayer
-                            attribution="Google Maps"
-                            url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-                            maxZoom={20}
-                            subdomains={["mt0", "mt1", "mt2", "mt3"]}
-                        />
-                    </LayersControl.BaseLayer>
+                            <LayersControl.BaseLayer name="Regular Map">
+                                <TileLayer
+                                    attribution="Google Maps"
+                                    url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+                                    maxZoom={20}
+                                    subdomains={["mt0", "mt1", "mt2", "mt3"]}
+                                />
+                            </LayersControl.BaseLayer>
 
 
-                    {/* Terrain Map */}
-                    <LayersControl.BaseLayer name="Terrain Map">
-                        <TileLayer
-                            attribution="Google Maps"
-                            url="http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}"
-                            maxZoom={20}
-                            subdomains={["mt0", "mt1", "mt2", "mt3"]}
-                        />
-                    </LayersControl.BaseLayer>
+                            {/* Terrain Map */}
+                            <LayersControl.BaseLayer name="Terrain Map">
+                                <TileLayer
+                                    attribution="Google Maps"
+                                    url="http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}"
+                                    maxZoom={20}
+                                    subdomains={["mt0", "mt1", "mt2", "mt3"]}
+                                />
+                            </LayersControl.BaseLayer>
 
-                </LayersControl>
+                        </LayersControl>
 
-                {/* Marker on the map */}
-                <Marker position={[21.6015, 71.2204]} icon={customIcon}>
-                    <Popup>Hi, There</Popup>
-                </Marker>
+                        {/* Marker on the map */}
+                        <Marker position={[latitude, longitude]} icon={customIcon}>
+                            <Popup>Hi, There</Popup>
+                        </Marker>
 
-            </MapContainer>
+                    </MapContainer>
+                ) : (<p className="text-center place-content-center h-full">Please Enter Latitude and Longitude.</p>)
+            }
+
         </div>
     );
 };

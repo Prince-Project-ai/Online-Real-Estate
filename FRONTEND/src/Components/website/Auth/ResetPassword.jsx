@@ -37,8 +37,6 @@ const ResetPassword = ({ isAnimating, onClose, onSwitchToSignIn }) => {
         }
       } else {
         setErrors(errors);
-        console.log(resetPasswordData);
-        console.log(errors);
       }
     } catch (error) {
       showToast(error?.response?.data?.message, "error");

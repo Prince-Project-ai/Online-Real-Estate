@@ -5,6 +5,7 @@ import errorHandler from "./Utils/errorHandler.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./Routes/User.router.js";
 import adminRouter from "./Routes/Admin.router.js";
+import sellerRouter from "./Routes/Seller.router.js";
 
 const app = express();
 
@@ -30,6 +31,10 @@ app.use("/api/v1/propertyfy", userRouter);
 // ADMIN
 app.use("/api/v1/propertyfy/admin/", adminRouter);
 
+// seller
+app.use("/api/v1/propertyfy/seller", sellerRouter);
+
+
 app.use(errorHandler);
 
 export { app };
@@ -48,7 +53,16 @@ export { app };
 
   
       ======================= API LIST [ AGENT ] =================
-      http://localhost:9999/api/v1/propertyfy/update-agent-profile
+      http://localhost:9999/api/v1/propertyfy/seller/update-agent-profile
+
+      
+      
+      
+      
+      ======================= API LIST [ SELLER ] =================
+      http://localhost:9999/api/v1/propertyfy/add-seller-property
+
+
 
       
 

@@ -9,6 +9,12 @@ export const handleUserApi = axios.create(
 	}
 )
 
+export const sellerApi = axios.create(
+	{
+		baseURL: "http://localhost:9999/api/v1/propertyfy/seller/",
+	}
+);
+
 // signUp
 export const signUpApi = async (formData) => {
 	const res = await handleUserApi.post("/sign-up", formData);
@@ -61,3 +67,17 @@ export const UpdateAgentProfile = async (formData) => {
 };
 
 // AGENT API END POINT LOGIC END 
+
+
+/*
+	============= SELLER API LOGIC LIST START ==============
+*/
+
+export const addListingSeller = async () => {
+	const res = await sellerApi.post("/add-seller-property");
+	return res.data;
+}
+
+/*
+	============= SELLER API LOGIC LIST END ==============
+*/
