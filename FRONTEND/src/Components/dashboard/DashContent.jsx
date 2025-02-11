@@ -139,7 +139,7 @@ const DashContent = () => {
                                     <div className="flex justify-center">
                                       <img
                                         src={rowItem["avatar"]}
-                                        alt="User  Avatar"
+                                        alt="User_Avatar"
                                         className="w-24 h-24 rounded-full object-cover"
                                       />
                                     </div>

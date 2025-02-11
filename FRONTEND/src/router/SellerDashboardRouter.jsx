@@ -7,6 +7,7 @@ import MessageProvider from "../Contexts/MessageContext";
 import AuthProvider, { useAuth } from "../Contexts/AuthContext";
 import AddListing from "../Components/SellerComponent/listing/AddListing";
 import SellerSupport from "../Components/SellerComponent/Chating/SellerSupport";
+import DataTableListing from "../Components/SellerComponent/listing/DataTableListing";
 
 const SellerDashboardRouter = () => {
   return (
@@ -18,6 +19,7 @@ const SellerDashboardRouter = () => {
               <Route path="/" element={<DashContent />} />
               <Route path="/profile" element={<SellerProfile />} />
               <Route path="/add-listing" element={<AddListing />} />
+              <Route path="/total-listing" element={<DataTableListing />} />
               <Route path="/seller-supprot" element={<SellerSupport />} />
             </Routes>
           </SellerLayout>

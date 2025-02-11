@@ -4,11 +4,20 @@ import LocationDetails from "./LocationDetails";
 import MediaUpload from "./MediaUpload";
 import PricingCard from "./PricingCard";
 import { formValidation } from "./wizardFormValidation";
+
+import { addListingSeller } from "../../../Api/website/HandleUserApi";
+import { useMessage } from "../../../Contexts/MessageContext";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import ButtonSpinner from "../../Loaders/ButtonSpinner";
 
 const AddListing = () => {
   const { currentAuth } = useAuth();
+  const { showToast } = useMessage();
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     adderId: currentAuth?._id,
@@ -43,24 +52,30 @@ const AddListing = () => {
     if (step === 1) {
       const fieldsToValidate = ["propertyTitle", "price", "size", "sizeUnit"];
       fieldsToValidate.forEach((field) => {
-        const fieldErrors = formValidation(field, formData[field]);
-        errors = { ...errors, ...fieldErrors };
+        const error = formValidation(field, formData[field]);
+        if (error) {
+          errors[field] = error;
+        }
       });
     }
 
     if (step === 2) {
       const locationFields = ["streetAddress", "district", "state", "country", "address_url", "latitude", "longitude"];
       locationFields.forEach((field) => {
-        const fieldErrors = formValidation(field, formData.location[field]);
-        errors = { ...errors, ...fieldErrors };
+        const error = formValidation(field, formData.location[field]);
+        if (error) {
+          errors[field] = error;
+        }
       });
     }
 
     if (step === 3) {
       const mediaFields = ["propertyImages", "propertyVideo"];
       mediaFields.forEach((field) => {
-        const fieldErrors = formValidation(field, formData[field], field === "propertyImages" ? formData.propertyImages : undefined);
-        errors = { ...errors, ...fieldErrors };
+        const error = formValidation(field, formData[field], field === "propertyImages" ? formData.propertyImages : undefined);
+        if (error) {
+          errors[field] = error;
+        }
       });
     }
 
@@ -109,8 +124,12 @@ const AddListing = () => {
       });
     }
 
-    const handleFormError = formValidation(name, value, files);
-    setFormErrors((prevErrors) => ({ ...prevErrors, ...handleFormError }));
+    // Validate the field and update form errors
+    const error = formValidation(name, value, files);
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
+    }));
   };
 
 
@@ -118,13 +137,41 @@ const AddListing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      const response = addListingSeller(formData);
+      const formDataToSend = new FormData();
+      formDataToSend.append("adderId", formData.adderId);
+      formDataToSend.append("role", formData.role);
+      formDataToSend.append("propertyTitle", formData.propertyTitle);
+      formDataToSend.append("listingType", formData.listingType);
+      formDataToSend.append("propertyType", formData.propertyType);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("priceNegotiable", formData.priceNegotiable);
+      formDataToSend.append("size", formData.size);
+      formDataToSend.append("sizeUnit", formData.sizeUnit);
+      formDataToSend.append("propertyVideo", formData.propertyVideo);
+
+      formDataToSend.append("location", JSON.stringify(formData.location));
+
+      if (formData.propertyImages && formData.propertyImages.length > 0) {
+        formData.propertyImages.forEach((image, index) => {
+          formDataToSend.append(`propertyImages`, image);
+        });
+      }
+      const response = await addListingSeller(formDataToSend);
+
+      if (response?.success) {
+        showToast(response?.message, "success");
+        navigate("/dashboard-seller/total-listing");
+      }
       console.log(response);
     } catch (error) {
-      console.error("Error submitting listing:", error);
+      showToast(error?.response?.data?.message, "error");
+    } finally {
+      setIsLoading(false);
     }
   };
+
 
   const renderStep = () => {
     switch (step) {
@@ -185,11 +232,17 @@ const AddListing = () => {
             )}
             {step === 4 && (
               <button type="submit" className="bg-dark font-inter tracking-wider text-white px-4 py-2 rounded-lg">
-                Submit Listing
+                {
+                  isLoading ? <ButtonSpinner /> : 'Submit Listing'
+                }
               </button>
             )}
           </div>
         </div>
+
+
+
+        
         <div className="bg-white rounded-lg self-start border p-5 col-span-4 sticky top-0">
           <ul className="space-y-4 rounded-lg overflow-hidden">
             <li className="flex items-center bg-secondary py-2 p-3">

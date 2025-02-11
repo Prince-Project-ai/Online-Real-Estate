@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 
-const Model = ({ children, ModelOutSideBtn, ModelLable, modelActionValue }) => {
+const Model = ({ children, ModelOutSideBtn, ModelLable, modelActionValue, classDesign }) => {
   const [modelState, setModelState] = useState(false);
 
   const openModel = useCallback(() => {
@@ -12,26 +12,13 @@ const Model = ({ children, ModelOutSideBtn, ModelLable, modelActionValue }) => {
     setModelState(false);
   }, []);
 
-  const handlePrimaryEvent = (e) => {
-    e.preventDefault();
-    // switch (key) {
-    //   case value:
-
-    //     break;
-
-    //   default:
-    //     break;
-    // }
-    console.log(e.target.value);
-  }
-
 
 
   return (
     <>
       <button
         onClick={openModel}
-        className="bg-dark border py-2 px-4 rounded-lg text-white font-inter text-xs"
+        className={classDesign}
       >
         {ModelOutSideBtn}
       </button>

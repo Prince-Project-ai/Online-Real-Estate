@@ -9,12 +9,6 @@ export const handleUserApi = axios.create(
 	}
 )
 
-export const sellerApi = axios.create(
-	{
-		baseURL: "http://localhost:9999/api/v1/propertyfy/seller/",
-	}
-);
-
 // signUp
 export const signUpApi = async (formData) => {
 	const res = await handleUserApi.post("/sign-up", formData);
@@ -73,10 +67,42 @@ export const UpdateAgentProfile = async (formData) => {
 	============= SELLER API LOGIC LIST START ==============
 */
 
-export const addListingSeller = async () => {
-	const res = await sellerApi.post("/add-seller-property");
+export const addListingSeller = async (formData) => {
+	const res = await handleUserApi.post("/add-seller-property", formData,
+		{
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		}
+	);
 	return res.data;
 }
+
+export const getAllListing = async () => {
+	const res = await handleUserApi.get("/get-all-listing");
+	return res.data;
+}
+
+export const deleteSellerListing = async (deleteId) => {
+	const res = await handleUserApi.delete(`/delete-listing/${deleteId}`);
+	return res.data;
+}
+
+export const updateListingSeller = async (propertyId, formData) => {
+	console.log("Property ID:", propertyId);
+
+	for (let [key, value] of formData.entries()) {
+		console.log(key, value);
+	}
+
+	const res = await handleUserApi.patch(`/update-seller-listing/${propertyId}`, formData, {
+		headers: {
+			"Content-Type": "multipart/form-data",
+		},
+	});
+
+	return res.data;
+};
 
 /*
 	============= SELLER API LOGIC LIST END ==============

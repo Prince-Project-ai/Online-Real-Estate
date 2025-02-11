@@ -9,11 +9,7 @@
   accent-color: #17191b;
 }
 
-select {
-  -webkit-appearance: none; /* For Chrome, Safari, and Edge */
-  -moz-appearance: none; /* For Firefox */
-  appearance: none !important;
-}
+/*  */
 
 select option {
   accent-color: #17191b !important;
@@ -28,15 +24,15 @@ select {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", serif;
   accent-color: black;
-  line-height: 1.5;
+  /* line-height: 1.5; */
 }
 
 /* For Webkit-based Browsers (Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
   width: 6px; /* Width of the vertical scrollbar */
-  height: 12px; /* Height of the horizontal scrollbar */
+  height: 2px; /* Height of the horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -142,4 +138,26 @@ body {
 .property-card:hover .property-img {
   transform: scale(1.2);
   transition: all 0.3s ease;
+}
+
+.swiper {
+  width: 500px;
+  height: 500px;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.swiper-pagination-bullet-active {
+  background: #17191b !important;
+}
+
+.local-host {
+  height: 350px;
+  width: 100%;
+  aspect-ratio: 1/1;
 }

@@ -32,7 +32,7 @@ app.use("/api/v1/propertyfy", userRouter);
 app.use("/api/v1/propertyfy/admin/", adminRouter);
 
 // seller
-app.use("/api/v1/propertyfy/seller", sellerRouter);
+app.use("/api/v1/propertyfy", sellerRouter);
 
 
 app.use(errorHandler);
@@ -61,6 +61,9 @@ export { app };
       
       ======================= API LIST [ SELLER ] =================
       http://localhost:9999/api/v1/propertyfy/add-seller-property
+      http://localhost:9999/api/v1/propertyfy/get-all-listing
+      http://localhost:9999/api/v1/propertyfy/delete-listing/:deleteId
+      http://localhost:9999/api/v1/propertyfy/update-seller-listing/:propertyId
 
 
 

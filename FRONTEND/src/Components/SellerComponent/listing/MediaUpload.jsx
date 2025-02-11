@@ -5,9 +5,6 @@ const MediaUpload = ({ formData, handleChange, previewImages, formErrors }) => {
   const fileInputRef = useRef(null);
 
 
-
-
-
   const handleButtonClick = (e) => {
     e.preventDefault();
     fileInputRef.current.click();

@@ -28,7 +28,8 @@ const PersonalInfo = () => {
     const { name, value, files } = e.target;
     const file = files?.[0];
     if (name === "avatar" && file) {
-      console.log("file size in kb : ", (file.size / 1024 / 1024).toFixed(2)); //default file object file size is in bytes if you wanbt ot make the in kb then convert by logic
+      console.log("file size in kb : ", (file.size / 1024 / 1024).toFixed(2));
+
       if (!VALID_IMAGE_TYPES.includes(file.type)) {
         showToast("Please upload a valid image file (JPG, JPEG, PNG)", "error");
         return;

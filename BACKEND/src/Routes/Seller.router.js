@@ -1,7 +1,7 @@
 import { Router } from "express";
 import path from "path";
 
-import { addSellerProperty } from "../Controllers/Seller.controller.js";
+import { addSellerProperty, deleteListing, totalListing, updateSellerListing } from "../Controllers/Seller.controller.js";
 import { verifyJWT } from "../Middlewares/Auth.Middleware.js";
 const router = Router();
 
@@ -49,6 +49,11 @@ const upload = multer({
 });
 
 
-router.post("/add-seller-property", verifyJWT, upload.array('propertyImages', 10), addSellerProperty);
+router.post("/add-seller-property", verifyJWT, upload.array('propertyImages', 6), addSellerProperty);
+
+router.get("/get-all-listing", verifyJWT, totalListing);
+router.delete("/delete-listing/:deleteId", deleteListing);
+router.patch("/update-seller-listing/:propertyId", verifyJWT, upload.array('propertyImages', 6), updateSellerListing);
+
 
 export default router;

@@ -5,7 +5,6 @@ export const validateField = (name, value, formData) => {
     fullName: () => {
       if (!value.trim()) return 'Full name is required.';
       if (value.length < 3) return 'Full name must be at least 3 characters.';
-      return '';
     },
     email: () => {
       if (!value.trim()) return 'Email is required.';
