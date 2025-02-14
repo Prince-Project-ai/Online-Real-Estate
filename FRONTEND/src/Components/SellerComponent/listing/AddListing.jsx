@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropertyType from "./PropertyType";
-import LocationDetails from "./LocationDetails";
+// import LocationDetails from "./LocationDetails";
 import MediaUpload from "./MediaUpload";
 import PricingCard from "./PricingCard";
 import { formValidation } from "./wizardFormValidation";
@@ -10,6 +10,7 @@ import { useMessage } from "../../../Contexts/MessageContext";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Loaders/ButtonSpinner";
+import SeachProperty from "./SeachProperty";
 
 const AddListing = () => {
   const { currentAuth } = useAuth();
@@ -30,7 +31,7 @@ const AddListing = () => {
     size: "",
     sizeUnit: "Square meter",
     location: {
-      streetAddress: "", district: "", state: "Gujarat", country: "India", address_url: "", latitude: "", longitude: ""
+      streetAddress: "", latitude: "", longitude: ""
     },
     propertyImages: [],
     propertyVideo: "",
@@ -53,16 +54,6 @@ const AddListing = () => {
       const fieldsToValidate = ["propertyTitle", "price", "size", "sizeUnit"];
       fieldsToValidate.forEach((field) => {
         const error = formValidation(field, formData[field]);
-        if (error) {
-          errors[field] = error;
-        }
-      });
-    }
-
-    if (step === 2) {
-      const locationFields = ["streetAddress", "district", "state", "country", "address_url", "latitude", "longitude"];
-      locationFields.forEach((field) => {
-        const error = formValidation(field, formData.location[field]);
         if (error) {
           errors[field] = error;
         }
@@ -158,6 +149,11 @@ const AddListing = () => {
           formDataToSend.append(`propertyImages`, image);
         });
       }
+
+      for (let [key, value] of formDataToSend.entries()) {
+        console.log(key, value);
+      }
+
       const response = await addListingSeller(formDataToSend);
 
       if (response?.success) {
@@ -185,9 +181,8 @@ const AddListing = () => {
         );
       case 2:
         return (
-          <LocationDetails
-            formData={formData.location}
-            handleChange={handleChange}
+          <SeachProperty
+            setFormData={setFormData}
             formErrors={formErrors}
           />
         );
@@ -242,7 +237,7 @@ const AddListing = () => {
 
 
 
-        
+
         <div className="bg-white rounded-lg self-start border p-5 col-span-4 sticky top-0">
           <ul className="space-y-4 rounded-lg overflow-hidden">
             <li className="flex items-center bg-secondary py-2 p-3">
@@ -295,3 +290,10 @@ export default React.memo(AddListing);
 //   }
 // });
 // console.log("Form All Error : ", formErrors);
+
+
+// {/* <LocationDetails
+//             formData={formData.location}
+//             handleChange={handleChange}
+//             formErrors={formErrors}
+//           /> */}

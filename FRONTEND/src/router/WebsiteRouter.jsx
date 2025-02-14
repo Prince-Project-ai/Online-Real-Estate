@@ -5,6 +5,8 @@ import Profile from "../Pages/website/Profile";
 import WebsiteContextStackProvider from "../Contexts/WebsiteContextStack";
 import HeaderSkeleton from "../Components/website/comman/HeaderSkeleton";
 import { useAuth } from "../Contexts/AuthContext";
+import FullMapFIlter from "../Pages/website/FullMapFIlter";
+import PropertyDetails from "../Pages/website/PropertyDetails";
 
 const Home = lazy(() => import("../Pages/website/Home"));
 const SearchResult = lazy(() => import("../Pages/website/SearchResult"));
@@ -30,11 +32,28 @@ const WebsiteRouter = () => {
                         path="/local"
                         element={<h2>Hello, this is the main route of the WebsiteRouter</h2>}
                     />
-                    <Route
+                    {/* <Route
                         path="/search-result"
                         element={
                             <PrivateRouter>
                                 <Suspense fallback={<h2>Loading search results...</h2>}><SearchResult /></Suspense>
+                            </PrivateRouter>
+                        }
+                    /> */}
+
+                    <Route
+                        path="/fullmap-filter"
+                        element={
+                            <PrivateRouter>
+                                <Suspense fallback={<h2>Loading map...</h2>}><FullMapFIlter /></Suspense>
+                            </PrivateRouter>
+                        }
+                    />
+                    <Route
+                        path="/property-details"
+                        element={
+                            <PrivateRouter>
+                                <Suspense fallback={<h2>Loading Propertys...</h2>}> <PropertyDetails /></Suspense>
                             </PrivateRouter>
                         }
                     />

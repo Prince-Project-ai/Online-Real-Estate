@@ -45,7 +45,18 @@ export const resetPasswordApi = async (resetPasswordData) => {
 	return res?.data;
 }
 
-// AGENT API END POINT LOGIC START
+export const searchPropertyByFilter = async (formData) => {
+	// console.log(formData);
+	const res = await handleUserApi.post("/search-result", formData, {
+		headers: {
+			"Content-Type": "application/json",
+		}
+	});
+	return res?.data;
+}
+
+// what is your backend file open it
+// user controller js at end 
 
 export const UpdateAgentProfile = async (formData) => {
 	const response = await handleUserApi.patch(
@@ -88,12 +99,18 @@ export const deleteSellerListing = async (deleteId) => {
 	return res.data;
 }
 
+
+export const showAllProperty = async () => {
+	const res = await handleUserApi.get('/all-property');
+	return res.data;
+}
+
 export const updateListingSeller = async (propertyId, formData) => {
 	console.log("Property ID:", propertyId);
 
-	for (let [key, value] of formData.entries()) {
-		console.log(key, value);
-	}
+	// for (let [key, value] of formData.entries()) {
+	// 	console.log(key, value);
+	// }
 
 	const res = await handleUserApi.patch(`/update-seller-listing/${propertyId}`, formData, {
 		headers: {

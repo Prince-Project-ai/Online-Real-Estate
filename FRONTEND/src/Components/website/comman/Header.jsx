@@ -19,7 +19,7 @@ const Header = () => {
   );
 
   return (
-    <header className="border-b border-dark px-5">
+    <header className="border-b h-auto border-dark px-5">
       <nav className="max-w-7xl md:px-4 lg:px-0 container mx-auto flex items-center justify-between py-2 relative">
         {/* Logo Section */}
         <Logo />

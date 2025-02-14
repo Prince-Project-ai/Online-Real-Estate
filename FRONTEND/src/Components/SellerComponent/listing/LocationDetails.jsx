@@ -1,8 +1,8 @@
 import React from "react";
 import MarkerLocation from "./MarkerMap/MarkerLocation";
+import SeachProperty from "./SeachProperty";
 
 const LocationDetails = ({ formData, handleChange, formErrors }) => {
-    console.log(formData);
     return (
         <div>
             <h2 className="text-xl font-description font-semibold mb-2">Location Details</h2>
@@ -49,6 +49,9 @@ const LocationDetails = ({ formData, handleChange, formErrors }) => {
                     {formErrors?.district && (
                         <p className="text-red-500 text-xs">{formErrors.district}</p>
                     )}
+                </div>
+                <div className="col-span-2">
+                    <SeachProperty />
                 </div>
                 <div className="col-span-2">
                     <label htmlFor="address" className="tracking-wide font-semibold text-sm">Street address*</label>

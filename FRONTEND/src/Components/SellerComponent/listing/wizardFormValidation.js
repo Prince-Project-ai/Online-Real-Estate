@@ -16,12 +16,6 @@ export const formValidation = (name, value, files, formData) => {
             return '';
         },
         sizeUnit: () => (!value ? 'Size Unit is required.' : ''),
-        district: () => (!value ? 'District is required.' : ''),
-        streetAddress: () => {
-            if (!value) return 'Address is required.';
-            if (value.trim().length < 10) return 'Address must be at least 10 characters.';
-            return '';
-        },
         latitude: () => {
             if (!value) return 'Latitude is required.';
             if (isNaN(value) || value < -90 || value > 90) return 'Enter a valid latitude (-90 to 90).';
@@ -32,12 +26,7 @@ export const formValidation = (name, value, files, formData) => {
             if (isNaN(value) || value < -180 || value > 180) return 'Enter a valid longitude (-180 to 180).';
             return '';
         },
-        address_url: () => {
-            const urlRegex = /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}(\/.*)?$/;
-            if (!value) return 'Location URL is required.';
-            if (!urlRegex.test(value)) return 'Enter a valid URL.';
-            return '';
-        },
+
         propertyImages: () => {
             if (!files || !files.length) return 'At least one image is required.';
             if (files.length > 6) return 'Max Images is 6. Upgrade to premium for more.';

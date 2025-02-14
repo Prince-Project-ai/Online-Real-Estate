@@ -1,19 +1,16 @@
-// import { User } from "../Models/User.model.js";
+    // import { User } from "../Models/User.model.js";
 import { Property } from "../Models/Property.model.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import cloudinary from "../Config/Cloudinary.js";
-import { compareSync } from "bcrypt";
 
 export const addSellerProperty = asyncHandler(async (req, res) => {
     try {
-
         if (!req.body) {
             throw new ApiError(400, "No Data Provided");
         }
 
-        // Parse the `location` field if it is a string
         let locationData;
         if (typeof req.body.location === "string") {
             try {
@@ -26,7 +23,7 @@ export const addSellerProperty = asyncHandler(async (req, res) => {
         }
 
         // Extract necessary fields from parsed `location`
-        const { streetAddress, district, state, country, address_url, latitude, longitude } = locationData;
+        const { streetAddress, latitude, longitude } = locationData;
 
         // Validate required fields
         if (
@@ -39,10 +36,6 @@ export const addSellerProperty = asyncHandler(async (req, res) => {
             !req.body.size ||
             !req.body.sizeUnit ||
             !streetAddress ||
-            !district ||
-            !state ||
-            !country ||
-            !address_url ||
             !latitude ||
             !longitude ||
             !req.body.propertyVideo
@@ -78,10 +71,6 @@ export const addSellerProperty = asyncHandler(async (req, res) => {
             sizeUnit: req.body.sizeUnit,
             location: {
                 streetAddress,
-                address_url,
-                district,
-                state,
-                country,
                 locationCode: [{ latitude, longitude }], // Ensure it's an array
             },
             images: imagesArray,
@@ -177,6 +166,7 @@ export const updateSellerListing = asyncHandler(async (req, res) => {
         throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM UPDATE LISTING");
     }
 });
+
 
 
 

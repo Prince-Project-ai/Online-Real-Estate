@@ -15,7 +15,7 @@ const images = [
 ];
 
 
-const SwiperGallery = () => {
+const SwiperGallery = ({ data }) => {
   const swiperRef = useRef(null);
 
   return (
@@ -36,9 +36,9 @@ const SwiperGallery = () => {
           modules={[EffectFlip, Navigation, Pagination]}
           className="rounded-lg shadow-lg w-full local-host "
         >
-          {images.map((img, index) => (
+          {data.map((img, index) => (
             <SwiperSlide key={index} className={`flex w-full justify-center items-center`}>
-              <img src={img} alt={`Slide ${index}`} className="w-full h-full object-cover rounded-lg" />
+              <img src={img.propertyImages} alt={`Slide ${index}`} className="w-full h-full object-cover rounded-lg" />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -55,4 +55,4 @@ const SwiperGallery = () => {
   );
 };
 
-export default SwiperGallery;
+export default React.memo(SwiperGallery);

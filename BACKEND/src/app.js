@@ -50,6 +50,8 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/logout-user
       http://localhost:9999/api/v1/propertyfy/current-auth
       http://localhost:9999/api/v1/propertyfy/verify-email
+      http://localhost:9999/api/v1/propertyfy/search-result
+      http://localhost:9999/api/v1/propertyfy/all-property
 
   
       ======================= API LIST [ AGENT ] =================

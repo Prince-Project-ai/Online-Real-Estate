@@ -51,22 +51,7 @@ const propertySchema = new Schema(
         type: String,
         required: true,
       },
-      address_url: {
-        type: String,
-        required: true,
-      },
-      district: {
-        type: String,
-        required: true,
-      },
-      state: {
-        type: String,
-        required: true,
-      },
-      country: {
-        type: String,
-        required: true,
-      },
+
       locationCode: [
         {
           latitude: {
@@ -84,7 +69,7 @@ const propertySchema = new Schema(
       {
         propertyImages: {
           type: String,
-          // required: true,
+          required: true,
         },
       }
     ],

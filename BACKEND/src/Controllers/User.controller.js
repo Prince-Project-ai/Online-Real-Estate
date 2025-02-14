@@ -7,6 +7,7 @@ import cloudinary from "../Config/Cloudinary.js";
 import fs from "fs";
 import { Transporter } from "../Utils/transporter.js";
 import bcrypt from "bcrypt";
+import { Property } from "../Models/Property.model.js";
 
 const options = {
   httpOnly: true,
@@ -355,6 +356,49 @@ export const resetPassword = asyncHandler(async (req, res) => {
     );
   }
 });
+
+
+export const searchFilter = asyncHandler(async (req, res) => {
+  try {
+    const { serviceType, location, propertyType } = req.body;
+    console.log(req.body);
+
+    if (!serviceType || !location || !propertyType) {
+      throw new ApiError(401, "Please fill all fields.");
+    }
+
+    const searchFilter = {
+      serviceType: serviceType === "Buy" ? "Sell" : serviceType, // Reverse logic for Buy/Sell
+      propertyType,
+      streetAddress: location,
+    };
+    const findProperty = await Property.find({
+      $and: [
+        { listingType: searchFilter.serviceType },
+        { propertyType: searchFilter.propertyType },
+        { 'location.streetAddress': searchFilter.streetAddress }
+      ]
+    });
+
+    res.status(200).json(new ApiResponse(200, findProperty, "Data Fetched Successfully."));
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM SEARCH CONTROLLER");
+  }
+});
+
+
+
+export const gettingAllProperty = asyncHandler(async (req, res) => {
+  try {
+    const allProperty = await Property.find();
+    if (!allProperty) throw new ApiError(404, "Data Not Found.");
+    res.status(200).json(new ApiResponse(200, allProperty, "Data Fetching"));
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM GETTING ALL PROPERTY");
+  }
+});
+
+
 
 // signin Controller
 // 1) seprate the part for accessing

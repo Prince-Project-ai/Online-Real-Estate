@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import HeroFilter from "../../Components/website/HeroFilter";
+import SearchResult from "./SearchResult";
+import { useSharedData } from "../../Contexts/SharedDataContext";
+import { showAllProperty } from "../../Api/website/HandleUserApi";
+// import { useCallback, useEffect } from "react";
+
 const Home = () => {
-  // const renderCount = useRef(0);
-  // renderCount.current += 1;
+  // pub/sub event Emiiter pattern
+
+  const { searchFilterData, setSearchFilterData } = useSharedData();
+
+  const fetchAllListings = useCallback(async () => {
+    try {
+      const response = await showAllProperty();
+      if (response?.success) {
+        setSearchFilterData(response.data || []);
+      }
+    } catch (error) {
+      console.error(error?.response?.data?.message);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAllListings();
+  }, []);
+
   return (
     <>
       <main>
@@ -31,9 +53,9 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section className="property-categories border-b bg-body py-16">
+
+        {/* <section className="property-categories border-b bg-body py-16">
           <div className="max-w-7xl mx-auto px-4 lg:px-0">
-            {/* Heading */}
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-4xl font-heading text-dark mb-1">
                 Explore Properties by Category
@@ -44,10 +66,7 @@ const Home = () => {
               <hr className="max-w-36 border-dark border rounded mx-auto bg-dark mt-3" />
             </div>
 
-            {/* Categories Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Houses */}
-              {/* Houses */}
               <div className="bg-secondary p-6 rounded-md hover:border-2 border-2 hover:border-dark transition-shadow duration-300 flex items-center gap-4">
                 <i className="ri-home-4-line text-4xl text-dark"></i>
                 <div>
@@ -58,7 +77,6 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Shops */}
               <div className="bg-secondary p-6 rounded-md hover:border-2 border-2 hover:border-dark transition-shadow duration-300 flex items-center gap-4">
                 <i className="ri-store-2-line text-4xl text-dark"></i>
                 <div>
@@ -69,7 +87,6 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Plots */}
               <div className="bg-secondary p-6 rounded-md hover:border-2 border-2 hover:border-dark transition-shadow duration-300 flex items-center gap-4">
                 <i className="ri-map-pin-line text-4xl text-dark"></i>
                 <div>
@@ -80,7 +97,6 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* PGs */}
               <div className="bg-secondary p-6 rounded-md hover:border-2 border-2 hover:border-dark transition-shadow duration-300 flex items-center gap-4">
                 <i className="ri-hotel-line text-4xl text-dark"></i>
                 <div>
@@ -91,7 +107,6 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Farmhouses */}
               <div className="bg-secondary p-6 rounded-md hover:border-2 border-2 hover:border-dark transition-shadow duration-300 flex items-center gap-4">
                 <i className="ri-home-smile-2-line text-4xl text-dark"></i>
                 <div>
@@ -103,7 +118,11 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
+
+        <SearchResult searchFilterData={searchFilterData} />
+
+
         <section className="bg-body py-16">
           <div className="max-w-7xl mx-auto px-4 lg:px-0">
             {/* Heading */}

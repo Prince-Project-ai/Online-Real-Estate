@@ -6,8 +6,10 @@ import {
 
 import {
   currentAuth,
+  gettingAllProperty,
   refreshAccessToken,
   resetPassword,
+  searchFilter,
   signIn,
   signUp,
   updateAgentProfile,
@@ -31,6 +33,8 @@ router.post("/refresh-token", refreshAccessToken);
 router.post("/logout-user", verifyJWT, userLogOut);
 router.post("/verify-email", veryfyEmail);
 router.patch("/reset-password", resetPassword);
+router.post("/search-result", verifyJWT, searchFilter);
+router.get("/all-property", verifyJWT, gettingAllProperty);
 
 // AGENT ROUTES
 
@@ -40,6 +44,8 @@ router.patch(
   upload.single("avatar"),
   updateAgentProfile
 );
+
+
 
 // SELLER ROUTES
 

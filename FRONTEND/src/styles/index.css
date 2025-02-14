@@ -140,7 +140,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.swiper {
+/* .swiper {
   width: 500px;
   height: 500px;
 }
@@ -150,7 +150,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #fff;
-}
+} */
 
 .swiper-pagination-bullet-active {
   background: #17191b !important;

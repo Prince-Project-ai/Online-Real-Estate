@@ -6,6 +6,7 @@ import { verifyJWT } from "../Middlewares/Auth.Middleware.js";
 const router = Router();
 
 import multer from "multer";
+import { ApiError } from "../Utils/ApiError.js";
 
 // Configure Multer to store files temporarily
 const storage = multer.diskStorage({
