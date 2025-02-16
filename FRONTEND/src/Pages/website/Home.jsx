@@ -54,6 +54,9 @@ const Home = () => {
           </div>
         </section>
 
+        <SearchResult searchFilterData={searchFilterData} />
+
+
         {/* <section className="property-categories border-b bg-body py-16">
           <div className="max-w-7xl mx-auto px-4 lg:px-0">
             <div className="text-center mb-12">
@@ -120,7 +123,6 @@ const Home = () => {
           </div>
         </section> */}
 
-        <SearchResult searchFilterData={searchFilterData} />
 
 
         <section className="bg-body py-16">

@@ -4,6 +4,7 @@ import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import SwiperGallery from "./swiperExample/SwiperGallery";
 import { FaMap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { showPropertyDetails } from "../../Api/website/HandleUserApi";
 
 
 const SearchResult = ({ searchFilterData }) => {
@@ -27,8 +28,9 @@ const SearchResult = ({ searchFilterData }) => {
     setIsOpenMenu(action);
   }
 
-  const handleFilterValue = (e) => {
-    console.log(e.target.getAttribute("value"));
+  const handleDetailsProperty = (e, id) => {
+    e.preventDefault();
+    navigate(`/property-details/${id}`);
   }
   return (
     <>
@@ -117,7 +119,7 @@ const SearchResult = ({ searchFilterData }) => {
                       <div className="w-full relative group">
                         <SwiperGallery data={data.images} />
                         <span className="absolute z-10 top-1 font-description bg-dark rounded left-1 text-white text-sm px-2 py-1 ">
-                          Sell
+                          {data.listingType}
                         </span>
                         <div className="save-layer z-10 absolute top-0 right-0 -translate-y-full transition-transform group-hover:translate-y-0 duration-200 ease flex items-center justify-center rounded-lg backdrop-blur-[2px]">
                           <button className="bg-dark text-white flex justify-center items-center text-xl h-12 w-12 rounded-full">
@@ -125,8 +127,6 @@ const SearchResult = ({ searchFilterData }) => {
                           </button>
                         </div>
                       </div>
-
-
                     </div>
 
                     <div className="pt-1">
@@ -139,7 +139,7 @@ const SearchResult = ({ searchFilterData }) => {
                       </p>
 
                       <div className="buttons text-end">
-                        <button className="mt-3 px-3 rounded  font-inter tracking-wider py-2 text-sm  bg-dark text-white">
+                        <button onClick={(e) => handleDetailsProperty(e, data._id)} className="mt-3 px-3 rounded  font-inter tracking-wider py-2 text-sm  bg-dark text-white">
                           Details
                         </button>
                       </div>
@@ -152,7 +152,7 @@ const SearchResult = ({ searchFilterData }) => {
                 }
               </div>
             </div>
-            <div className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+            <div className="flex justify-center my-5">
               <button onClick={() => navigate("/fullmap-filter")} className="bg-dark px-5 py-3 flex items-center text-white text-sm rounded">Show map <FaMap className="pl-2 text-xl" /></button>
             </div>
           </div>

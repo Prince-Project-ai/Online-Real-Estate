@@ -23,7 +23,7 @@ const mapContainerStyle = {
 
 
 const defaultCenter = {
-  lat: 21.6015, // Default Center (India)
+  lat: 21.6015, // Default Center (amreli)
   lng: 71.2204,
 };
 

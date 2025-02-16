@@ -8,6 +8,7 @@ import fs from "fs";
 import { Transporter } from "../Utils/transporter.js";
 import bcrypt from "bcrypt";
 import { Property } from "../Models/Property.model.js";
+import { Review } from "../Models/Review.model.js";
 
 const options = {
   httpOnly: true,
@@ -65,32 +66,9 @@ export const signUp = asyncHandler(async (req, res) => {
   if (user) {
     throw new ApiError(401, "User Already Exist..");
   }
-  // console.log("Form Body : ", req.body);
-  // console.log("file", req.file);
 
-  // Default avatar URL - replace with your default image URL from Cloudinary
-  //   {
-  //     "success": false,
-  //     "message": "Must supply api_key"
-  // }
   const defaultAvatarUrl =
     "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg";
-
-  // if (!req.file) {
-  //     res.status(400).json({ message: "file not found" });
-  // }
-
-  // const newProfileImage = await cloudinary.uploader.upload(req.file.path, {
-  //     folder: "PropertyFy/profile_imgs",
-  //     transformation: [
-  //         {
-  //             width: 200,
-  //             height: 200,
-  //             crop: "thumb",
-  //             gravity: "face",
-  //         },
-  //     ],
-  // });
 
   const newUser = await User.create({
     fullName,
@@ -342,8 +320,6 @@ export const resetPassword = asyncHandler(async (req, res) => {
       }
     ).select("-password -refreshToken");
 
-
-
     if (!updatePassword) throw new ApiError(404, "User Not Found");
 
     res
@@ -361,7 +337,6 @@ export const resetPassword = asyncHandler(async (req, res) => {
 export const searchFilter = asyncHandler(async (req, res) => {
   try {
     const { serviceType, location, propertyType } = req.body;
-    console.log(req.body);
 
     if (!serviceType || !location || !propertyType) {
       throw new ApiError(401, "Please fill all fields.");
@@ -398,6 +373,112 @@ export const gettingAllProperty = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+export const getPropertyById = asyncHandler(async (req, res) => {
+  try {
+    const { propertyId } = req.params;
+    if (!propertyId) throw new ApiError(400, "PropertyId not Provided.");
+    const property = await Property.findOne({ _id: propertyId });
+    if (!property) throw new ApiError(404, "Property not Available.");
+    res.status(200).json(new ApiResponse(200, property, "Data Fetching"));
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM GETTING SINGLE PROPERTY");
+  }
+});
+
+
+export const allReviewByProId = asyncHandler(async (req, res) => {
+  try {
+    const { propertyId } = req.params;
+    if (!propertyId) throw new ApiError(404, "Product Id Not Found.");
+
+    const reviews = await Review.find({ propertyId });
+
+    if (!reviews.length > 0 || !reviews) throw new ApiError(404, "Review not Available");
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, reviews, "Revies Fetched"));
+
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM FETCHING REVIEW")
+  }
+});
+
+export const addReview = asyncHandler(async (req, res) => {
+  try {
+    const adderId = req.user._id;
+    const { propertyId } = req.params;
+    const { rating, comment, avatar, name } = req.body;
+    if (!(rating && comment && avatar && name)) throw new ApiError(400, "Review and Rating is Mandatory.");
+
+    const review = await Review.create({
+      userId: adderId,
+      propertyId,
+      rating,
+      comment,
+      avatar,
+      name,
+    });
+
+    if (!review) throw new ApiError(404, "Review Not Added");
+
+    res
+      .status(201)
+      .json(new ApiResponse(201, review, "Revies Fetched"));
+
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM ADD REVIEW")
+  }
+});
+
+
+export const deleteReview = asyncHandler(async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    if (!reviewId) throw new ApiError(404, "Review Id not Found");
+
+    const deleteReview = await Review.findByIdAndDelete({ _id: reviewId });
+
+    if (!deleteReview) throw new ApiError(404, "Review not deleted");
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Revies Deleted"));
+
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM DELETE REVIEW")
+  }
+});
+
+export const updateReview = asyncHandler(async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    const { rating, comment } = req.body;
+    if (!reviewId) throw new ApiError(404, "Review Id not Found");
+
+    const updateParticural = {};
+    if (rating) updateParticural.rating = rating;
+    if (comment) updateParticural.comment = comment;
+
+    const updateReview = await Review.findByIdAndUpdate({ _id: reviewId },
+      updateParticural,
+      {
+        new: true,
+      },
+    );
+
+    if (!updateReview) throw new ApiError(404, "Review not updated");
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, updateReview, "Revies Updated"));
+
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM UPDATE REVIEW");
+  }
+});
 
 
 // signin Controller

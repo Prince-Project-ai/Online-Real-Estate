@@ -5,7 +5,11 @@ import {
 } from "../Middlewares/Auth.Middleware.js";
 
 import {
+  addReview,
+  allReviewByProId,
   currentAuth,
+  deleteReview,
+  getPropertyById,
   gettingAllProperty,
   refreshAccessToken,
   resetPassword,
@@ -13,6 +17,7 @@ import {
   signIn,
   signUp,
   updateAgentProfile,
+  updateReview,
   userLogOut,
   veryfyEmail,
 } from "../Controllers/User.controller.js";
@@ -35,6 +40,14 @@ router.post("/verify-email", veryfyEmail);
 router.patch("/reset-password", resetPassword);
 router.post("/search-result", verifyJWT, searchFilter);
 router.get("/all-property", verifyJWT, gettingAllProperty);
+router.get("/property-details/:propertyId", verifyJWT, getPropertyById);
+
+
+// REVIE MODULE
+router.post("/post-review/:propertyId", verifyJWT, addReview);
+router.get("/revies/:propertyId", verifyJWT, allReviewByProId);
+router.patch("/update-revies/:reviewId", verifyJWT, updateReview);
+router.delete("/delete-review/:reviewId", verifyJWT, deleteReview);
 
 // AGENT ROUTES
 

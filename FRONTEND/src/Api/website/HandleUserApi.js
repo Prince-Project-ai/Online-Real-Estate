@@ -55,6 +55,41 @@ export const searchPropertyByFilter = async (formData) => {
 	return res?.data;
 }
 
+// REVIEW MODULE
+
+export const reviewByProduct = async (productId) => {
+	const res = await handleUserApi.get(`/revies/${productId}`);
+	return res?.data;
+}
+
+export const deleteReview = async (reviewId) => {
+	const res = await handleUserApi.delete(`/delete-review/${reviewId}`);
+	return res?.data;
+}
+
+export const addReviewByProduct = async (formData, productId) => {
+	// console.log(formData);
+	for (let [key, value] of formData.entries()) {
+		console.log(key, value);
+	}
+
+	const res = await handleUserApi.post(`/post-review/${productId}`, formData, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	return res?.data;
+}
+
+export const updateReview = async (reviewId, reviewData) => {
+	const res = await handleUserApi.patch(`/update-revies/${reviewId}`, reviewData, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	return res?.data;
+}
+
 // what is your backend file open it
 // user controller js at end 
 
@@ -102,6 +137,11 @@ export const deleteSellerListing = async (deleteId) => {
 
 export const showAllProperty = async () => {
 	const res = await handleUserApi.get('/all-property');
+	return res.data;
+}
+
+export const showPropertyDetails = async (id) => {
+	const res = await handleUserApi.get(`/property-details/${id}`);
 	return res.data;
 }
 

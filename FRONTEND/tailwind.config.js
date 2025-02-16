@@ -7,6 +7,7 @@ export default {
         tada: "tada 1s ease-in-out",
         slideDown: "slideDown 0.5s ease-in-out",
         bounce: "bounce 1s ease-in-out",
+        leftToRight: 'leftToRight 0.3s ease-in-out',
       },
       keyframes: {
         tada: {
@@ -15,6 +16,10 @@ export default {
           "30%, 50%, 70%, 90%": { transform: "scale(1.1) rotate(3deg)" },
           "40%, 60%, 80%": { transform: "scale(1.1) rotate(-3deg)" },
           "100%": { transform: "scale(1) rotate(0)" },
+        },
+        leftToRight: {
+          '0%': { transform: 'scaleX(0)', transformOrigin: 'left' },
+          '100%': { transform: 'scaleX(1)', transformOrigin: 'left' },
         },
         slideDown: {
           "0%": {

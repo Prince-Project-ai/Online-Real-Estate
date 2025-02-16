@@ -52,13 +52,20 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/verify-email
       http://localhost:9999/api/v1/propertyfy/search-result
       http://localhost:9999/api/v1/propertyfy/all-property
+      http://localhost:9999/api/v1/propertyfy/property-details/:propertyId
 
+      
+      http://localhost:9999/api/v1/propertyfy/post-review
+      http://localhost:9999/api/v1/propertyfy/revies/:productId
+      http://localhost:9999/api/v1/propertyfy/update-revies/:reviewId
+      http://localhost:9999/api/v1/propertyfy/delete-review/:reviewId
   
+
+
+
+
       ======================= API LIST [ AGENT ] =================
       http://localhost:9999/api/v1/propertyfy/seller/update-agent-profile
-
-      
-      
       
       
       ======================= API LIST [ SELLER ] =================

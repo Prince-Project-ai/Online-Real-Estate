@@ -50,7 +50,7 @@ const WebsiteRouter = () => {
                         }
                     />
                     <Route
-                        path="/property-details"
+                        path="/property-details/:data"
                         element={
                             <PrivateRouter>
                                 <Suspense fallback={<h2>Loading Propertys...</h2>}> <PropertyDetails /></Suspense>
@@ -70,7 +70,6 @@ const WebsiteRouter = () => {
 const PrivateRouter = ({ children }) => {
     const { isLoading, isAuthenticated, currentAuth } = useAuth();
     if (isLoading) return <p>Loading Profile...</p>
-    console.log(currentAuth?.role);
     if (!isAuthenticated || currentAuth?.role !== "User") return <Navigate to="/" replace />
     return children;
 }
