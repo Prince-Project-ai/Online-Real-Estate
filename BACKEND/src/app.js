@@ -53,6 +53,8 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/search-result
       http://localhost:9999/api/v1/propertyfy/all-property
       http://localhost:9999/api/v1/propertyfy/property-details/:propertyId
+      http://localhost:9999/api/v1/propertyfy/seller-info
+      http://localhost:9999/api/v1/propertyfy/seller-review/:sellerId
 
       
       http://localhost:9999/api/v1/propertyfy/post-review

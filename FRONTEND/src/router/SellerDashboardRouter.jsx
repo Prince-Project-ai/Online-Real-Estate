@@ -8,23 +8,29 @@ import AuthProvider, { useAuth } from "../Contexts/AuthContext";
 import AddListing from "../Components/SellerComponent/listing/AddListing";
 import SellerSupport from "../Components/SellerComponent/Chating/SellerSupport";
 import DataTableListing from "../Components/SellerComponent/listing/DataTableListing";
+import ApprovalProperty from "../Components/SellerComponent/listing/PropertyApprovals/ApprovalProperty";
+import SocketProvider from "../Contexts/SocketContext";
 
 const SellerDashboardRouter = () => {
   return (
     <MessageProvider>
-      <AuthProvider>
-        <PrivateRoute>
-          <SellerLayout>
-            <Routes>
-              <Route path="/" element={<DashContent />} />
-              <Route path="/profile" element={<SellerProfile />} />
-              <Route path="/add-listing" element={<AddListing />} />
-              <Route path="/total-listing" element={<DataTableListing />} />
-              <Route path="/seller-supprot" element={<SellerSupport />} />
-            </Routes>
-          </SellerLayout>
-        </PrivateRoute>
-      </AuthProvider>
+      <SocketProvider>
+        <AuthProvider>
+          <PrivateRoute>
+            <SellerLayout>
+              <Routes>
+                <Route path="/" element={<DashContent />} />
+                <Route path="/profile" element={<SellerProfile />} />
+                <Route path="/add-listing" element={<AddListing />} />
+                <Route path="/total-listing" element={<DataTableListing />} />
+                <Route path="/view-approvals" element={<ApprovalProperty />} />
+                <Route path="/seller-supprot" element={<SellerSupport />} />
+                <Route path="/review" element={"Backend is Created."} />
+              </Routes>
+            </SellerLayout>
+          </PrivateRoute>
+        </AuthProvider>
+      </SocketProvider>
     </MessageProvider>
   );
 };

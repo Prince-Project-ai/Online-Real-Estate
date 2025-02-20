@@ -6,7 +6,7 @@ import App from "./App.jsx";
 import "leaflet/dist/leaflet.css";
 
 createRoot(document.getElementById("PropertyFy")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+  // <StrictMode>
+  <App />
+  // </StrictMode>
 );

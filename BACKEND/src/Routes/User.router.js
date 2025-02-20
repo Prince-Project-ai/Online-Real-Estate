@@ -9,6 +9,7 @@ import {
   allReviewByProId,
   currentAuth,
   deleteReview,
+  fetchSellerByProperty,
   getPropertyById,
   gettingAllProperty,
   refreshAccessToken,
@@ -41,6 +42,7 @@ router.patch("/reset-password", resetPassword);
 router.post("/search-result", verifyJWT, searchFilter);
 router.get("/all-property", verifyJWT, gettingAllProperty);
 router.get("/property-details/:propertyId", verifyJWT, getPropertyById);
+router.get("/seller-info/:sellerId", verifyJWT, fetchSellerByProperty);
 
 
 // REVIE MODULE

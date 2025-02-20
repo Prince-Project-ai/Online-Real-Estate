@@ -255,7 +255,6 @@ export const userLogOut = asyncHandler(async (req, res) => {
 });
 
 // reset Password functionality
-
 export const veryfyEmail = asyncHandler(async (req, res) => {
   try {
     const { email } = req.body;
@@ -333,7 +332,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
-
+// search Filter functionality
 export const searchFilter = asyncHandler(async (req, res) => {
   try {
     const { serviceType, location, propertyType } = req.body;
@@ -362,7 +361,7 @@ export const searchFilter = asyncHandler(async (req, res) => {
 });
 
 
-
+// fetch all property
 export const gettingAllProperty = asyncHandler(async (req, res) => {
   try {
     const allProperty = await Property.find();
@@ -373,8 +372,7 @@ export const gettingAllProperty = asyncHandler(async (req, res) => {
   }
 });
 
-
-
+// property by id
 export const getPropertyById = asyncHandler(async (req, res) => {
   try {
     const { propertyId } = req.params;
@@ -387,7 +385,7 @@ export const getPropertyById = asyncHandler(async (req, res) => {
   }
 });
 
-
+// fetch review by product id
 export const allReviewByProId = asyncHandler(async (req, res) => {
   try {
     const { propertyId } = req.params;
@@ -406,6 +404,7 @@ export const allReviewByProId = asyncHandler(async (req, res) => {
   }
 });
 
+// add review
 export const addReview = asyncHandler(async (req, res) => {
   try {
     const adderId = req.user._id;
@@ -433,7 +432,7 @@ export const addReview = asyncHandler(async (req, res) => {
   }
 });
 
-
+// delete review
 export const deleteReview = asyncHandler(async (req, res) => {
   try {
     const { reviewId } = req.params;
@@ -452,6 +451,7 @@ export const deleteReview = asyncHandler(async (req, res) => {
   }
 });
 
+// update review
 export const updateReview = asyncHandler(async (req, res) => {
   try {
     const { reviewId } = req.params;
@@ -480,6 +480,20 @@ export const updateReview = asyncHandler(async (req, res) => {
   }
 });
 
+// fetch seller by property id
+export const fetchSellerByProperty = asyncHandler(async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    if (!sellerId) throw new ApiError(404, "Seller id not found");
+    const seller = await User.findById(sellerId);
+    if (!seller) throw new ApiError(404, "Seller Not Found.");
+    res
+      .status(200)
+      .json(new ApiResponse(200, seller, "Seller Found."));
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM FETCH SELLER BY PROPERTY");
+  }
+});
 
 // signin Controller
 // 1) seprate the part for accessing

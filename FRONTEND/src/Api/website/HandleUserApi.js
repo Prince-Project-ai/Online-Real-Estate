@@ -90,6 +90,11 @@ export const updateReview = async (reviewId, reviewData) => {
 	return res?.data;
 }
 
+
+export const getSellerInfo = async (id) => {
+	const res = await handleUserApi.get(`/seller-info/${id}`);
+	return res?.data;
+}
 // what is your backend file open it
 // user controller js at end 
 
@@ -146,7 +151,6 @@ export const showPropertyDetails = async (id) => {
 }
 
 export const updateListingSeller = async (propertyId, formData) => {
-	console.log("Property ID:", propertyId);
 
 	// for (let [key, value] of formData.entries()) {
 	// 	console.log(key, value);

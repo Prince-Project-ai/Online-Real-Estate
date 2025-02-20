@@ -5,6 +5,7 @@ import { createServer } from "http";
 
 import { app } from "./app.js";
 import { connectDB } from "./DB/Connection.js";
+import { retrivedSellerApproaval } from "./Controllers/Seller.controller.js";
 
 const server = createServer(app);
 
@@ -19,8 +20,17 @@ const io = new Server(server, {
 io.listen(9998);
 
 io.on("connection", (socket) => {
+
   console.log("Client connected with socket id : ", socket.id);
+  console.log("Client connected with socket IP : ", socket.handshake.address);
+
+  socket.on("retrivedNotApprovalProperty", () => {
+    console.log("Socket Calling.");
+    socket.emit("sendProperty", retrivedSellerApproaval);
+  });
+
   socket.emit("verify", 'You are Connected To Chat');
+
   socket.on("success", (res) => {
     console.log("Verification successfully.", res);
   });
@@ -33,10 +43,6 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
   });
 });
-
-
-
-
 
 const PORT = process.env.PORT || 5656;
 

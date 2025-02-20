@@ -10,15 +10,10 @@ const SellerSupport = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const socket = io("http://localhost:9998");
-
-    return () => {
-      const socket = io("http://localhost:9998");
-    };
   }, []);
 
   const handleSendMessage = () => {
-    const socket = io("http://localhost:9998");
+    const socket = io("http://localhost:9998"); 
     socket.emit("client", message);
     setMessage("");
   }

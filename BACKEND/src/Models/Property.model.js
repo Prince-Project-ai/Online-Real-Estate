@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { type } from "os";
 
 const propertySchema = new Schema(
   {
@@ -77,6 +78,10 @@ const propertySchema = new Schema(
       type: String,
       required: true,
     },
+    approval: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

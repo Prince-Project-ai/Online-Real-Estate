@@ -4,6 +4,7 @@ import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import cloudinary from "../Config/Cloudinary.js";
+import { Review } from "../Models/Review.model.js";
 
 export const addSellerProperty = asyncHandler(async (req, res) => {
     try {
@@ -166,6 +167,34 @@ export const updateSellerListing = asyncHandler(async (req, res) => {
         throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM UPDATE LISTING");
     }
 });
+
+export const sellerReview = asyncHandler(async (req,res) => {
+    try {   
+        const { sellerId } = req.params;
+        if(!sellerId) throw new ApiError(404,"Seller id not Found");
+        const Revies = await Review.find({userId:sellerId});
+        if(!Revies) throw new ApiError(404,"Review Not Available");
+        res
+        .status(200)
+        .json(new ApiResponse(200, Revies, "Reviews Retrieved Successfully."));
+    } catch (error) {
+        throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM REVIEW SELLER.");
+    }
+});
+
+export const retrivedSellerApproaval = asyncHandler(async (req,res) => {
+    try {
+        const approvedProp = await Property.find({approval:false});
+        if(!approvedProp) throw new ApiError(404,"Approvals not at moment");
+        res
+        .status(200)
+        .json(new ApiResponse(200,approvedProp,"Retrived Approvals."));
+    } catch (error) {
+        throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM FETCH APPROVAL.");
+    }
+});
+
+
 
 
 
