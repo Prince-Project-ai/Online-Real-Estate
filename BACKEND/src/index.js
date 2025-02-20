@@ -1,53 +1,17 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { Server } from "socket.io";
-import { createServer } from "http";
 
 import { app } from "./app.js";
 import { connectDB } from "./DB/Connection.js";
-import { retrivedSellerApproaval } from "./Controllers/Seller.controller.js";
-
-const server = createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    credentials: true,
-  }
-});
-
-
-io.listen(9998);
-
-io.on("connection", (socket) => {
-
-  console.log("Client connected with socket id : ", socket.id);
-  console.log("Client connected with socket IP : ", socket.handshake.address);
-
-  socket.on("retrivedNotApprovalProperty", () => {
-    console.log("Socket Calling.");
-    socket.emit("sendProperty", retrivedSellerApproaval);
-  });
-
-  socket.emit("verify", 'You are Connected To Chat');
-
-  socket.on("success", (res) => {
-    console.log("Verification successfully.", res);
-  });
-
-  socket.on("client", (socket) => {
-    console.log("Client Message : ", socket);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
 
 const PORT = process.env.PORT || 5656;
 
 connectDB();
 
+// server.listen(PORT, () => {
+//   console.log(`⚙️💫🤞⚙️ Server is running at PORT: ${PORT}`);
+// });
+
 app.listen(PORT, () => {
-  console.log(`⚙️💫🤞⚙️ Server is running at PORT: ${PORT}`);
+  console.log(`⚙️💫🤞⚙️ App is running at PORT: ${PORT}`);
 });

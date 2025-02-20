@@ -6,8 +6,18 @@ import cookieParser from "cookie-parser";
 import userRouter from "./Routes/User.router.js";
 import adminRouter from "./Routes/Admin.router.js";
 import sellerRouter from "./Routes/Seller.router.js";
+import http from "http";
+
+import setupSocket from "./Config/socket.js";
+
 
 const app = express();
+
+const server = http.createServer(app);
+
+server.listen(9998, (err) => {
+  console.log("SOCKET SERVER IS LISTEN ON 9998");
+});
 
 app.use(cookieParser());
 app.use(express.json({ limit: "16kb" }));
@@ -34,8 +44,10 @@ app.use("/api/v1/propertyfy/admin/", adminRouter);
 // seller
 app.use("/api/v1/propertyfy", sellerRouter);
 
+setupSocket(server);
 
 app.use(errorHandler);
+
 
 export { app };
 

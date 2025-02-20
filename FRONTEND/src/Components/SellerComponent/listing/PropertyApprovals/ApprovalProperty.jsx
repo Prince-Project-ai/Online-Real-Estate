@@ -1,19 +1,27 @@
 import React, { useEffect } from "react";
 import { useSocket } from "../../../../Contexts/SocketContext";
-
+import { useAuth } from "../../../../Contexts/AuthContext";
 const ApprovalProperty = () => {
+
     const { socket } = useSocket();
+    const { currentAuth } = useAuth();
 
     useEffect(() => {
         if (!socket) return;
 
-        socket.emit("retrivedNotApprovalProperty", () => {
-            socket.on("sendProperty", function (data) {
-                console.log("Received : ", data);
-            });
-        });
+        const handleSendProperty = (data) => {
+            console.log("Received:", data);
+        };
+        socket.emit("retrivedNotApprovalProperty", currentAuth._id);
+        socket.on("Properties", handleSendProperty);
 
-        return () => socket.off("retrivedNotApprovalProperty");
+        socket.on('error', (message) => {
+            console.log("Calling");
+            console.error('WebSocket error :', message);
+        });
+        return () => {
+            // socket.off("sendProperty", handleSendProperty);
+        };
     }, [socket]);
 
     return (
@@ -21,4 +29,4 @@ const ApprovalProperty = () => {
     );
 };
 
-export default ApprovalProperty;
+export default React.memo(ApprovalProperty);

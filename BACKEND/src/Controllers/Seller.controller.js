@@ -182,27 +182,12 @@ export const sellerReview = asyncHandler(async (req,res) => {
     }
 });
 
-export const retrivedSellerApproaval = asyncHandler(async (req,res) => {
-    try {
-        const approvedProp = await Property.find({approval:false});
-        if(!approvedProp) throw new ApiError(404,"Approvals not at moment");
-        res
-        .status(200)
-        .json(new ApiResponse(200,approvedProp,"Retrived Approvals."));
-    } catch (error) {
-        throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM FETCH APPROVAL.");
-    }
-});
-
-
-
-
-
-
 // export const SellerSupportChat = asyncHandler(async (req,res) => {
 //     try {
         
 //     } catch (error) {
-//         throw new ApiError(error.status || 500,error.messaage || "INTERNAL SERVER ERROR FORM CHATING SULLER SUPPORT.")
+//         throw new ApiError(error.retrivedSellerApproaval
+// 
+//  || 500,error.messaage || "INTERNAL SERVER ERROR FORM CHATING SULLER SUPPORT.")
 //     }
 // });

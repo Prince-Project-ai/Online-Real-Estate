@@ -18,8 +18,6 @@ const SellerSupport = () => {
     setMessage("");
   }
 
-
-
   return (
     <div className="grid w-full max-h-screen grid-cols-12 bg-white">
       <div className="chat-user col-span-3 w-full border border-dark flex flex-col h-full overflow-hidden">
