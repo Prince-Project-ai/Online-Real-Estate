@@ -4,7 +4,7 @@ import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import SwiperGallery from "./swiperExample/SwiperGallery";
 import { FaMap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { showPropertyDetails } from "../../Api/website/HandleUserApi";
+// import { showPropertyDetails } from "../../Api/website/HandleUserApi";
 
 
 const SearchResult = ({ searchFilterData }) => {
@@ -16,22 +16,24 @@ const SearchResult = ({ searchFilterData }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!ref.current.contains(event.target)) {
+      if (ref.current && !ref.current.contains(event.target)) {
         setIsOpenMenu(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-  }, [ref]);
 
-  const handleOpenMenu = (e, action) => {
-    e.preventDefault();
-    setIsOpenMenu(action);
-  }
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
 
   const handleDetailsProperty = (e, id) => {
     e.preventDefault();
     navigate(`/property-details/${id}`);
   }
+
   return (
     <>
       <div className="">

@@ -2,18 +2,30 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { SlPlus } from "react-icons/sl";
 import { LuSendHorizontal } from "react-icons/lu";
-
+import { useAuth } from "../../../Contexts/AuthContext";
+import { useSocket } from "../../../Contexts/SocketContext";
 
 
 const SellerSupport = () => {
+  const { currentAuth } = useAuth();
+  const { socket, fromInput } = useSocket();
+
+  const [messages, setMessages] = useState([]);
 
   const [message, setMessage] = useState("");
 
+  console.log(currentAuth?._id);
+
   useEffect(() => {
-  }, []);
+    console.log("render");
+    socket.on(currentAuth?._id, ({ message }) => {
+      console.log(message);
+      setMessages((prev) => ([...prev, message]));
+    });
+  }, [socket]);
 
   const handleSendMessage = () => {
-    const socket = io("http://localhost:9998"); 
+    const socket = io("http://localhost:9998");
     socket.emit("client", message);
     setMessage("");
   }
@@ -207,21 +219,27 @@ const SellerSupport = () => {
 
 
         <div className="chat-body flex-1 h-full overflow-hidden overflow-y-auto bg-secondary">
-          <ul className="flex flex-col w-full p-2 gap-y-3  ">
-            <li className="reciver self-start text-sm">
-              <div className="user-chat-content flex gap-x-2">
+          <ul className="flex flex-col w-full p-2 gap-y-3">
 
-                <div className="user-profile self-end">
-                  <img src="https://bootstrapdemos.wrappixel.com/spike/dist/assets/images/profile/user-1.jpg" alt="profile-img" className="h-8 w-8 rounded-full" />
-                </div>
+            {
+              messages.map((message, i) => (
+                <li key={i} className="reciver self-start text-sm">
+                  <div className="user-chat-content flex gap-x-2">
 
-                <div className="user-name w-2/3 bg-white rounded-bl-none rounded-[12px] self-center px-3 py-2 border text-xs font-inter">
-                  <h5>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ipsa.</h5>
-                  {/* <img src="https://bootstrapdemos.wrappixel.com/spike/dist/assets/images/profile/user-1.jpg" className="h-20 w-20" alt="" /> */}
-                </div>
+                    <div className="user-profile self-end">
+                      <img src="https://bootstrapdemos.wrappixel.com/spike/dist/assets/images/profile/user-1.jpg" alt="profile-img" className="h-8 w-8 rounded-full" />
+                    </div>
 
-              </div>
-            </li>
+                    <div className="user-name w-2/3 bg-white rounded-bl-none rounded-[12px] self-center px-3 py-2 border text-xs font-inter">
+                      <h5>{message}</h5>
+                      {/* <img src="https://bootstrapdemos.wrappixel.com/spike/dist/assets/images/profile/user-1.jpg" className="h-20 w-20" alt="" /> */}
+                    </div>
+
+                  </div>
+                </li>
+              ))
+            }
+
 
             <li className="reciver self-start text-sm">
               <div className="user-chat-content flex gap-x-2">
@@ -471,6 +489,7 @@ const SellerSupport = () => {
 
               </div>
             </li>
+
           </ul>
         </div>
         <div className="chat-footer border-t border-b border-dark p-2">

@@ -24,7 +24,6 @@ const PropertyDetails = () => {
   const { data } = useParams();
   const [propSellerInfo, setPropSellerInfo] = useState(null);
 
-
   const defaultCenter = {
     lat: 21.6015,
     lng: 71.2204,
@@ -49,7 +48,7 @@ const PropertyDetails = () => {
     }
   }, []);
 
-  
+
   useEffect(() => {
     fetchCurrentDetails(data);
     return () => {
@@ -60,7 +59,7 @@ const PropertyDetails = () => {
 
   return (
     <>
-      <ClientSupport />
+      <ClientSupport propSellerInfo={propSellerInfo} />
       <section className="max-w-7xl mx-auto my-10 relative">
         <div className="property-images">
           <div className="grid-images grid gap-5 grid-cols-12">

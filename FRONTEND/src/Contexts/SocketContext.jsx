@@ -11,6 +11,9 @@ export const useSocket = () => {
 
 const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
+    const [senderText, setSenderText] = useState("");
+    const [chats, setChats] = useState([]);
+
 
     useEffect(() => {
         const newSocket = io("http://localhost:9998", {
@@ -18,15 +21,15 @@ const SocketProvider = ({ children }) => {
         });
 
         newSocket.on('connect', () => {
-            console.log('Connected to server');
+            console.log("Socket Connected.");
         });
 
         newSocket.on('disconnect', (reason) => {
-            console.log('Disconnected from server:', reason);
+            console.log('Socket Disconnected : ', reason);
         });
 
         newSocket.on('connect_error', (error) => {
-            console.error('Connection error:', error);
+            console.log('Socket Error : ', error);
         });
 
         setSocket(newSocket);
@@ -36,8 +39,19 @@ const SocketProvider = ({ children }) => {
         };
     }, []);
 
+    const sendMessage = (text, reciverId, senderId, type) => {
+        socket.emit('emit-message', { text, reciverId, senderId, type });
+        setChats((prev) => ([...prev, text]));
+        setSenderText("");
+    }
+
     const contextValue = {
         socket,
+        sendMessage,
+        senderText,
+        setSenderText,
+        chats,
+        setChats,
     };
 
     return (
