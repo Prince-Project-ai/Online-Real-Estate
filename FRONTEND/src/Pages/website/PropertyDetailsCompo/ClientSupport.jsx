@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { LuSendHorizontal } from "react-icons/lu";
 import { SlPlus } from "react-icons/sl";
@@ -8,17 +8,19 @@ import { useAuth } from "../../../Contexts/AuthContext";
 const ClientSupport = ({ propSellerInfo }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { currentAuth } = useAuth();
-  const { sendMessage, chats, senderText, setSenderText } = useSocket();
-  
+  const { sendMessageSeller, chats, senderText, setSenderText } = useSocket();
+
   const handleEmitMessage = (e) => {
+    
     e.preventDefault();
-    sendMessage(senderText, currentAuth?._id, propSellerInfo?._id, "text");
-  }
+    sendMessageSeller(senderText, propSellerInfo?._id, currentAuth?._id, "text");
+    setSenderText("");
+  };
 
   return (
     <div className="fixed z-40 bottom-0 right-0 w-80">
       <div
-        className="bg-white border border-dark border-b-0 w-full flex items-center justify-between space-x-3 h-auto rounded-t-xl p-2 py-1  top-0 z-10 cursor-pointer sticky"
+        className="bg-white border border-dark border-b-0 w-full flex items-center justify-between space-x-3 h-auto rounded-t-xl p-2 py-1 top-0 z-10 cursor-pointer sticky"
         onClick={() => setIsChatOpen(!isChatOpen)}
       >
         <div className="seller-profile gap-x-3 py-1 flex items-center justify-center relative">
@@ -32,8 +34,8 @@ const ClientSupport = ({ propSellerInfo }) => {
                 />
               </div>
               <div className="userinfo">
-                <h4 className="font-semibold text-lg leading-[25px]">Mike Nielsen</h4>
-                <p className="text-xs leading-[15px]">Online</p>
+                <h4 className="font-semibold text-lg leading-[25px]">{propSellerInfo?.name || "Seller Name"}</h4>
+                <p className="text-xs leading-[15px]">{propSellerInfo?.status || "Online"}</p>
               </div>
             </div>
           </div>
@@ -50,15 +52,15 @@ const ClientSupport = ({ propSellerInfo }) => {
         <div className="border h-96 overflow-y-auto border-dark border-b-0 bg-secondary">
           <div className="message-body flex flex-col w-full p-2 gap-y-1">
             {chats.map((message, i) => (
-              <div key={i} className={`flex ${i % 2 === 0 ? "justify-start" : "justify-end"}`}>
-                <div className={`flex gap-x-2 items-end ${i % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}>
+              <div key={i} className={`flex ${message.senderId === currentAuth?._id ? "justify-end" : "justify-start"}`}>
+                <div className={`flex gap-x-2 items-end ${message.senderId === currentAuth?._id ? "flex-row-reverse" : "flex-row"}`}>
                   <img
                     src="https://bootstrapdemos.wrappixel.com/spike/dist/assets/images/profile/user-1.jpg"
                     alt="profile-img"
                     className="h-8 w-8 rounded-full"
                   />
-                  <div className={`p-3 rounded-lg  text-xs ${i % 2 === 0 ? "bg-white rounded-bl-none border" : "bg-dark text-white border-dark rounded-br-none"}`}>
-                    <p>{message}</p>
+                  <div className={`p-3 rounded-lg text-xs ${message.senderId === currentAuth?._id ? "bg-dark text-white border-dark rounded-br-none" : "bg-white rounded-bl-none border"}`}>
+                    <p>{message.text}</p>
                   </div>
                 </div>
               </div>

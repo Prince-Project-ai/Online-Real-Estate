@@ -11,15 +11,15 @@ const WebsiteContextStackProvider = ({ children }) => {
   return (
 
     <MessageProvider>
-      <SocketProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <SocketProvider>
           <UserProvider>
             <SharedDataProvider>
               {children}
             </SharedDataProvider>
           </UserProvider>
-        </AuthProvider>
-      </SocketProvider>
+        </SocketProvider>
+      </AuthProvider>
     </MessageProvider>
   )
 }

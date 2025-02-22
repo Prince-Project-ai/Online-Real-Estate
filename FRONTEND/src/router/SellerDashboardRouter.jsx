@@ -14,8 +14,8 @@ import SocketProvider from "../Contexts/SocketContext";
 const SellerDashboardRouter = () => {
   return (
     <MessageProvider>
-      <SocketProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <SocketProvider>
           <PrivateRoute>
             <SellerLayout>
               <Routes>
@@ -29,8 +29,8 @@ const SellerDashboardRouter = () => {
               </Routes>
             </SellerLayout>
           </PrivateRoute>
-        </AuthProvider>
-      </SocketProvider>
+        </SocketProvider>
+      </AuthProvider>
     </MessageProvider>
   );
 };
