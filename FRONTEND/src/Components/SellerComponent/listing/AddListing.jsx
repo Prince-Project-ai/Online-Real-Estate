@@ -192,6 +192,7 @@ const AddListing = () => {
             formData={formData}
             handleChange={handleChange}
             previewImages={previewImages}
+            setPreviewImages={setPreviewImages}
             formErrors={formErrors} // Pass errors here
           />
         );
@@ -211,8 +212,8 @@ const AddListing = () => {
 
   return (
     <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <div className="grid grid-cols-12 gap-x-5">
-        <div className="bg-white rounded-lg self-start border p-5 col-span-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="bg-white rounded-lg order-1 lg:order-0 self-start border p-5 lg:col-span-8 col-span-1">
           {renderStep()}
           <div className="flex justify-between mt-6">
             {step > 1 && (
@@ -227,28 +228,23 @@ const AddListing = () => {
             )}
             {step === 4 && (
               <button type="submit" className="bg-dark font-inter tracking-wider text-white px-4 py-2 rounded-lg">
-                {
-                  isLoading ? <ButtonSpinner /> : 'Submit Listing'
-                }
+                {isLoading ? <ButtonSpinner /> : 'Submit Listing'}
               </button>
             )}
           </div>
         </div>
 
-
-
-
-        <div className="bg-white rounded-lg self-start border p-5 col-span-4 sticky top-0">
+        <div className="bg-white rounded-lg order-0 lg:order-1 self-start border p-5 lg:col-span-4 col-span-1 lg:sticky lg:top-0">
           <ul className="space-y-4 rounded-lg overflow-hidden">
-            <li className="flex items-center bg-secondary py-2 p-3">
+            <li className={`flex items-center bg-secondary py-2 p-3`}>
               <i className={`${step === 1 ? 'ri-arrow-right-circle-line' : 'ri-checkbox-circle-line'} text-xl me-2`}></i>
               <p className="font-inter text-sm">Property Type</p>
             </li>
-            <li className="flex items-center bg-secondary py-2 p-3">
+            <li className={`flex items-center bg-secondary py-2 p-3`}>
               <i className={`${step === 2 ? 'ri-arrow-right-circle-line' : step < 2 ? 'ri-circle-line' : 'ri-checkbox-circle-line'} text-xl me-2`}></i>
               <p className="font-inter text-sm">Location</p>
             </li>
-            <li className="flex items-center bg-secondary py-2 p-3">
+            <li className={`flex items-center bg-secondary py-2 p-3`}>
               <i className={`${step === 3 ? 'ri-arrow-right-circle-line' : step < 3 ? 'ri-circle-line' : 'ri-checkbox-circle-line'} text-xl me-2`}></i>
               <p className="font-inter text-sm">Photos and videos</p>
             </li>
@@ -261,6 +257,7 @@ const AddListing = () => {
       </div>
     </form>
   );
+
 };
 
 export default React.memo(AddListing);

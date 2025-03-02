@@ -10,6 +10,7 @@ import SellerSupport from "../Components/SellerComponent/Chating/SellerSupport";
 import DataTableListing from "../Components/SellerComponent/listing/DataTableListing";
 import ApprovalProperty from "../Components/SellerComponent/listing/PropertyApprovals/ApprovalProperty";
 import SocketProvider from "../Contexts/SocketContext";
+import ReviewsDashboard from "../Components/SellerComponent/Review/ReviewsDashboard";
 
 const SellerDashboardRouter = () => {
   return (
@@ -25,7 +26,7 @@ const SellerDashboardRouter = () => {
                 <Route path="/total-listing" element={<DataTableListing />} />
                 <Route path="/view-approvals" element={<ApprovalProperty />} />
                 <Route path="/seller-supprot" element={<SellerSupport />} />
-                <Route path="/review" element={"Backend is Created."} />
+                <Route path="/review" element={<ReviewsDashboard />} />
               </Routes>
             </SellerLayout>
           </PrivateRoute>

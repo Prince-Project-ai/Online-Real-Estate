@@ -14,12 +14,12 @@ const Review = ({ review, onToggleDropdown, isOpen, dropdownRef, setOpenDropdown
       <div className="flex w-full items-center justify-between mb-2">
         <div className="flex items-center">
           <img
-            src={review.avatar}
+            src={currentAuth._id === review.userId ? currentAuth.avatar : review.avatar}
             alt="Profile"
             className="w-10 h-10 rounded-full mr-3"
           />
           <div>
-            <h3 className="font-bold">{review.name}</h3>
+            <h3 className="font-bold">{currentAuth._id === review.userId ? currentAuth?.fullName : review.name}</h3>
             <p className="text-xs text-gray-500">
               {new Date(review.createdAt).toLocaleDateString()}
             </p>

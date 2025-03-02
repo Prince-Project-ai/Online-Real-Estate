@@ -9,6 +9,7 @@ import {
   allReviewByProId,
   currentAuth,
   deleteReview,
+  fetchChatMessages,
   fetchSellerByProperty,
   getPropertyById,
   gettingAllProperty,
@@ -43,6 +44,8 @@ router.post("/search-result", verifyJWT, searchFilter);
 router.get("/all-property", verifyJWT, gettingAllProperty);
 router.get("/property-details/:propertyId", verifyJWT, getPropertyById);
 router.get("/seller-info/:sellerId", verifyJWT, fetchSellerByProperty);
+
+router.get("/fetchChatMessages", verifyJWT, fetchChatMessages)
 
 
 // REVIE MODULE

@@ -1,10 +1,10 @@
-    // import { User } from "../Models/User.model.js";
 import { Property } from "../Models/Property.model.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import cloudinary from "../Config/Cloudinary.js";
 import { Review } from "../Models/Review.model.js";
+
 
 export const addSellerProperty = asyncHandler(async (req, res) => {
     try {
@@ -88,7 +88,6 @@ export const addSellerProperty = asyncHandler(async (req, res) => {
     }
 });
 
-
 export const totalListing = asyncHandler(async (req, res) => {
     try {
         const sellerIds = req?.user?._id;
@@ -117,15 +116,13 @@ export const deleteListing = asyncHandler(async (req, res) => {
     }
 });
 
-
-
 export const updateSellerListing = asyncHandler(async (req, res) => {
     try {
         const sellerId = req.user._id; // Seller's ID
         const { propertyId } = req.params; // Property ID to update
 
         let updateData = { ...req.body }; // Copy req.body to prevent mutations
-        
+
         let uploadedImages = [];
 
         // Upload images to Cloudinary if any
@@ -168,26 +165,47 @@ export const updateSellerListing = asyncHandler(async (req, res) => {
     }
 });
 
-export const sellerReview = asyncHandler(async (req,res) => {
-    try {   
+export const getReviewsBySeller = asyncHandler(async (req, res) => {
+    try {
         const { sellerId } = req.params;
-        if(!sellerId) throw new ApiError(404,"Seller id not Found");
-        const Revies = await Review.find({userId:sellerId});
-        if(!Revies) throw new ApiError(404,"Review Not Available");
-        res
-        .status(200)
-        .json(new ApiResponse(200, Revies, "Reviews Retrieved Successfully."));
+
+        // Fetch all properties added by the seller
+        const properties = await Property.find({ adderId: sellerId });
+        if (!properties || properties.length === 0) {
+            throw new ApiError(404, "No properties found for this seller");
+        }
+
+        // Extract property IDs
+        const propertyIds = properties.map(property => property._id);
+
+        // Fetch reviews for all properties
+        const reviews = await Review.find({ propertyId: { $in: propertyIds } });
+        if (!reviews || reviews.length === 0) {
+            throw new ApiError(404, "No reviews available for the seller's properties");
+        }
+
+        res.status(200).json(new ApiResponse(200, reviews, "Reviews retrieved successfully"));
     } catch (error) {
-        throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM REVIEW SELLER.");
+        throw new ApiError(error.status || 500, error.message || "Internal Server Error");
     }
 });
 
-// export const SellerSupportChat = asyncHandler(async (req,res) => {
-//     try {
-        
-//     } catch (error) {
-//         throw new ApiError(error.retrivedSellerApproaval
-// 
-//  || 500,error.messaage || "INTERNAL SERVER ERROR FORM CHATING SULLER SUPPORT.")
-//     }
-// });
+export const fetchPendingListings = asyncHandler(async (req, res) => {
+    try {
+        const { sellerId } = req.params;
+
+        if (!sellerId) throw new ApiError(404, "Seller id not found.");
+
+        const PendingPropertes = await Property.find({
+            $and: [{ adderId: sellerId }, { approval: "Pending" }]
+        });
+
+        if (!PendingPropertes || PendingPropertes.length === 0) throw new ApiError(404, 'Approvals not available at the moment');
+
+        res
+            .status(200)
+            .json(new ApiResponse(200, PendingPropertes, "Fetch Successfully."));
+    } catch (error) {
+        throw new ApiError(error?.status || 500, error?.message || "INTERNAL SERVER ERROR FROM THE FETCHING PENDING LISTING.");
+    }
+});

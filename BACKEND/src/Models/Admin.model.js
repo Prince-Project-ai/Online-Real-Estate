@@ -14,12 +14,19 @@ const adminSchema = new Schema(
       required: true,
       unique: true,
       lowercase: true,
-      index:true,
+      index: true,
       trim: true,
     },
     password: {
       type: String,
       required: true,
+    },
+    phoneNumber: {
+      type: Number,
+      required: true,
+    },
+    avatar: {
+      type: String,
     },
     token: {
       type: String,

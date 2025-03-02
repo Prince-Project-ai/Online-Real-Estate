@@ -83,10 +83,10 @@ const DashContent = () => {
   };
 
   return (
-    <div className="w-full p-5 page-body flex-1 overflow-hidden overflow-y-auto">
-      <div className="dashboard-atglance mb-4 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-        {/* Your glance components here */}
-      </div>
+    <div className="w-full bg-white p-5 page-body rounded-lg border">
+      {/* <div className="dashboard-atglance mb-4 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5"> */}
+      {/* Your glance components here */}
+      {/* </div> */}
       <div className="border p-3 rounded-lg">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
           <div className="flex items-center gap-2">

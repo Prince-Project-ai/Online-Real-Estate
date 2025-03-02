@@ -7,6 +7,9 @@ import cron from "node-cron";
 import CryptoJS from "crypto-js";
 import bcrypt from "bcrypt";
 import { User } from "../Models/User.model.js";
+import cloudinary from "../Config/Cloudinary.js";
+import fs from "fs";
+import { Property } from "../Models/Property.model.js";
 
 // this is options for cookies
 const OPTIONS = {
@@ -82,13 +85,14 @@ export const generateAccessToken = (ADMIN) => {
 // admin signup using post man no fronted required
 export const adminSignUp = asyncHandler(async (req, res) => {
   try {
-    const { adminName, email, password } = req.body;
-    await Admin.create({
+    const { adminName, email, password, phoneNumber } = req.body;
+    const newAdmin = await Admin.create({
       adminName,
       email,
       password,
+      phoneNumber,
     });
-    res.status(201).json(new ApiResponse(201, {}, "Registration successful."));
+    res.status(201).json(new ApiResponse(201, newAdmin, "Registration successfully."));
   } catch (error) {
     throw new ApiError(
       error.status,
@@ -103,7 +107,7 @@ export const adminSignIn = asyncHandler(async (req, res) => {
 
   if (!(email && password)) throw new ApiError(401, "All fields are required.");
 
-  const admin = await Admin.findOne({ email }).select("+password");
+  const admin = await Admin.findOne({ email });
 
   if (!admin) throw new ApiError(401, "Invalid Credentials.");
 
@@ -118,12 +122,10 @@ export const adminSignIn = asyncHandler(async (req, res) => {
     passwordUpdateJob.start();
   }
 
-  OPTIONS.maxAge = 60 * 60 * 1000 * 24;
-
   res
     .status(200)
     .cookie("adminAccessToken", token, OPTIONS) // Cookie configuration optimized
-    .json(new ApiResponse(200, {}, "Login Successfully..."));
+    .json(new ApiResponse(200, admin, "Login Successfully..."));
 });
 
 // admin Logout Controller
@@ -175,3 +177,150 @@ export const removeAccessAuth = asyncHandler(async (req, res) => {
     throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM REMOVE ACCESS AUTHS [ADMIN SIDE]");
   }
 });
+
+
+export const updateAdminProfile = asyncHandler(async (req, res) => {
+  try {
+    const adminId = req.admin._id;
+    const updatedField = {};
+    const { adminName, email, password, phoneNumber } = req.body;
+
+
+    // Handle file upload for avatar
+    if (req.file && req.file.path) {
+      const newProfileImage = await cloudinary.uploader.upload(req.file.path, {
+        folder: "PropertyFy/profile_imgs",
+        transformation: [
+          {
+            width: 200,
+            height: 200,
+            crop: "thumb",
+            gravity: "face",
+          },
+        ],
+      });
+
+      updatedField.avatar = newProfileImage.secure_url;
+
+      // Unlink the file from the local machine
+      fs.unlinkSync(req.file.path, (err) => {
+        if (err) {
+          console.error("Failed to delete local file : ", err);
+        }
+      });
+    }
+
+
+    // Add other fields to update if they exist
+    if (adminName) updatedField.adminName = adminName;
+    if (password) updatedField.password = password;
+    if (email) updatedField.email = email;
+    if (phoneNumber) updatedField.phoneNumber = phoneNumber;
+
+    console.log(updatedField);
+
+
+    // Update the agent profile
+    const updatedAdmin = await Admin.findByIdAndUpdate(
+      adminId,
+      {
+        $set: updatedField,
+      },
+      {
+        new: true, // Return the updated document
+      }
+    ).select("-token");
+
+    if (!updatedAdmin) {
+      throw new ApiError(404, "User not found.");
+    }
+
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedAdmin,
+          "Admin profile updated successfully."
+        )
+      );
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM UPDATING ADMIN PROFILE");
+  }
+});
+
+
+
+
+export const retriveAllPendingApprovals = asyncHandler(async (req, res) => {
+  try {
+
+    const propertyList = await Property.find({ approval: "Pending" });
+    if (!propertyList || propertyList.length === 0) {
+      throw new ApiError(404, "No pending approvals found");
+    }
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, propertyList, "Property Fetched"));
+
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM FETCHING PENDING PROPERTY APPROVALS.");
+  }
+});
+
+
+export const approveSellerProperty = asyncHandler(async (req, res) => {
+  try {
+    const propertyId = req.params.propertyId;
+    const { status } = req.body;
+
+    const approvedProperty = await Property.findByIdAndUpdate(
+      propertyId,
+      {
+        $set: { approval: status },
+      },
+      {
+        new: true,
+      }
+    );
+    if (!approvedProperty) {
+      throw new ApiError(404, "No pending approvals found");
+    }
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, approvedProperty, "Property Approved"));
+
+  } catch (error) {
+    throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM APPROVING PENDING PROPERTY.");
+  }
+});
+
+
+export const fetchAllProperty = asyncHandler(async (req, res) => {
+  try {
+    const properties = await Property.find();
+    if (!properties || properties.length === 0) throw new ApiError(404, "No property found");
+    res
+      .status(200)
+      .json(new ApiResponse(200, properties, "Property Fetched."));
+  } catch (error) {
+    console.log(error?.status || 500, error?.message || "INTERNAL SERVER FROM THE FETCHING ALL PROPERTS FROM ADMIN SIDE");
+  }
+})
+
+// export const retrivedSellerApproaval = async (socket, id) => {
+//   try {
+//     const approvedProp = await Property.find({
+//       $and: [{ adderId: id }, { approval: false }]
+//     });
+//     if (!approvedProp) {
+//       socket.emit('error', 'Approvals not available at the moment');
+//     }
+//     socket.emit('Properties', approvedProp);
+
+//   } catch (error) {
+//     socket.emit('error', error.message || "INTERNAL SERVER ERROR.");
+//   }
+// };

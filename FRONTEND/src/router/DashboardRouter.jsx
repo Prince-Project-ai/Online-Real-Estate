@@ -7,7 +7,9 @@ import DashboardHome from "../Components/dashboard/DashboardHome";
 import AdminContextProvider, { useAdminAuth } from "../Contexts/ADMIN/AdminAuthContext";
 import MessageProvider from "../Contexts/MessageContext";
 import DashboardSkeleton from "../Components/dashboard/comman/DashboardSkeleton";
-
+import AdminProfile from "../Pages/dashboard/profileComponnet/AdminProfile";
+import ApprovalDataTable from "../Pages/dashboard/propertyApproval/ApprovalDataTable";
+import AllProperty from "../Pages/dashboard/AllProperty/AllProperty";
 
 const DashboardRouter = () => {
   return (
@@ -15,12 +17,40 @@ const DashboardRouter = () => {
       <AdminContextProvider>
         <DashboardLayouts>
           <Routes>
+            {/* Public Route for Sign-in */}
             <Route path="/sign-in" element={<SignIn />} />
+
+            {/* Protected Routes */}
             <Route
               path="/"
               element={
                 <PrivateRoute>
                   <DashboardHome />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <AdminProfile />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/approvals"
+              element={
+                <PrivateRoute>
+                  <ApprovalDataTable />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/all-property"
+              element={
+                <PrivateRoute>
+                  <AllProperty />
                 </PrivateRoute>
               }
             />
@@ -40,17 +70,16 @@ const DashboardRouter = () => {
   );
 };
 
-
-
-
 export default DashboardRouter;
 
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const { isAdminAuthenticated, isLoading } = useAdminAuth();
+
   if (isLoading) {
-    return <DashboardSkeleton />
+    return <DashboardSkeleton />;
   }
+
   if (!isAdminAuthenticated) {
     return <Navigate to="/dashboard/sign-in" replace />;
   }

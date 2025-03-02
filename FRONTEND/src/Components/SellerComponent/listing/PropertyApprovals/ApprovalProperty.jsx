@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { useSocket } from "../../../../Contexts/SocketContext";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../../../Contexts/AuthContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCards } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-cards";
+import { fetchPendingApproval } from "../../../../Api/website/HandleUserApi";
 
 const ApprovalProperty = () => {
-  const { socket } = useSocket();
   const { currentAuth } = useAuth();
   const [properties, setProperties] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [photoIndex, setPhotoIndex] = useState(0);
 
+  const fetchPendingListings = useCallback(async () => {
+    try {
+      const response = await fetchPendingApproval(currentAuth?._id);
+      if (response?.success) {
+
+        setProperties(response?.data);
+      }
+    } catch (error) {
+      console.log(error?.response?.data?.message || error?.message);
+    }
+  }, []);
+
+
   useEffect(() => {
-    if (!socket) return;
-
-    const handleSendProperty = (data) => {
-      setProperties(data);
-    };
-
-    socket.emit("retrivedNotApprovalProperty", currentAuth._id);
-    socket.on("Properties", handleSendProperty);
-
-    socket.on("error", (message) => {
-      console.error("WebSocket error:", message);
-    });
-
+    fetchPendingListings();
     return () => {
-      socket.off("Properties", handleSendProperty);
+      fetchPendingListings();
     };
-  }, [socket, currentAuth._id]);
+  }, [currentAuth?._id]);
 
   return (
     <div className="max-w-6xl mx-auto">

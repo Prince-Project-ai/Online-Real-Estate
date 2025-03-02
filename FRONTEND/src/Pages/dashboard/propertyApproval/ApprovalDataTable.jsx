@@ -1,0 +1,340 @@
+import React, { useCallback, useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-cards";
+import { EffectCards } from "swiper/modules";
+import { approvePendingApprovals, fetchPendingPropertyApproval } from "../../../Api/dashboard/HandleAdminApi";
+import Model from "../../../Components/dashboard/comman/Model";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+import { AiFillWarning } from "react-icons/ai";
+import { useMessage } from "../../../Contexts/MessageContext";
+
+const ApprovalDataTable = () => {
+  const GOOGLE_MAPS_API_KEY = "AIzaSyC5oArfQeCOs0SeDNFzm7bCF5htor89riI";
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const [images, setImages] = useState([]);
+  const [pendingApprovals, setPendingApprovals] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const { showToast } = useMessage();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
+
+
+
+  // Filter data based on search
+  const filteredData = pendingApprovals.filter((item) =>
+    Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(search.toLowerCase())
+    )
+  );
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+  const startIndex = (currentPage - 1) * entriesPerPage;
+  const endIndex = startIndex + entriesPerPage;
+  const currentData = filteredData.slice(startIndex, endIndex);
+
+  // Generate page numbers
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const fetchPendingApproval = useCallback(async () => {
+    try {
+      const response = await fetchPendingPropertyApproval();
+      if (response?.success) {
+        setPendingApprovals(response?.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    fetchPendingApproval();
+    return () => {
+      fetchPendingApproval();
+    };
+  }, []);
+
+
+  const handleApproveProperty = async (e, action, id) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setIsDisable(true);
+    console.log(action);
+    try {
+      const res = await approvePendingApprovals(id, action);
+      if (res?.success) {
+
+        setPendingApprovals(pendingApprovals.filter((property) => property?._id !== res?.data?._id));
+
+        showToast(res?.message || "success");
+        // closeModel();
+      }
+    } catch (error) {
+      console.error(error?.response?.data?.message || error?.message);
+    } finally {
+      setIsLoading(false);
+      setIsDisable(false);
+    }
+  }
+
+  return (
+    <>
+      <h2 className="text-xl font-semibold mb-4">Property Approval</h2>
+      <div className="bg-white rounded-lg border p-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+          <select
+            value={entriesPerPage}
+            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+            className="w-auto text-sm p-2 border rounded outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+          >
+            <option value={5}>5 </option>
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+          </select>
+
+          <input
+            type="search"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full md:w-auto text-sm p-2 border rounded outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+          />
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-full divide-y divide-gray-500">
+            <thead className="bg-gray-50">
+              <tr className="text-left">
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">ID</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">Image</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">Property Title</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">Property Type</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">Listing Type</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">Price</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">size</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">location</th>
+                <th className="py-3 px-4 font-normal text-dark/70 text-xs">Action</th>
+              </tr>
+            </thead>
+
+
+            <tbody className="divide-y divide-gray-200">
+
+              {currentData.map((property, i) => {
+
+                const propertyImages = property?.images?.map((img) => img?.propertyImages) || [];
+                return (
+
+                  <tr key={i} className="hover:bg-gray-50 transition-colors">
+
+                    <td className="py-3 px-4 text-sm text-gray-700">{i + 1}</td>
+
+                    <td className="py-3 px-1 shrink-0">
+                      {propertyImages.length > 0 && (
+                        <img
+                          src={propertyImages[0]}
+                          className="w-16 h-16 object-contain rounded-lg cursor-pointer"
+                          alt="property"
+                          onClick={() => {
+                            setImages(propertyImages);
+                            setPhotoIndex(0);
+                            setIsOpen(true);
+                          }}
+                        />
+                      )}
+                    </td>
+
+
+                    <td className="py-3 px-4 text-sm text-gray-700">{property.propertyTitle}</td>
+
+
+                    <td className="py-3 px-4 text-sm text-gray-700">{property.propertyType}</td>
+
+
+                    <td className="py-3 px-4 text-sm text-gray-700">{property.listingType}</td>
+
+
+                    <td className="py-3 px-4 text-sm text-gray-700">
+                      {property.price} {property.priceNegotiable ? "(Negotiable)" : ""}
+                    </td>
+
+
+                    <td className="py-3 px-4 text-sm text-gray-700">
+                      {property.size} {property.sizeUnit}
+                    </td>
+
+
+                    <td className="py-3 px-4">
+                      <Model
+                        ModelOutSideBtn=<FaMapLocationDot />
+                        ModelLable="View Location"
+                        classDesign="bg-dark h-10 w-10 flex items-center justify-center text-lg text-white rounded"
+                      >
+                        <div className="model-body p-3">
+                          <div className="space-y-3">
+                            <p>
+                              <strong>Street Address:</strong> {property.location.streetAddress}
+                            </p>
+                            <p>
+                              <strong>Latitude:</strong> {property.location.locationCode[0].latitude}
+                            </p>
+                            <p>
+                              <strong>Longitude:</strong> {property.location.locationCode[0].longitude}
+                            </p>
+                            <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
+                              <GoogleMap center={{ lat: property.location.locationCode[0].latitude, lng: property.location.locationCode[0].longitude }} zoom={15} mapContainerStyle={{ width: "100%", height: "350px" }}>
+                                <Marker position={{ lat: property.location.locationCode[0].latitude, lng: property.location.locationCode[0].longitude }} />
+                              </GoogleMap>
+                            </LoadScript>
+                            {/* <a
+                              href={property.location.address_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-dark hover:underline"
+                            >
+                              Open Location
+                            </a> */}
+                          </div>
+                        </div>
+                      </Model>
+                    </td>
+
+
+
+                    {/* update model */}
+                    <td className="py-3 px-4 space-x-2 w-auto">
+                      <Model
+                        ModelOutSideBtn="Approval"
+                        ModelLable="Approval"
+                        classDesign="bg-dark flex items-center justify-center text-sm px-3 py-2 text-white rounded"
+                      >
+                        {/* Modal Body */}
+                        <div className="model-body p-2 bg-white rounded-lg shadow-lg">
+                          <div className="bg-red-100 border border-red-500 text-red-700 px-4 py-3 rounded-md flex items-center">
+                            <AiFillWarning className="text-red-600 text-4xl me-3" />
+                            <div>
+                              <h2 className="text-lg font-semibold">Warning!</h2>
+                              <p className="text-sm">Are you sure you want to approve this?</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Modal Footer */}
+                        <div className="p-3 border-t border-gray-300 bg-gray-50 flex justify-end gap-2">
+                          <button
+                            disabled={isDisable}
+                            onClick={(e) => handleApproveProperty(e, "Rejected", property._id)}
+                            className="bg-secondary border text-gray-700 px-4 text-sm py-2 rounded font-medium tracking-wider"
+                          >
+                            {
+                              isLoading ? 'Canceling... ' : 'Cancel'
+                            }
+                          </button>
+                          <button
+                            disabled={isDisable}
+                            onClick={(e) => handleApproveProperty(e, "Approved", property._id)}
+                            className="bg-red-500 outline-none hover:bg-red-700 text-white px-4 text-sm py-2 rounded font-medium tracking-wider"
+                            local={`${property._id}`}
+                          >
+                            {
+                              isLoading ? 'Approving... ' : 'Approve'
+                            }
+                          </button>
+
+                        </div>
+                      </Model>
+
+
+                      {/* <button
+                        onClick={() => openModel(property)}
+                        className="bg-dark text-white rounded w-full px-3 py-2 text-sm"
+                      >
+                        Approve */}
+                      {/* <FaRegEdit /> */}
+                      {/* </button> */}
+                    </td>
+
+
+                  </tr>
+                );
+              })}
+              {!currentData.length && (
+                <tr>
+                  <td className="py-6 text-center text-gray-500" colSpan={9}>
+                    No data found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+
+
+
+          </table>
+        </div>
+
+
+        {/* Pagination */}
+        <div className="flex flex-col md:flex-row justify-between items-center mt-6" >
+          <div className="text-sm text-gray-600 mb-4 md:mb-0">
+            Showing {startIndex + 1} to {Math.min(endIndex, filteredData.length)} of {filteredData.length} entries
+          </div>
+          <div className="flex space-x-2">
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                onClick={() => setCurrentPage(number)}
+                className={`px-3 font-description w-10 h-10 py-1 rounded ${currentPage === number
+                  ? "bg-dark text-white"
+                  : "bg-white border hover:bg-gray-50"
+                  }`}
+              >
+                {number}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Image Gallery Modal */}
+        {
+          isOpen && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-80 z-50">
+              <button
+                className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 transition-colors"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close gallery"
+              >
+                ✖
+              </button>
+              <Swiper
+                effect={"cards"}
+                grabCursor={true}
+                modules={[EffectCards]}
+                className="w-80 h-96"
+                initialSlide={photoIndex}
+              >
+                {images.map((img, index) => (
+                  <SwiperSlide key={index}>
+                    <img
+                      src={img}
+                      alt={`property ${index}`}
+                      className="w-full h-full object-contain rounded-lg bg-white"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )
+        }
+      </div>
+    </>
+  );
+};
+
+export default React.memo(ApprovalDataTable);

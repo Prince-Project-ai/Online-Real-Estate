@@ -37,27 +37,30 @@ const Sizing = ({ formData, handleChange, formErrors }) => {
 
   return (
     <div className="mb-4">
-      <label className="block font-medium">Size:</label>
-      <div className="w-full flex items-center space-x-3">
-        <div className="relative w-full flex items-center">
+      <label className="block font-medium text-sm sm:text-base">Size:</label>
+      <div className="w-full flex flex-col sm:flex-row items-center sm:space-x-3 space-y-2 sm:space-y-0">
+
+        {/* Input Field */}
+        <div className="relative w-full">
           <input
             type="number"
             name="size"
             value={areaSize}
             onChange={(e) => setAreaSize(Number(e.target.value))}
             min={0}
-            className="w-full p-2 border rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out mt-1 font-description tracking-wide"
+            className="w-full p-2 border rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out font-description tracking-wide"
             placeholder="Enter size"
           />
         </div>
 
-        <div className="relative w-full flex items-center gap-2">
+        {/* Converted Size & Dropdown */}
+        <div className="relative w-full flex items-center">
           <input
             type="number"
             name="actualSize"
             value={actualSize}
             disabled={true}
-            className="w-full p-2 border rounded font-description outline-none focus:ring-1 focus:ring-dark duration-200 ease-in-out"
+            className="w-full p-2 border rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out font-description tracking-wide"
             placeholder="0000"
             readOnly
           />
@@ -65,7 +68,7 @@ const Sizing = ({ formData, handleChange, formErrors }) => {
             name="sizeUnit"
             value={areaFilterType}
             onChange={(e) => setAreaFilterType(e.target.value)}
-            className="p-2 border absolute right-0 rounded font-description outline-none focus:ring-1 focus:ring-dark duration-200 ease-in-out"
+            className="p-2 border rounded font-description outline-none focus:ring-1 focus:ring-dark duration-200 ease-in-out text-sm sm:text-base ml-2 sm:ml-0"
           >
             {areaType.map((filter, i) => (
               <option key={i} value={filter}>
@@ -75,10 +78,8 @@ const Sizing = ({ formData, handleChange, formErrors }) => {
           </select>
         </div>
       </div>
-      <p className="text-xs text-zinc-500 mt-1">Default square meter*</p>
-      {
-        formErrors.size && <p className="text-red-500 text-xs mt-1">{formErrors.size}</p>
-      }
+      <p className="text-xs sm:text-sm text-zinc-500 mt-1">Default square meter*</p>
+      {formErrors.size && <p className="text-red-500 text-xs mt-1">{formErrors.size}</p>}
     </div>
   );
 };

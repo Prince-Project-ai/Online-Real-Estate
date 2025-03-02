@@ -28,6 +28,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
+    methods: "GET,POST,PUT,DELETE,PATCH",
   })
 );
 
@@ -68,29 +69,30 @@ export { app };
       http://localhost:9999/api/v1/propertyfy/seller-info
       http://localhost:9999/api/v1/propertyfy/seller-review/:sellerId
 
-      
+
       http://localhost:9999/api/v1/propertyfy/post-review
       http://localhost:9999/api/v1/propertyfy/revies/:productId
       http://localhost:9999/api/v1/propertyfy/update-revies/:reviewId
       http://localhost:9999/api/v1/propertyfy/delete-review/:reviewId
-  
+
 
 
 
 
       ======================= API LIST [ AGENT ] =================
       http://localhost:9999/api/v1/propertyfy/seller/update-agent-profile
-      
-      
+
+
       ======================= API LIST [ SELLER ] =================
       http://localhost:9999/api/v1/propertyfy/add-seller-property
       http://localhost:9999/api/v1/propertyfy/get-all-listing
       http://localhost:9999/api/v1/propertyfy/delete-listing/:deleteId
       http://localhost:9999/api/v1/propertyfy/update-seller-listing/:propertyId
+      http://localhost:9999/api/v1/propertyfy/get-pending-listing/:sellerId
 
 
 
-      
+
 
       ======================= API LIST [ SOMETING (COMING SOON) ] =================
       http://localhost:9999/api/v1/propertyfy/admin-sign-up
@@ -103,8 +105,16 @@ export { app };
       ======================= API LIST [ SOMETING (ADMIN) ] =================
       http://localhost:9999/api/v1/propertyfy/admin/all-users
       http://localhost:9999/api/v1/propertyfy/admin/remove-auth
+      http://localhost:9999/api/v1/propertyfy/admin/update-admin-profile
+      http://localhost:9999/api/v1/propertyfy/admin/fetch-pending-approval
+      http://localhost:9999/api/v1/propertyfy/admin/property-approve
 
 
 
 =============================================== [API LIST END] ========================================
 */
+
+
+
+// socket connection way
+// 1)first create the httpServer

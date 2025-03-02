@@ -111,6 +111,25 @@ export const UpdateAgentProfile = async (formData) => {
 	return response.data;
 };
 
+
+export const fetchSellerReviewBYId = async (id) => {
+	const response = await handleUserApi.get(`/seller-review/${id}`);
+	return response.data;
+};
+
+
+export const fetchChatMessages = async (senderId, receiverId) => {
+	try {
+		const response = await handleUserApi.get(`/fetchChatMessages?senderId=${senderId}&receiverId=${receiverId}`);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching chat messages:', error);
+		throw error;
+	}
+};
+
+
+
 // AGENT API END POINT LOGIC END 
 
 
@@ -147,6 +166,11 @@ export const showAllProperty = async () => {
 
 export const showPropertyDetails = async (id) => {
 	const res = await handleUserApi.get(`/property-details/${id}`);
+	return res.data;
+}
+
+export const fetchPendingApproval = async (id) => {
+	const res = await handleUserApi.get(`/get-pending-listing/${id}`);
 	return res.data;
 }
 

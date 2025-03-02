@@ -210,38 +210,6 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section className="bg-body border-t py-16">
-          <div className="w-full mx-auto px-2">
-            {/* Heading and Description */}
-            <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-heading text-dark mb-4">
-                Properties Near You
-              </h2>
-              <p className="text-lg font-description text-secondary">
-                Discover properties closest to your current location and start your journey today.
-              </p>
-            </div>
-
-            {/* Map and Property Pins */}
-            <div className="relative h-[650px] w-full rounded-md shadow-lg overflow-hidden">
-              {/* Replace iframe with an interactive map component like Google Maps or Leaflet */}
-              {/* <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345093746!2d-122.41941548468153!3d37.77492977975971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085818d3e255a3d%3A0x4b0b1c1df3e637b6!2sSan+Francisco%2C+CA%2C+USA!5e0!3m2!1sen!2sin!4v1685097123456!5m2!1sen!2sin"
-                allowFullScreen=""
-                loading="lazy"
-                className="w-full h-full border-0"
-                title="Map of Nearby Properties"
-              ></iframe> */}
-            </div>
-
-            {/* Map Integration Instructions */}
-            <div className="mt-6 text-center">
-              <p className="text-md font-description text-secondary">
-                Click on the property pins on the map to explore more details about properties near you.
-              </p>
-            </div>
-          </div>
-        </section>
       </main>
     </>
   );

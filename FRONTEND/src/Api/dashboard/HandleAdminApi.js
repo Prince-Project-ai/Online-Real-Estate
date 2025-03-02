@@ -4,9 +4,6 @@ axios.defaults.withCredentials = true;
 
 export const HandleAdminApi = axios.create({
   baseURL: "http://localhost:9999/api/v1/propertyfy/admin/",
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // admin sign in
@@ -15,7 +12,8 @@ export const AdminSignIn = async (form) => {
 };
 
 export const AdminAuth = async () => {
-  return await HandleAdminApi.get("/current-admin");
+  const response = await HandleAdminApi.get("/current-admin");
+  return response?.data;
 };
 
 export const AdminLogoutApi = async () => {
@@ -31,6 +29,34 @@ export const RemoveAuthAccess = async (authId) => {
   const res = await HandleAdminApi.delete(`/remove-auth/${authId}`);
   return res?.data;
 };
+
+export const UpdateAdminProfile = async (formData) => {
+  console.log(formData);
+  const response = await HandleAdminApi.patch("/update-admin-profile", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }
+  );
+  return response.data;
+};
+
+export const fetchPendingPropertyApproval = async () => {
+  const res = await HandleAdminApi.get("/fetch-pending-approval");
+  return res?.data;
+}
+
+export const approvePendingApprovals = async (id, action) => {
+  const res = await HandleAdminApi.patch(`/property-approve/${id}`, { status: action });
+  return res?.data;
+}
+
+
+export const fetchAllPropertyFromAdmin = async () => {
+  const res = await HandleAdminApi.get("/fetch-all-property");
+  return res?.data;
+}
+
 
 // what is my process of admin sign in
 

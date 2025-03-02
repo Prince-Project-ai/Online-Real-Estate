@@ -9,15 +9,17 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
       req.cookies?.accessToken ||
       req?.header("Authorization")?.replace("Bearer ", "");
 
+    console.log(Token);
+
     if (!Token) throw new ApiError(401, "unAuthorized Request.");
 
     const decode = jwt.verify(Token, process.env.ACCESS_TOKEN_SECRET);
-    
+
     const user = await User.findById(decode.id).select(
       "-password -refreshToken"
     );
     if (!user) throw new ApiError(401, "unAuthorized Request.");
-    
+
     req.user = user;
 
     next();

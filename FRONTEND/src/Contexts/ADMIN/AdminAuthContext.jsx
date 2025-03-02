@@ -13,11 +13,15 @@ const AdminContextProvider = ({ children }) => {
 
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [adminInfo, setAdminInfo] = useState(null);
 
   const fetchCurrentAdmin = useCallback(async () => {
 
     try {
-      await AdminAuth();
+      const response = await AdminAuth();
+      if (response?.success) {
+        setAdminInfo(response?.data);
+      }
       setIsAdminAuthenticated(true);
     } catch (error) {
       console.error(false || error?.message);
@@ -36,6 +40,8 @@ const AdminContextProvider = ({ children }) => {
   const contextValue = {
     isAdminAuthenticated,
     isLoading,
+    adminInfo,
+    setAdminInfo,
     setIsAdminAuthenticated,
   };
 

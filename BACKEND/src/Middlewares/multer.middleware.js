@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     cb(null, "src/uploads/profileImg/");
   },
   filename: (req, file, cb) => {
-    const uniqueName = `${Date.now()}_${req.user._id}`;
+    const uniqueName = `${Date.now()}_${req?.user?._id || req?.admin?._id}`;
     cb(null, uniqueName);
   },
 });

@@ -8,12 +8,10 @@ import { EffectCards } from "swiper/modules";
 import Model from "../../dashboard/comman/Model";
 import { NavLink } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { FaRegEdit, FaRegEye, FaSpinner } from "react-icons/fa";
-
+import { FaRegEye, FaSpinner } from "react-icons/fa";
+import { TbEdit } from "react-icons/tb";
 import { formValidation } from "./wizardFormValidation";
-import Sizing from "./Sizing.jsx";
-
-
+import { FaMapMarkedAlt } from "react-icons/fa";
 import house from "../../../assets/sellerDashboard/house.png";
 import pg from "../../../assets/sellerDashboard/pg.png";
 import building from "../../../assets/sellerDashboard/appartment.png";
@@ -30,9 +28,7 @@ const DataTableListing = () => {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
-
   const [modelState, setModelState] = useState(false);
-
 
 
   const closeModel = useCallback(() => {
@@ -232,24 +228,24 @@ const DataTableListing = () => {
             onChange={(e) => setEntriesPerPage(Number(e.target.value))}
             className="w-auto text-sm p-2 border rounded outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
           >
-            <option value={5}>5 entries</option>
-            <option value={10}>10 entries</option>
-            <option value={25}>25 entries</option>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={25}>25</option>
           </select>
 
           <NavLink
             to="/dashboard-seller/add-listing"
-            className="text-xs bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600 transition duration-200"
+            className="text-sm bg-dark py-2 px-4 text-white rounded hover:bg-dark/80 transition duration-200"
           >
             Add Listing
           </NavLink>
 
           <input
             type="search"
-            placeholder="Search..."
+            placeholder="Search anything.. "
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full md:w-auto text-sm p-2 border rounded outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+            className="w-full md:w-auto text-sm p-2 border rounded outline-none focus:ring-1 focus:ring-dark focus:border-dark transition duration-200"
           />
         </div>
 
@@ -318,9 +314,9 @@ const DataTableListing = () => {
 
                     <td className="py-3 px-4">
                       <Model
-                        ModelOutSideBtn={<i className="ri-map-pin-user-line text-xl"></i>}
+                        ModelOutSideBtn={<FaMapMarkedAlt />}
                         ModelLable="View Location"
-                        classDesign="bg-dark px-2 py-1 text-white rounded"
+                        classDesign="bg-dark h-10 w-10 flex items-center justify-center text-white text-lg rounded"
                       >
                         <div className="model-body p-3">
                           <div className="space-y-3">
@@ -342,14 +338,6 @@ const DataTableListing = () => {
                             <p>
                               <strong>Longitude:</strong> {property.location.locationCode[0].longitude}
                             </p>
-                            <a
-                              href={property.location.address_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-500 hover:underline"
-                            >
-                              Open Location
-                            </a>
                           </div>
                         </div>
                       </Model>
@@ -358,12 +346,12 @@ const DataTableListing = () => {
 
 
                     {/* update model */}
-                    <td className="py-3 px-4 flex space-x-2">
+                    <td className="py-3 px-4 space-x-2">
                       <button
                         onClick={() => openModel(property)}
-                        className="bg-green-500 text-white rounded text-xl px-2"
+                        className="bg-green-500 text-white rounded text-xl p-2"
                       >
-                        <FaRegEdit />
+                        <TbEdit />
                       </button>
                       {modelState &&
                         <div className="fixed inset-0 z-50">
@@ -507,50 +495,7 @@ const DataTableListing = () => {
                                       {/* <Sizing /> */}
                                     </div>
                                     <div className="grid lg:grid-cols-2 grid-col-1 gap-4">
-                                      <div>
-                                        <label htmlFor="Country" className="tracking-wide font-semibold text-sm">Country*</label>
-                                        <input
-                                          type="text"
-                                          id="Country"
-                                          name="country"
-                                          value={formData.location.country}
-                                          onChange={handleUpdateChange}
-                                          readOnly
-                                          disabled
-                                          placeholder="Country"
-                                          className="w-full p-2 border rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out   font-description tracking-wide"
-                                        />
-                                      </div>
-                                      <div>
-                                        <label htmlFor="state" className="tracking-wide font-semibold text-sm">State*</label>
-                                        <input
-                                          type="text"
-                                          id="state"
-                                          name="state"
-                                          value={formData.location.state}
-                                          onChange={handleUpdateChange}
-                                          readOnly
-                                          disabled
-                                          placeholder="State"
-                                          className="w-full p-2 border text-sm rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out font-description tracking-wide"
-                                        />
-                                      </div>
-                                      <div>
-                                        <label htmlFor="District" className="tracking-wide font-semibold text-sm">District*</label>
-                                        <input
-                                          type="text"
-                                          id="District"
-                                          name="district"
-                                          value={formData.location.district}
-                                          onChange={handleUpdateChange}
-                                          placeholder="district"
-                                          className="w-full p-2 text-sm border rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out font-description tracking-wide"
-                                        />
-                                        {formErrors?.district && (
-                                          <p className="text-red-500 text-xs">{formErrors.district}</p>
-                                        )}
-                                      </div>
-                                      <div>
+                                      <div className="col-span-2">
                                         <label htmlFor="address" className="tracking-wide font-semibold text-sm">Street address*</label>
                                         <input
                                           type="text"
@@ -595,21 +540,6 @@ const DataTableListing = () => {
                                         />
                                         {formErrors?.longitude && (
                                           <p className="text-red-500 text-xs">{formErrors.longitude}</p>
-                                        )}
-                                      </div>
-                                      <div className="col-span-2">
-                                        <label htmlFor="location-link" className="tracking-wide font-semibold text-sm">Location Link*</label>
-                                        <input
-                                          type="text"
-                                          id="location-link"
-                                          name="address_url"
-                                          value={formData.location.address_url}
-                                          onChange={handleUpdateChange}
-                                          placeholder="Past Google Location link here"
-                                          className="w-full p-2 border text-sm rounded outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out font-description tracking-wide"
-                                        />
-                                        {formErrors?.address_url && (
-                                          <p className="text-red-500 text-xs">{formErrors.address_url}</p>
                                         )}
                                       </div>
                                       {/* Add other fields similarly */}
@@ -715,12 +645,6 @@ const DataTableListing = () => {
                       >
                         {isLoading ? <FaSpinner className="animate-spin" /> : <RiDeleteBin5Line className="text-xl" />}
                       </button>
-                      <button
-                        className="p-2 bg-blue-700 text-white rounded "
-                        onClick={() => alert(`View ${property.propertyTitle}`)}
-                      >
-                        <FaRegEye className="text-xl" />
-                      </button>
                     </td>
 
 
@@ -752,8 +676,8 @@ const DataTableListing = () => {
               <button
                 key={number}
                 onClick={() => setCurrentPage(number)}
-                className={`px-3 py-1 rounded ${currentPage === number
-                  ? "bg-blue-500 text-white"
+                className={`w-10 h-10 font-description rounded ${currentPage === number
+                  ? "bg-dark text-white"
                   : "bg-white border hover:bg-gray-50"
                   }`}
               >

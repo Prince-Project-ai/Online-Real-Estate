@@ -8,7 +8,7 @@ import { useAdminAuth } from "../../Contexts/ADMIN/AdminAuthContext";
 const SignIn = () => {
   const navigate = useNavigate();
   const { showToast } = useMessage();
-  const { setIsAdminAuthenticated } = useAdminAuth();
+  const { setIsAdminAuthenticated,setAdminInfo } = useAdminAuth();
   const [signInData, setSignInData] = useState({
     email: "",
     password: "",
@@ -61,6 +61,8 @@ const SignIn = () => {
       if (signRes?.data?.success) {
         showToast(signRes?.data?.message, "success");
         setIsAdminAuthenticated(true);
+        console.log(signRes?.data);   
+        setAdminInfo(signRes?.data?.data);
         navigate("/dashboard");
       }
     } catch (error) {

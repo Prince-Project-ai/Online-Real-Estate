@@ -2,30 +2,41 @@ import mongoose, { Schema } from "mongoose";
 
 const messageSchema = new Schema(
     {
-        // user id ok
+        avatar: {
+            type: String,
+            required: true,
+        },
+        name: {
+            type: String,
+            required: true,
+        },
         senderId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
         },
-        // here seller id
         receiverId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
         },
-        // message text
         message: {
             type: String,
-            required: true,
+            required: function () {
+                return this.messageType === "text";
+            },
         },
-        // message type
         messageType: {
             type: String,
             enum: ["text", "image"],
             default: "text",
         },
-        // message status
+        image: {
+            type: String, // Store the URL or path to the image
+            required: function () {
+                return this.messageType === "image";
+            },
+        },
         read: {
             type: Boolean,
             default: false,

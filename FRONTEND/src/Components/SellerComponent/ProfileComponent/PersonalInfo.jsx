@@ -17,50 +17,48 @@ const PersonalInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [filePreview, setFilePreview] = useState(currentAuth.avatar);
 
-  // Sync with the latest auth data
   useEffect(() => {
     setFormData(currentAuth);
     setFilePreview(currentAuth.avatar);
   }, [currentAuth]);
 
-  // Handle form field changes
-  const handleChange = useCallback((e) => {
-    const { name, value, files } = e.target;
-    const file = files?.[0];
-    if (name === "avatar" && file) {
-      console.log("file size in kb : ", (file.size / 1024 / 1024).toFixed(2));
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value, files } = e.target;
+      const file = files?.[0];
 
-      if (!VALID_IMAGE_TYPES.includes(file.type)) {
-        showToast("Please upload a valid image file (JPG, JPEG, PNG)", "error");
-        return;
+      if (name === "avatar" && file) {
+        if (!VALID_IMAGE_TYPES.includes(file.type)) {
+          showToast("Please upload a valid image file (JPG, JPEG, PNG)", "error");
+          return;
+        }
+
+        if ((file.size / 1024 / 1024).toFixed(2) > 5) {
+          showToast("Please upload a MAX size of 5MB", "error");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => setFilePreview(reader.result);
+        reader.readAsDataURL(file);
+
+        setChangedFields((prev) => ({ ...prev, [name]: file }));
+      } else {
+        setChangedFields((prev) => ({ ...prev, [name]: value }));
       }
 
-      if ((file.size / 1024 / 1024).toFixed(2) > 5) {
-        showToast("Please upload a MAX size of 5MB", "error");
-        return;
-      }
+      setFormData((prev) => ({
+        ...prev,
+        [name]: file || value,
+      }));
+    },
+    [showToast]
+  );
 
-      const reader = new FileReader();
-      reader.onload = () => setFilePreview(reader.result);
-      reader.readAsDataURL(file);
-
-      setChangedFields((prev) => ({ ...prev, [name]: file }));
-    } else {
-      setChangedFields((prev) => ({ ...prev, [name]: value }));
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: file || value,
-    }));
-  }, [showToast]);
-
-  // Update button disable state
   useEffect(() => {
     setIsDisabled(Object.keys(changedFields).length === 0);
   }, [changedFields]);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -87,7 +85,6 @@ const PersonalInfo = () => {
     }
   };
 
-  // Memoized form fields to avoid unnecessary renders
   const memoizedFormFields = useMemo(
     () => [
       {
@@ -122,109 +119,97 @@ const PersonalInfo = () => {
   );
 
   return (
-    <>
-      <div className="heading mb-3">
-        <h1 className="text-2xl font-semibold font-inter">Personal Information</h1>
-      </div>
+    <div className="max-w-2xl mx-auto p-6 bg-white border rounded-lg shadow-md">
+      <h1 className="text-2xl font-semibold font-inter text-gray-800 mb-5">
+        Edit Personal Information
+      </h1>
 
-      <div className="profile-form">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="profile-photo mb-5 flex space-x-5 items-center">
-            <div className="photo">
-              <img
-                src={filePreview || defaultProfile}
-                alt="Profile"
-                className="w-20 h-20 rounded-full border-2 object-cover"
-                onError={(e) => (e.target.src = defaultProfile)}
-              />
-            </div>
-            <div className="upload-input">
-              <input
-                type="file"
-                name="avatar"
-                className="bg-secondary rounded-lg px-2 py-2 font-inter cursor-pointer"
-                id="avatar"
-                onChange={handleChange}
-                accept={VALID_IMAGE_TYPES.join(", ")}
-              />
-            </div>
-          </div>
-
-          {memoizedFormFields.map((field) => (
-            <FormField
-              key={field.id}
-              {...field}
-              handleChange={handleChange}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col items-center space-y-3 md:flex-row md:space-x-5">
+          <div className="w-24 h-24 border-2 rounded-full overflow-hidden">
+            <img
+              src={filePreview || defaultProfile}
+              alt="Profile"
+              className="h-full w-full object-cover"
+              onError={(e) => (e.target.src = defaultProfile)}
             />
-          ))}
-
-          <TextArea
-            placeholder="Enter Address"
-            required
-            id="address"
-            value={formData?.address || ""}
-            handleChange={handleChange}
-            label="Address"
-            name="address"
-          />
-
-          <div className="text-end">
-            <button
-              type="submit"
-              disabled={isDisabled}
-              className={`${isDisabled ? "cursor-not-allowed opacity-50" : ""
-                } px-8 rounded-lg mt-5 text-white font-medium font-inter tracking-wider py-2 bg-dark hover:ring-dark hover:ring-2 hover:ring-offset-1`}
-            >
-              {isLoading ? <ButtonSpinner /> : "Save"}
-            </button>
           </div>
-        </form>
-      </div>
-    </>
+          <input
+            type="file"
+            name="avatar"
+            className="mt-2 block w-full md:w-auto px-4 py-2 border rounded-lg cursor-pointer text-gray-600"
+            onChange={handleChange}
+            accept={VALID_IMAGE_TYPES.join(", ")}
+          />
+        </div>
+
+        {memoizedFormFields.map((field) => (
+          <FormField key={field.id} {...field} handleChange={handleChange} />
+        ))}
+
+        <TextArea
+          placeholder="Enter Address"
+          id="address"
+          value={formData?.address || ""}
+          handleChange={handleChange}
+          label="Address"
+          name="address"
+        />
+
+        <div className="text-end">
+          <button
+            type="submit"
+            disabled={isDisabled}
+            className={`px-8 py-2 text-white font-medium tracking-wider rounded-lg bg-dark hover:bg-dark/90 transition ${isDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+          >
+            {isLoading ? <ButtonSpinner /> : "Save"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
 export default PersonalInfo;
 
 const FormField = React.memo(
-  ({ type, placeholder, required, value, handleChange, id, label, name, icon }) => (
-    <div className="mb-3">
-      <label htmlFor={id} className="block mb-1 font-description text-sm">
+  ({ type, placeholder, value, handleChange, id, label, name, icon }) => (
+    <div>
+      <label htmlFor={id} className="block mb-1 text-sm font-medium text-gray-700">
         {label}
       </label>
       <div className="relative">
-        <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-          <i className={`${icon} opacity-50`}></i>
+        <div className="absolute inset-y-0 left-3 flex items-center text-gray-500">
+          <i className={`${icon}`}></i>
         </div>
         <input
           type={type}
           id={id}
-          className="bg-secondary font-description focus:bg-white border-gray-300 text-dark text-sm placeholder:text-zinc-500 rounded-lg block w-full p-2.5 ps-9"
+          className="w-full pl-10 p-2 border rounded-lg font-description focus:ring-2 focus:ring-dark"
           name={name}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
-          required={required}
         />
       </div>
     </div>
   )
 );
 
-const TextArea = React.memo(({ placeholder, required, id, value, label, name, handleChange }) => (
-  <div className="mb-3">
-    <label htmlFor={id} className="block mb-1 text-sm font-description text-dark">
+const TextArea = React.memo(({ placeholder, id, value, label, name, handleChange }) => (
+  <div>
+    <label htmlFor={id} className="block mb-1 text-sm font-medium text-gray-700">
       {label}
     </label>
     <textarea
       id={id}
       rows="4"
       name={name}
-      className="block font-description p-2.5 w-full text-sm text-dark rounded-lg placeholder:text-zinc-500 bg-secondary"
+      className="w-full p-2 border rounded-lg font-description focus:ring-2 focus:ring-dark"
       placeholder={placeholder}
       onChange={handleChange}
       value={value}
-      required={required}
     />
   </div>
 ));

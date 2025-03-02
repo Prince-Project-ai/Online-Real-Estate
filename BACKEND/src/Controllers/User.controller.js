@@ -9,6 +9,7 @@ import { Transporter } from "../Utils/transporter.js";
 import bcrypt from "bcrypt";
 import { Property } from "../Models/Property.model.js";
 import { Review } from "../Models/Review.model.js";
+import { Message } from "../Models/Message.model.js";
 
 const options = {
   httpOnly: true,
@@ -350,7 +351,8 @@ export const searchFilter = asyncHandler(async (req, res) => {
       $and: [
         { listingType: searchFilter.serviceType },
         { propertyType: searchFilter.propertyType },
-        { 'location.streetAddress': searchFilter.streetAddress }
+        { 'location.streetAddress': searchFilter.streetAddress },
+        { approval: "Approved" }
       ]
     });
 
@@ -364,7 +366,7 @@ export const searchFilter = asyncHandler(async (req, res) => {
 // fetch all property
 export const gettingAllProperty = asyncHandler(async (req, res) => {
   try {
-    const allProperty = await Property.find();
+    const allProperty = await Property.find({ approval: "Approved" });
     if (!allProperty) throw new ApiError(404, "Data Not Found.");
     res.status(200).json(new ApiResponse(200, allProperty, "Data Fetching"));
   } catch (error) {
@@ -377,7 +379,11 @@ export const getPropertyById = asyncHandler(async (req, res) => {
   try {
     const { propertyId } = req.params;
     if (!propertyId) throw new ApiError(400, "PropertyId not Provided.");
-    const property = await Property.findOne({ _id: propertyId });
+    const property = await Property.findOne({
+      _id: propertyId,
+      approval: "Approved"
+    });
+
     if (!property) throw new ApiError(404, "Property not Available.");
     res.status(200).json(new ApiResponse(200, property, "Data Fetching"));
   } catch (error) {
@@ -494,6 +500,31 @@ export const fetchSellerByProperty = asyncHandler(async (req, res) => {
     throw new ApiError(error.status || 500, error.message || "INTERNAL SERVER ERROR FROM FETCH SELLER BY PROPERTY");
   }
 });
+
+
+export const fetchChatMessages = asyncHandler(async (req, res, next) => {
+  try {
+    const { senderId, receiverId } = req.query;
+    console.log(senderId, receiverId);
+
+    if (!senderId || !receiverId) {
+      throw new ApiError(400, "Both senderId and receiverId are required.");
+    }
+
+    // Fetch messages between sender and receiver
+    const messages = await Message.find({
+      $or: [
+        { senderId: senderId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: senderId },
+      ],
+    }).sort({ createdAt: 1 });
+
+    res.status(200).json(new ApiResponse(200, messages, "Messages Retrieved."));
+  } catch (error) {
+    next(new ApiError(error.status || 500, error.message || "Internal Server Error while fetching chat messages."));
+  }
+});
+
 
 // signin Controller
 // 1) seprate the part for accessing

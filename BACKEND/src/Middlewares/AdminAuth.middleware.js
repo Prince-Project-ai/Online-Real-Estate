@@ -18,7 +18,7 @@ export const verifyAdminJWT = asyncHandler(async (req, res, next) => {
     if (!decodedToken?.id) {
       throw new ApiError(401, "Unauthorized request. Invalid token.");
     }
-    
+
     // Find admin by decoded token ID
     const admin = await Admin.findById(decodedToken.id).select("-password -token");
     if (!admin) {
@@ -46,15 +46,19 @@ export const sendAdminData = asyncHandler(async (req, res, next) => {
 
 
 export const validateField = asyncHandler(async (req, res, next) => {
-  const { adminName, email, password } = req.body;
 
-  if (!(adminName && email && password)) throw new ApiError(401, "All Field are Required.");
+  const { adminName, email, password, phoneNumber } = req.body;
+
+  console.log(req.body);
+
+
+  if (!(adminName && email && password && phoneNumber)) throw new ApiError(401, "All Field are Required.");
 
   const admin = await Admin.findOne({
     $or: [
       { email: email },
       { adminName: adminName }]
-  }).select("+email +adminName");
+  });
 
   if (admin) {
     throw new ApiError(401, "Admin Already Exist with this email or username..");
