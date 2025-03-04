@@ -4,4 +4,4 @@
 
 # === Technology ===
 
-# Node.js || Express.js || MongoDB || React + Vite || Tailwind CSS
+# Node.js || Express.js || MongoDB || React + Vite || Tailwind CSS || Socket io
