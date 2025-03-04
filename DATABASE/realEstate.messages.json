@@ -1,0 +1,288 @@
+[{
+  "_id": {
+    "$oid": "67c2912d34ed01ec372f47c3"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "yash ubhada",
+  "senderId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "receiverId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "message": "hello hiii",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:46:37.880Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:46:37.880Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c2914534ed01ec372f47c5"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "yash ubhada",
+  "senderId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "receiverId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "message": "what are you doing",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:47:01.662Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:47:01.662Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c2915234ed01ec372f47c7"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740743092/PropertyFy/profile_imgs/zgwdaszg0t7wsm0cqazi.png",
+  "name": "seller@gmail.com",
+  "senderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "receiverId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "message": "nothing what are you doing",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:47:14.354Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:47:14.354Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c2915834ed01ec372f47c9"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740743092/PropertyFy/profile_imgs/zgwdaszg0t7wsm0cqazi.png",
+  "name": "seller@gmail.com",
+  "senderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "receiverId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "message": "hello ",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:47:20.451Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:47:20.451Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c2916834ed01ec372f47cb"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740743092/PropertyFy/profile_imgs/zgwdaszg0t7wsm0cqazi.png",
+  "name": "seller@gmail.com",
+  "senderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "receiverId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "message": "why it's not working please fix it",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:47:36.525Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:47:36.525Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c2917a34ed01ec372f47cd"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740743092/PropertyFy/profile_imgs/zgwdaszg0t7wsm0cqazi.png",
+  "name": "seller@gmail.com",
+  "senderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "receiverId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "message": "hello",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:47:54.847Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:47:54.847Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c292edc6b0ddb90bb3bc8f"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740743092/PropertyFy/profile_imgs/zgwdaszg0t7wsm0cqazi.png",
+  "name": "seller@gmail.com",
+  "senderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "receiverId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "message": "hello what",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:54:05.090Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:54:05.090Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c2931bc6b0ddb90bb3bcaa"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "yash ubhada",
+  "senderId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "receiverId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "message": "nothing",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T04:54:51.860Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T04:54:51.860Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c3522ddd4af460f40081aa"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Prince Bavishi",
+  "senderId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "receiverId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "message": "hello what are you doing now",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T18:30:05.496Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T18:30:05.496Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c35240dd4af460f40081ae"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740743092/PropertyFy/profile_imgs/zgwdaszg0t7wsm0cqazi.png",
+  "name": "seller@gmail.com",
+  "senderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "receiverId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "message": "hiii nice workinng",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T18:30:24.223Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T18:30:24.223Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c35249dd4af460f40081b0"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Prince Bavishi",
+  "senderId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "receiverId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "message": "hello",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T18:30:33.959Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T18:30:33.959Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c35daddd4af460f40082dc"
+  },
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Prince Bavishi",
+  "senderId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "receiverId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "message": "Good Morning",
+  "messageType": "text",
+  "image": null,
+  "read": false,
+  "createdAt": {
+    "$date": "2025-03-01T19:19:09.557Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T19:19:09.557Z"
+  },
+  "__v": 0
+}]

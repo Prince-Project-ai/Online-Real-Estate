@@ -62,7 +62,7 @@ const PropertyDetails = () => {
       <ClientSupport propSellerInfo={propSellerInfo} />
       <section className="max-w-7xl mx-auto my-10 relative">
         <div className="property-images">
-          <div className="grid-images grid gap-5 grid-cols-12">
+          <div className="grid-images grid gap-5  lg:grid-cols-12">
             <div className="col-span-8">
 
               <div className="rounded-[16px] border border-dark self-start overflow-hidden">
@@ -151,19 +151,6 @@ const PropertyDetails = () => {
                   <button className="w-full py-3 tracking-wide text-white bg-dark rounded-lg">Send Message</button>
                 </div>
               </div>
-
-
-              {/* <div className="contact-seller border rounded-[16px] border-dark p-6 pt-7 self-start mt-5">
-              <h3 className="text-2xl font-semibold mb-4 font-inter">Contact me</h3>
-              <div className="contact-info space-y-5">
-                <input type="text" name="fullName" placeholder="Your Name" className="w-full p-3 border rounded-lg outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out mt-1 tracking-wide" />
-                <input type="email" name="email" placeholder="email" className="w-full p-3 border rounded-lg outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out mt-1 tracking-wide" />
-                <textarea name="" rows={3} placeholder="Message" className="w-full p-3 border rounded-lg outline-none focus:ring-1 focus:ring-offset-1 focus:border-dark focus:ring-dark duration-200 ease-in-out mt-1 tracking-wide" id=""></textarea>
-                <button className="w-full py-3 tracking-wide text-white bg-dark rounded-lg">Send Email</button>
-              </div>
-            </div> */}
-
-
 
             </div>
           </div>

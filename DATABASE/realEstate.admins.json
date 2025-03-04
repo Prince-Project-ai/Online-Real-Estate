@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "67c0b574d1209485b3ead808"
+  },
+  "adminName": "admin",
+  "email": "admin@gmail.com",
+  "password": "$2b$08$FqLxK5u8lMVKUMV2Z9zzCev0CCREEjl0Q9y4Ye1hVMB9VRLiOnY/e",
+  "phoneNumber": 4587965985,
+  "token": null,
+  "createdAt": {
+    "$date": "2025-02-27T18:56:52.170Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:26:24.530Z"
+  },
+  "__v": 0,
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740723982/PropertyFy/profile_imgs/jq7iua3y46jl540dudjt.jpg"
+}]

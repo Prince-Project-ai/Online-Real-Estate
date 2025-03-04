@@ -1,0 +1,198 @@
+[{
+  "_id": {
+    "$oid": "67c1a90f00994b07a72868bc"
+  },
+  "adderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "role": "Seller",
+  "propertyTitle": "Ut temporibus aliqua ok it's update",
+  "propertyType": "House",
+  "listingType": "Sell",
+  "price": 99898999,
+  "priceNegotiable": false,
+  "size": 78,
+  "sizeUnit": "Square meter",
+  "location": {
+    "streetAddress": "Sardar Shopping Center, F-82, Jilla Panchayat Rd, opp. Mahiti Kacheri, Amreli Irrigation Division, D.L.B. Society, Amreli, Gujarat 365601, India",
+    "locationCode": [
+      {
+        "latitude": 21.6029235,
+        "longitude": 71.2182966,
+        "_id": {
+          "$oid": "67c1a90f00994b07a72868bd"
+        }
+      }
+    ]
+  },
+  "images": [
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740744974/PropertyFy/property_images/jgkemp65ofxpfb3ujtgv.png",
+      "_id": {
+        "$oid": "67c1a90f00994b07a72868be"
+      }
+    }
+  ],
+  "propertyVideo": "https://www.youtube.com/sdsds",
+  "approval": "Approved",
+  "createdAt": {
+    "$date": "2025-02-28T12:16:15.444Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T15:29:57.444Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c1aa4f00994b07a72868fe"
+  },
+  "adderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "role": "Seller",
+  "propertyTitle": "Ut temporibus aliqua ok it's update",
+  "propertyType": "House",
+  "listingType": "Sell",
+  "price": 4999999,
+  "priceNegotiable": false,
+  "size": 0.0027,
+  "sizeUnit": "hectare",
+  "location": {
+    "streetAddress": "Market Yard Rd, Amreli Irrigation Division, D.L.B. Society, Amreli, Gujarat 365601, India",
+    "locationCode": [
+      {
+        "latitude": 21.6017316,
+        "longitude": 71.2180741,
+        "_id": {
+          "$oid": "67c1aa4f00994b07a72868ff"
+        }
+      }
+    ]
+  },
+  "images": [
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740745294/PropertyFy/property_images/ixipjpu999a8inel0znb.png",
+      "_id": {
+        "$oid": "67c1aa4f00994b07a7286900"
+      }
+    }
+  ],
+  "propertyVideo": "https://www.youtube.com/sdsds",
+  "approval": "Approved",
+  "createdAt": {
+    "$date": "2025-02-28T12:21:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T15:29:43.880Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c1ab8700994b07a7286922"
+  },
+  "adderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "role": "Seller",
+  "propertyTitle": "Ut temporibus aliqua ok it's update",
+  "propertyType": "House",
+  "listingType": "Sell",
+  "price": 999895656,
+  "priceNegotiable": false,
+  "size": 33,
+  "sizeUnit": "Square meter",
+  "location": {
+    "streetAddress": "Sector 1, Chandigarh, 160001, India",
+    "locationCode": [
+      {
+        "latitude": 30.7447621,
+        "longitude": 76.8105866,
+        "_id": {
+          "$oid": "67c1ab8700994b07a7286923"
+        }
+      }
+    ]
+  },
+  "images": [
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740745605/PropertyFy/property_images/v42wiuxgibx8dhzqqv2t.png",
+      "_id": {
+        "$oid": "67c1ab8700994b07a7286924"
+      }
+    },
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740756640/PropertyFy/property_images/wdtoosxz9wj6enclo0vj.png",
+      "_id": {
+        "$oid": "67c1d6a11a3d4dacf76a2a21"
+      }
+    },
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740756691/PropertyFy/property_images/putenp8vnzuo3glmspbc.png",
+      "_id": {
+        "$oid": "67c1d6d41a3d4dacf76a2a36"
+      }
+    },
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740756704/PropertyFy/property_images/kqjsc9czxsgx2pgtl6mu.png",
+      "_id": {
+        "$oid": "67c1d6e21a3d4dacf76a2a4f"
+      }
+    }
+  ],
+  "propertyVideo": "https://www.youtube.com/sdsd",
+  "approval": "Approved",
+  "createdAt": {
+    "$date": "2025-02-28T12:26:47.425Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T05:12:36.170Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c35c68dd4af460f4008281"
+  },
+  "adderId": {
+    "$oid": "679dd7b2eecde7b54f827f7c"
+  },
+  "role": "Seller",
+  "propertyTitle": "Error quis consectet",
+  "propertyType": "House",
+  "listingType": "Sell",
+  "price": 36,
+  "priceNegotiable": false,
+  "size": 491081.8849,
+  "sizeUnit": "Square feet",
+  "location": {
+    "streetAddress": "Sukhnath Chowk Rd, Joshipura, Junagadh, Gujarat 362001, India",
+    "locationCode": [
+      {
+        "latitude": 21.5338603,
+        "longitude": 70.4609138,
+        "_id": {
+          "$oid": "67c35c68dd4af460f4008282"
+        }
+      }
+    ]
+  },
+  "images": [
+    {
+      "propertyImages": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740856423/PropertyFy/property_images/ybaaldcgnn1qgx5oijjo.png",
+      "_id": {
+        "$oid": "67c35c68dd4af460f4008283"
+      }
+    }
+  ],
+  "propertyVideo": "https://www.youtube.com/sdsd",
+  "approval": "Pending",
+  "createdAt": {
+    "$date": "2025-03-01T19:13:44.716Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T19:13:44.716Z"
+  },
+  "__v": 0
+}]

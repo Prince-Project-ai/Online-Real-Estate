@@ -4,7 +4,7 @@ import { useMessage } from '../../../Contexts/MessageContext';
 import Spinner from '../../core/Spinner';
 import { validateField } from '../../../Utils/ValidationUtils'; // Import the validation utility
 
-const ROLES = ['User', 'Seller', 'Agent'];
+const ROLES = ['User', 'Seller'];
 
 const SignUp = ({ isAnimating, onClose, onSwitchToSignIn }) => {
   const { showToast } = useMessage();

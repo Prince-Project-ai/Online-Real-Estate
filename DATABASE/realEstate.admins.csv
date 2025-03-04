@@ -1,0 +1,2 @@
+_id,adminName,email,password,phoneNumber,token,createdAt,updatedAt,__v,avatar
+67c0b574d1209485b3ead808,admin,admin@gmail.com,$2b$08$FqLxK5u8lMVKUMV2Z9zzCev0CCREEjl0Q9y4Ye1hVMB9VRLiOnY/e,4587965985,,2025-02-27T18:56:52.170Z,2025-02-28T06:26:24.530Z,0,https://res.cloudinary.com/duto9uwjs/image/upload/v1740723982/PropertyFy/profile_imgs/jq7iua3y46jl540dudjt.jpg

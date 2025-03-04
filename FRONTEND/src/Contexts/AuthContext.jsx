@@ -20,6 +20,15 @@ const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentAuth, setCurrentAuth] = useState(null);
 
+  // seller at-a-glannce
+  const [totalProperty, setTotalProperty] = useState(0);
+  const [totalView, setTotalView] = useState(0);
+  const [pendingApprovals, setPendingApprovals] = useState(0);
+  const [totalSpending, setTotalSpending] = useState(0);
+
+
+
+
   const fetchCurrentAuth = useCallback(async () => {
     try {
       const res = await currentUser();
@@ -53,6 +62,14 @@ const AuthProvider = ({ children }) => {
     currentAuth,
     isAuthenticated,
     isLoading,
+    totalProperty,
+    totalView,
+    pendingApprovals,
+    totalSpending,
+    setTotalProperty,
+    setTotalView,
+    setPendingApprovals,
+    setTotalSpending,
     setCurrentAuth,
     setIsAuthenticated,
   };

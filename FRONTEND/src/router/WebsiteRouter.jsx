@@ -7,8 +7,8 @@ import HeaderSkeleton from "../Components/website/comman/HeaderSkeleton";
 import { useAuth } from "../Contexts/AuthContext";
 import FullMapFIlter from "../Pages/website/FullMapFIlter";
 import PropertyDetails from "../Pages/website/PropertyDetails";
-
-const Home = lazy(() => import("../Pages/website/Home"));
+import Home from "../Pages/website/Home";
+// const Home = lazy(() => import("../Pages/website/Home"));
 const SearchResult = lazy(() => import("../Pages/website/SearchResult"));
 const Header = lazy(() => import("../Components/website/comman/Header"));
 const Footer = lazy(() => import("../Components/website/comman/Footer"));
@@ -22,7 +22,7 @@ const WebsiteRouter = () => {
                 </Suspense>
 
                 <Routes>
-                    <Route path="/" element={<Suspense fallback={<h1>Loading home...</h1>}><Home /></Suspense>} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/profile" element={
                         <PrivateRouter>
                             <Profile />
@@ -74,5 +74,5 @@ const PrivateRouter = ({ children }) => {
     return children;
 }
 
-export default WebsiteRouter;
+export default React.memo(WebsiteRouter);
 

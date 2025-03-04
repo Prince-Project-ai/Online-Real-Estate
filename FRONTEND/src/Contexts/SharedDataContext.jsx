@@ -12,8 +12,11 @@ const SharedDataProvider = ({ children }) => {
 
     const [searchFilterData, setSearchFilterData] = useState([]);
 
+
+
     const contextValue = {
-        searchFilterData, setSearchFilterData
+        searchFilterData,
+        setSearchFilterData,
     }
     return (
         <SharedDataContext.Provider value={contextValue}>

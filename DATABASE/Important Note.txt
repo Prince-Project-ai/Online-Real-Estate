@@ -1,0 +1,2 @@
+i have made mongodb database and export the csv file.
+you can import the csv file via mongodb compass.

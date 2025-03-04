@@ -192,3 +192,6 @@ export const updateListingSeller = async (propertyId, formData) => {
 /*
 	============= SELLER API LOGIC LIST END ==============
 */
+
+
+// at a glance at seller dashboard api calculation

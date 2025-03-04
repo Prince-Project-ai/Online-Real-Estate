@@ -1,0 +1,418 @@
+[{
+  "_id": {
+    "$oid": "67b30ac8dd6aa7c91e13ac9d"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adec0b87e96598717ec4e2"
+  },
+  "rating": 1,
+  "comment": "Hello This is Nice Property LOCALHOST",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-17T10:09:12.334Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-18T11:27:14.375Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b30b2cdd6aa7c91e13ad19"
+  },
+  "userId": {
+    "$oid": "67b22f14828c0041ea814b71"
+  },
+  "propertyId": {
+    "$oid": "67adec0b87e96598717ec4e2"
+  },
+  "rating": 5,
+  "comment": "Absolutely love my new home! The neighborhood is peaceful, and the real estate agent was very professional throughout the process.",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+  "name": "Axel Holman",
+  "createdAt": {
+    "$date": "2025-02-17T10:10:52.277Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T10:10:52.277Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b30b46dd6aa7c91e13ad1c"
+  },
+  "userId": {
+    "$oid": "67b22f14828c0041ea814b71"
+  },
+  "propertyId": {
+    "$oid": "67adec0b87e96598717ec4e2"
+  },
+  "rating": 5,
+  "comment": "Great apartment with a fantastic view! The only downside was a slight delay in paperwork, but overall, a great experience.",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+  "name": "Axel Holman",
+  "createdAt": {
+    "$date": "2025-02-17T10:11:18.286Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T10:11:18.286Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b337cedd6aa7c91e13b5d1"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adeb8087e96598717ec4c6"
+  },
+  "rating": 3,
+  "comment": "3456789 56789 678 sjhds sd sd",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-17T13:21:18.543Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-24T03:45:52.946Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b3454fdd6aa7c91e13b7ca"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adeb8087e96598717ec4c6"
+  },
+  "rating": 4,
+  "comment": "Gello towerll",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-17T14:18:55.425Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T14:18:55.425Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b54a4dec8d996276740727"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adeb8087e96598717ec4c6"
+  },
+  "rating": 5,
+  "comment": "local host hello world",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-19T03:04:45.397Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-19T03:05:01.029Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b859273a43da6db878048e"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67b7406911b98854146ae836"
+  },
+  "rating": 4,
+  "comment": "uhkjh j khj ddf",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-21T10:44:55.687Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-22T03:06:32.408Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b93f1b0f68070e43dab57b"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67b7406911b98854146ae836"
+  },
+  "rating": 4,
+  "comment": "localhost jsjdhsd",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-22T03:06:03.181Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-22T03:06:12.009Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b969c25ec6efd2ac025ba0"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adeb8087e96598717ec4c6"
+  },
+  "rating": 5,
+  "comment": "sjhdskhd skjdhsd jhds d sdskd",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-22T06:08:02.364Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-22T06:08:10.499Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b99e4a94425f3cc411f3b7"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adec0b87e96598717ec4e2"
+  },
+  "rating": 4,
+  "comment": "sasa as as a   s s",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-22T09:52:10.512Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-22T09:52:16.839Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b9a372228b5eef1c479255"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67b96a395ec6efd2ac025bbe"
+  },
+  "rating": 5,
+  "comment": "local fg rrtgt trt",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-22T10:14:10.290Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-22T10:14:10.290Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bbeb3291889ed30d204280"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adeb8087e96598717ec4c6"
+  },
+  "rating": 5,
+  "comment": "sdsdsd sds s",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-24T03:44:50.914Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-24T03:44:50.914Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bd8a7b669d19b966e1a9f0"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adec0b87e96598717ec4e2"
+  },
+  "rating": 2,
+  "comment": "local dei nothing",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-25T09:16:43.910Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-25T09:16:55.146Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c058dae417b9a7e3c343c9"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67bbec8091889ed30d2042f5"
+  },
+  "rating": 4,
+  "comment": "Hello This is Nice Property",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1739786914/PropertyFy/profile_imgs/u7mjojss1wcuaoxvgjll.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-27T12:21:46.419Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T12:21:46.419Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c13035600099cff45e3b2e"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67adec0b87e96598717ec4e2"
+  },
+  "rating": 5,
+  "comment": "hello World Yash hello",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740661904/PropertyFy/profile_imgs/gfnpr242c5qraiunjtbq.png",
+  "name": "user@gmail.com",
+  "createdAt": {
+    "$date": "2025-02-28T03:40:37.270Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T03:42:17.655Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c1df491a3d4dacf76a2c07"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67c1a90f00994b07a72868bc"
+  },
+  "rating": 5,
+  "comment": "nice property",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Yash Bhai Lalo",
+  "createdAt": {
+    "$date": "2025-02-28T16:07:37.541Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T16:07:37.541Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c1e1131a3d4dacf76a2c40"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67c1ab8700994b07a7286922"
+  },
+  "rating": 4,
+  "comment": "nice propertys",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Yash Bhai Lalo",
+  "createdAt": {
+    "$date": "2025-02-28T16:15:15.829Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T16:15:15.829Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c3519cdd4af460f400819e"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67c1ab8700994b07a7286922"
+  },
+  "rating": 5,
+  "comment": "hello hii",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Prince Bavishi",
+  "createdAt": {
+    "$date": "2025-03-01T18:27:40.662Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T18:27:40.662Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c351a7dd4af460f40081a1"
+  },
+  "userId": {
+    "$oid": "67ab4a0fc4f947b280dc01ec"
+  },
+  "propertyId": {
+    "$oid": "67c1ab8700994b07a7286922"
+  },
+  "rating": 5,
+  "comment": "nice property",
+  "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+  "name": "Prince Bavishi",
+  "createdAt": {
+    "$date": "2025-03-01T18:27:51.008Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T18:27:51.008Z"
+  },
+  "__v": 0
+}]

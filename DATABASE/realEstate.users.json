@@ -1,0 +1,202 @@
+[
+  {
+    "_id": {
+      "$oid": "679b7697c6b9a27355e7eed8"
+    },
+    "fullName": "Tanek Jacobs",
+    "email": "juqan@mailinator.com",
+    "password": "$2b$08$R654mDdjhW.5w1KRHJryc.NEUCuTvS1I7o.hrcq5LEll3RNchWMEO",
+    "phoneNumber": "1120320120",
+    "address": "Aute ut voluptas eum",
+    "refreshToken": null,
+    "role": "Agent",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-01-30T12:54:47.540Z"
+    },
+    "updatedAt": {
+      "$date": "2025-01-30T12:54:47.540Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "679b76a1c6b9a27355e7eedc"
+    },
+    "fullName": "Quintessa Hall",
+    "email": "homaw@mailinator.com",
+    "password": "$2b$08$AzPH4Ynu1g2DKc2ak2sof.av7DpvjPeCmXmpg3RSkIQlUyshm4W7O",
+    "phoneNumber": "4587954623",
+    "address": "Elit culpa totam te",
+    "refreshToken": null,
+    "role": "Seller",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-01-30T12:54:57.327Z"
+    },
+    "updatedAt": {
+      "$date": "2025-01-30T12:54:57.327Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "679dd65feecde7b54f827f65"
+    },
+    "fullName": "agent@gmail.com",
+    "email": "agent@gmail.com",
+    "password": "$2b$08$VipN9hHorYwCKY/E7v9q9e1JwPAaOtjm/Bq3fGFcfQAOMrvnUxGAW",
+    "phoneNumber": "5445879564",
+    "address": "kdjs lsdjk djlsdjk sdsk",
+    "refreshToken": null,
+    "role": "Agent",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1738410482/PropertyFy/profile_imgs/yqxiz88ugvhsnkhmdjiw.jpg",
+    "createdAt": {
+      "$date": "2025-02-01T08:07:59.492Z"
+    },
+    "updatedAt": {
+      "$date": "2025-02-02T04:51:10.496Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67a611b51bc21ba2bd38c457"
+    },
+    "fullName": "darshan",
+    "email": "darshan@gmail.com",
+    "password": "$2b$08$kyGmLgCR1YEjs/czMF1wKuoMRPC/zNNxwuQPozCfCyq0zSLw.s8TW",
+    "phoneNumber": "0000000000",
+    "address": "000 00 00 00 0 ",
+    "refreshToken": null,
+    "role": "User",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-02-07T13:59:17.293Z"
+    },
+    "updatedAt": {
+      "$date": "2025-02-07T13:59:17.293Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67ab4a0fc4f947b280dc01ec"
+    },
+    "fullName": "Prince Bavishi",
+    "email": "user@gmail.com",
+    "password": "$2b$08$Fyi3KWeiHRxDqKcHgTebnODEGQn0ybgqZK7WzCepCvNcv4wC5MFkW",
+    "phoneNumber": "12345685421",
+    "address": "00 00 00 00 0",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YWI0YTBmYzRmOTQ3YjI4MGRjMDFlYyIsImlhdCI6MTc0MDk3MTk2NSwiZXhwIjoxNzQxNTc2NzY1fQ.4BiKGvy_2aXA4s8tgxKVWkraBpyly0VwC6DUPxJNi3E",
+    "role": "User",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1740714403/PropertyFy/profile_imgs/sxwv1lavfwx7y7fmkbum.jpg",
+    "createdAt": {
+      "$date": "2025-02-11T13:01:03.452Z"
+    },
+    "updatedAt": {
+      "$date": "2025-03-03T03:19:25.585Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67b22f14828c0041ea814b71"
+    },
+    "fullName": "Axel Holman",
+    "email": "mumofi@mailinator.com",
+    "password": "$2b$08$2APJiubxKMv1tG.rLioxL.LoLpNlisDQ2woU70L52/i0MbcPbnQ/6",
+    "phoneNumber": "5444248429",
+    "address": "Labore incidunt pra",
+    "refreshToken": null,
+    "role": "User",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-02-16T18:31:48.882Z"
+    },
+    "updatedAt": {
+      "$date": "2025-02-17T10:21:32.788Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67bbf1d4898288c4a88960d3"
+    },
+    "fullName": "sagil bhai",
+    "email": "sagil@gmail.com",
+    "password": "$2b$08$C1iWRJdhHPyVdXXJfQfLYeN9LnDVut7kt1/Oqr3s84Sd36Cxoyr2m",
+    "phoneNumber": "4587956421",
+    "address": "skj ksj hkjshdksj dkjs hd",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmJmMWQ0ODk4Mjg4YzRhODg5NjBkMyIsImlhdCI6MTc0MDM5OTIwNCwiZXhwIjoxNzQxMDA0MDA0fQ.YsdGDSUhCj8tLiFII9eVD120OADHXxd_z36wkMjghEk",
+    "role": "User",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-02-24T04:13:08.802Z"
+    },
+    "updatedAt": {
+      "$date": "2025-02-24T12:13:24.456Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67bdd1c8132a4fd98736e474"
+    },
+    "fullName": "Prince Bavishi",
+    "email": "pb@gmail.com",
+    "password": "$2b$08$grhpFQfo/VaFcI0bbOVjceKcBwr7xSyyUtfEOCL5.dvCE7BdALINi",
+    "phoneNumber": "7854321878",
+    "address": "pb@gmail.com",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmRkMWM4MTMyYTRmZDk4NzM2ZTQ3NCIsImlhdCI6MTc0MDQ5MzI2MiwiZXhwIjoxNzQxMDk4MDYyfQ.94_0dSK81GkNkb2Zbog0wWHmkrTsA89-opUw_EJL0Ro",
+    "role": "User",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-02-25T14:20:56.890Z"
+    },
+    "updatedAt": {
+      "$date": "2025-02-25T14:21:02.148Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67c1ed9b1a3d4dacf76a2dc4"
+    },
+    "fullName": "test test",
+    "email": "test@gmail.com",
+    "password": "$2b$08$fPqGIuDpOOjh84.t5sNFCeBrO2LnV23DhY7Z4Tx8wkgBiVMvzLum.",
+    "phoneNumber": "8965987546",
+    "address": "stest@gmail.com",
+    "refreshToken": null,
+    "role": "User",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-02-28T17:08:43.624Z"
+    },
+    "updatedAt": {
+      "$date": "2025-03-01T04:33:02.139Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "67c4016d7bd0f7e42574541e"
+    },
+    "fullName": "Prince Bavishi",
+    "email": "seller@gmail.com",
+    "password": "$2b$08$MbW3QwsLU48AZHDTHd4c3.823.b6ZNgjqvCxWMZA7tDAuRHw0zX8S",
+    "phoneNumber": "5468975465",
+    "address": "seller@gmail.com",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzQwMTZkN2JkMGY3ZTQyNTc0NTQxZSIsImlhdCI6MTc0MDg5ODY3OSwiZXhwIjoxNzQxNTAzNDc5fQ.4ZkDO0HLSD7K0KztOmB8Rj4E9yph-JnSTJZztydBbqA",
+    "role": "Seller",
+    "avatar": "https://res.cloudinary.com/duto9uwjs/image/upload/v1737528548/PropertyFy/profile_imgs/wjlbupipguv7c2ucesdb.jpg",
+    "createdAt": {
+      "$date": "2025-03-02T06:57:49.259Z"
+    },
+    "updatedAt": {
+      "$date": "2025-03-02T06:57:59.326Z"
+    },
+    "__v": 0
+  }
+]

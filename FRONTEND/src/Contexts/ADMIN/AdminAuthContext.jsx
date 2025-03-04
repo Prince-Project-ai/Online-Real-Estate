@@ -15,6 +15,13 @@ const AdminContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [adminInfo, setAdminInfo] = useState(null);
 
+  // seller at-a-glannce
+  const [totalProperty, setTotalProperty] = useState(0);
+  const [totalUser, setTotalUser] = useState(0);
+  const [totalRevanue, setTotalRevanue] = useState(0);
+
+
+
   const fetchCurrentAdmin = useCallback(async () => {
 
     try {
@@ -41,6 +48,9 @@ const AdminContextProvider = ({ children }) => {
     isAdminAuthenticated,
     isLoading,
     adminInfo,
+    totalProperty, setTotalProperty,
+    totalUser, setTotalUser,
+    totalRevanue, setTotalRevanue,
     setAdminInfo,
     setIsAdminAuthenticated,
   };

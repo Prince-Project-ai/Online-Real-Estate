@@ -1,16 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { searchPropertyByFilter } from "../../Api/website/HandleUserApi";
-
 import { useMessage } from "../../Contexts/MessageContext";
 import ButtonSpinner from "../Loaders/ButtonSpinner";
-// import { useNavigate } from "react-router-dom";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import { useSharedData } from "../../Contexts/SharedDataContext";
 
+
 const GOOGLE_MAPS_API_KEY = "AIzaSyC5oArfQeCOs0SeDNFzm7bCF5htor89riI";
-
-
-
 
 const HeroFilter = () => {
   const [filterSearchData, setFilterSearchData] = useState([]);
