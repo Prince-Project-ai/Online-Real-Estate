@@ -11,6 +11,7 @@ export const AdminSignIn = async (form) => {
   return await HandleAdminApi.post("/admin-sign-in", form);
 };
 
+// admin isLoggedIn
 export const AdminAuth = async () => {
   const response = await HandleAdminApi.get("/current-admin");
   return response?.data;
@@ -56,10 +57,3 @@ export const fetchAllPropertyFromAdmin = async () => {
   const res = await HandleAdminApi.get("/fetch-all-property");
   return res?.data;
 }
-
-
-// what is my process of admin sign in
-
-// first of the i will create the api call and print the response and erro in log
-
-// then i will go to that sign in page and mkae a useState that do the form data and and save in form object and iw will create the on chnagr evvent i want ot make this proocees very optimize that whhy i will using usememoe and and seprateh the each compoent the

@@ -46,7 +46,6 @@ export const resetPasswordApi = async (resetPasswordData) => {
 }
 
 export const searchPropertyByFilter = async (formData) => {
-	// console.log(formData);
 	const res = await handleUserApi.post("/search-result", formData, {
 		headers: {
 			"Content-Type": "application/json",
@@ -54,8 +53,6 @@ export const searchPropertyByFilter = async (formData) => {
 	});
 	return res?.data;
 }
-
-// REVIEW MODULE
 
 export const reviewByProduct = async (productId) => {
 	const res = await handleUserApi.get(`/revies/${productId}`);
@@ -68,11 +65,6 @@ export const deleteReview = async (reviewId) => {
 }
 
 export const addReviewByProduct = async (formData, productId) => {
-	// console.log(formData);
-	for (let [key, value] of formData.entries()) {
-		console.log(key, value);
-	}
-
 	const res = await handleUserApi.post(`/post-review/${productId}`, formData, {
 		headers: {
 			"Content-Type": "application/json",
@@ -90,17 +82,14 @@ export const updateReview = async (reviewId, reviewData) => {
 	return res?.data;
 }
 
-
 export const getSellerInfo = async (id) => {
 	const res = await handleUserApi.get(`/seller-info/${id}`);
 	return res?.data;
 }
-// what is your backend file open it
-// user controller js at end 
 
 export const UpdateAgentProfile = async (formData) => {
 	const response = await handleUserApi.patch(
-		"/update-agent-profile", // Use the correct API endpoint
+		"/update-agent-profile",
 		formData,
 		{
 			headers: {
@@ -111,12 +100,10 @@ export const UpdateAgentProfile = async (formData) => {
 	return response.data;
 };
 
-
 export const fetchSellerReviewBYId = async (id) => {
 	const response = await handleUserApi.get(`/seller-review/${id}`);
 	return response.data;
 };
-
 
 export const fetchChatMessages = async (senderId, receiverId) => {
 	try {
@@ -127,15 +114,6 @@ export const fetchChatMessages = async (senderId, receiverId) => {
 		throw error;
 	}
 };
-
-
-
-// AGENT API END POINT LOGIC END 
-
-
-/*
-	============= SELLER API LOGIC LIST START ==============
-*/
 
 export const addListingSeller = async (formData) => {
 	const res = await handleUserApi.post("/add-seller-property", formData,
@@ -175,11 +153,6 @@ export const fetchPendingApproval = async (id) => {
 }
 
 export const updateListingSeller = async (propertyId, formData) => {
-
-	// for (let [key, value] of formData.entries()) {
-	// 	console.log(key, value);
-	// }
-
 	const res = await handleUserApi.patch(`/update-seller-listing/${propertyId}`, formData, {
 		headers: {
 			"Content-Type": "multipart/form-data",
@@ -188,10 +161,3 @@ export const updateListingSeller = async (propertyId, formData) => {
 
 	return res.data;
 };
-
-/*
-	============= SELLER API LOGIC LIST END ==============
-*/
-
-
-// at a glance at seller dashboard api calculation

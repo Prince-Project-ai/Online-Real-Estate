@@ -57,8 +57,6 @@ const Profile = () => {
         setUpdateFormData((prevData) => ({ ...prevData, [name]: value || file }));
     }, []);
 
-    // console.log(currentAuth);
-
     const updateProfile = async (e) => {
         e.preventDefault();
         setIsBtnLoading(true);
@@ -119,9 +117,7 @@ const Profile = () => {
                         <button
                             onClick={() => setIsEditing(!isEditing)}
                             className="bg-dark text-white px-4 py-2 rounded-lg flex items-center gap-2 font-inter hover:ring-2 hover:ring-offset-2 hover:ring-dark duration-200"
-                        // className="bg-black text-white hover:bg-gray-800 focus:ring-black/50 shadow-lg px-6 py-3 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2"
                         >
-                            {/* {isEditing ? <RiCloseLine className="w-4 h-4" /> : <RiEditLine className="w-4 h-4" />} */}
                             {isEditing ? 'Cancel' : 'Edit Profile'}
                         </button>
                     </div>
@@ -151,7 +147,6 @@ export default React.memo(Profile);
 
 const EditForm = React.memo(({ updateFormData, isBtnLoading, handleChange, updateProfile, isDisable }) => (
     <div className="md:col-span-6 auto-rows-auto border-gray-300 border rounded-xl p-6 shadow-sm">
-        {/* <form onSubmit={(e) => { e.preventDefault(); setIsEditing(false); }} className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
         <h1 className='font-inter text-xl font-semibold mb-5'>Edit Personal Info</h1>
         <form onSubmit={updateProfile} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField

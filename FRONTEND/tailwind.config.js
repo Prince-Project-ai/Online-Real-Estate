@@ -44,7 +44,7 @@ export default {
       },
       fontFamily: {
         primary: ["Poppins", "sans-serif"],
-        heading: ["Lobster", "serif"],
+        heading: ["Lobster Two", "serif"],
         description: ["Libre Franklin", "sans-serif"],
         inter: ["Inter", "serif"],
       },

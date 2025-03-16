@@ -41,7 +41,11 @@ const EditReview = ({ review, setOpenDropdownIndex }) => {
       if (response?.success) {
         showToast(response?.message, "success");
         setIsEdited(null);
-        setReviews((prev) => ([...prev, response?.data]));
+        setReviews((prev) =>
+          prev.map((review) =>
+            review._id === isEdited ? response?.data : review
+          )
+        );
         setOpenDropdownIndex(null);
       }
     } catch (error) {

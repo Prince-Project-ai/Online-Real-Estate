@@ -27,7 +27,15 @@ const AccessMenu = () => {
         <div className={`w-40 ${isOpen ? 'absolute' : 'hidden'} border mt-2 shadow absolute rounded-lg bg-white top-auto right-0 menu-list-drawer`}>
           <ul className="p-2 space-y-2">
             <li onClick={() => setIsOpen(false)} className="font-description w-full text-[17px] space-x-1"><i className="ri-user-line bg-secondary p-1 rounded border"></i> <NavLink to={`${role === "Agent" ? "/dashboard-agent/profile" : role === "Seller" ? '/dashboard-seller/profile' : '/profile'}`} className="font-description">Profile</NavLink></li>
-            <li onClick={() => setIsOpen(false)} className="font-description w-full text-[17px] space-x-1"><i className="ri-dashboard-fill bg-secondary p-1 rounded border"></i><NavLink to={"/dashboard-agent"} className="font-description">Dashboard</NavLink></li>
+            {
+              currentAuth?.role !== "User" && (
+                <li onClick={() => setIsOpen(false)} className="font-description w-full text-[17px] space-x-1">
+                  <i className="ri-dashboard-fill bg-secondary p-1 rounded border"></i><NavLink to={"/dashboard-seller"} className="font-description">Dashboard</NavLink>
+                </li>
+              )
+            }
+
+
             {/* <li><AuthModalManager /></li> */}
           </ul>
           <ul className="border-t w-full p-2">
